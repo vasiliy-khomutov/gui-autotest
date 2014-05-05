@@ -9,8 +9,7 @@ import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class ChargeBack {
@@ -22,19 +21,19 @@ public class ChargeBack {
     private String cbcode = "1";
     private String cbindicator = "1111";
 
-    private String partialCBKAmount1 = "888,88";
+    //private String partialCBKAmount1 = "888,88";
     private String partialCBKAmount2 = "44,44";
 
     private String typeTransaction = "Chargeback";
 
     private String idTransaction;
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
+    private String baseUrl;
 
-    private String loginMerchant = "crono.ru@gmail.com";
-    private String passwordMerchant = "tester123";
-    private String loginAdmin = "f.kunakov";
-    private String passwordAdmin = "123asdqwe";
+    private String loginMerchant;
+    private String passwordMerchant;
+    private String loginAdmin;
+    private String passwordAdmin;
     private String captcha = "ability";
 
     private String orderID = "";
@@ -66,7 +65,7 @@ public class ChargeBack {
     // simple
 
     private String simpleamountPending = "222,22";
-    private String simpleamountPending2 = "1222,22";
+    //private String simpleamountPending2 = "1222,22";
 
     private String simplependingMercahnt = "#57482 - www.test1.ru";
     private String simpleoptionPendingMerchant = "option[value=\"57482\"]";
@@ -74,7 +73,7 @@ public class ChargeBack {
 
     private String simpleamountPreauth1 = "300";
     private String simpleamountPreauth2 = "224,44";
-    private String simpleamountPreauth4 = "1224,44";
+    //private String simpleamountPreauth4 = "1224,44";
     private String simpleamountPreauthComplete ="224,44";
     private String simpleamountPreauthPart3 = "224,44";
 
@@ -85,11 +84,11 @@ public class ChargeBack {
     // simple sapmax
 
     private String simpleSapmaxamountPending = "444,22";
-    private String simpleSapmaxamountPending2 = "1444,22";
+    //private String simpleSapmaxamountPending2 = "1444,22";
 
     private String simpleSapmaxamountPreauth1 = "600";
     private String simpleSapmaxamountPreauth2 = "424,44";
-    private String simpleSapmaxamountPreauth4 = "1424,44";
+    //private String simpleSapmaxamountPreauth4 = "1424,44";
     private String simpleSapmaxamountPreauthComplete ="424,44";
     private String simpleSapmaxamountPreauthPart3 = "424,44";
 
@@ -104,11 +103,11 @@ public class ChargeBack {
     // 3DS
 
     private String amount3DSPending = "666,22";
-    private String amount3DSPending2 = "1666,22";
+    //private String amount3DSPending2 = "1666,22";
 
     private String amount3DSPreauth1 = "700";
     private String amount3DSPreauth2 = "624,44";
-    private String amount3DSPreauth4 = "1624,44";
+    //private String amount3DSPreauth4 = "1624,44";
     private String amount3DSPreauthComplete ="624,44";
     private String amount3DSPreauthPart3 = "624,44";
 
@@ -123,11 +122,11 @@ public class ChargeBack {
     // 3DS Sapmax
 
     private String amount3DSSapmaxPending = "666,22";
-    private String amount3DSSapmaxPending2 = "1666,22";
+    //private String amount3DSSapmaxPending2 = "1666,22";
 
     private String amount3DSSapmaxPreauth1 = "700";
     private String amount3DSSapmaxPreauth2 = "624,44";
-    private String amount3DSSapmaxPreauth4 = "1624,44";
+    //private String amount3DSSapmaxPreauth4 = "1624,44";
     private String amount3DSSapmaxPreauthComplete ="624,44";
     private String amount3DSSapmaxPreauthPart3 = "624,44";
 
@@ -138,6 +137,17 @@ public class ChargeBack {
     private String preAuthMercahnt3DSSapmax = "#59529 - www.3DS-trx-sapmax2.ru";
     private String optionPreAuthMerchant3DSSapmax = "option[value=\"59529\"]";
     private String MIDpreAuth3DSSapmax = "59529";
+
+    @BeforeTest
+    public void createParameters(){
+
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
     // full chargeback
     // simple

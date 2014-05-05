@@ -8,18 +8,18 @@ import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class Simple {
 
     private long id = System.currentTimeMillis();
     private String idTransaction;
-    private String baseUrl = "https://secure.payonlinesystem.com/";
-    private String loginMerchant = "crono.ru@gmail.com";
-    private String passwordMerchant = "tester123";
-    private String loginAdmin = "v.khomutov";
-    private String passwordAdmin = "tester123";
+    private String baseUrl;
+    private String loginMerchant;
+    private String passwordMerchant;
+    private String loginAdmin; //= "v.khomutov";
+    private String passwordAdmin; //= "tester123";
     private String captcha = "ability";
 
     private String pendingMercahnt = "#57482 - www.test1.ru";
@@ -44,11 +44,11 @@ public class Simple {
     private String expDateMonth = "05";
     private String expDateYear = "2015";
 
-    private String address = "3-я ул.Строителей, д.25, корп.1, кв.12";
-    private String city = "Москва";
-    private String zipCode = "123456";
-    private String country = "Россия";
-    private String phone = "+7 495 1234567";
+    //private String address = "3-я ул.Строителей, д.25, корп.1, кв.12";
+    //private String city = "Москва";
+    //private String zipCode = "123456";
+    //private String country = "Россия";
+    //private String phone = "+7 495 1234567";
 
     private String pendingMercahntUrl = "http://www.test1.ru";
     private String preAuthMercahntUrl = "http://www.transactions.com";
@@ -64,9 +64,20 @@ public class Simple {
     private String testGateway = "Test gateway";
     private String typePurchase = "Purchase";
 
-    private String lastActionPreAuth = "PreAuth";
+    //private String lastActionPreAuth = "PreAuth";
     private String lastActionComplete = "Complete";
     private String cardType = "MasterCard";
+
+    @BeforeTest
+    public void createParameters(){
+
+       String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
     @Test
     public void pendingTransaction(){
@@ -142,7 +153,7 @@ public class Simple {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         TestUtils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName, partialCompleteAmount, partialCompleteAmount, testGateway, email);
 
@@ -191,7 +202,7 @@ public class Simple {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         TestUtils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + "1" + orderID, typePurchase, pendingStatus, cardHolderName, amount, amount, testGateway, email);
 

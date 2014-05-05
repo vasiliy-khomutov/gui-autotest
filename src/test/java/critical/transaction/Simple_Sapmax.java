@@ -3,10 +3,12 @@ package critical.transaction;
 
 import critical.TestUtils;
 import critical.callbacks.DriverFactory;
+import model.Environment;
 import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class Simple_Sapmax {
@@ -14,13 +16,13 @@ public class Simple_Sapmax {
     private long id = System.currentTimeMillis();
     private String idTransaction;
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
+    private String baseUrl;
 
-    private String loginMerchant = "crono.ru@gmail.com";
-    private String passwordMerchant = "tester123";
+    private String loginMerchant;
+    private String passwordMerchant;
 
-    private String loginAdmin = "v.khomutov";
-    private String passwordAdmin = "tester123";
+    private String loginAdmin;
+    private String passwordAdmin;
 
     private String captcha = "ability";
 
@@ -36,7 +38,7 @@ public class Simple_Sapmax {
     private String MIDpreAuth = "59528";
     private String preAuthMercahntUrl = "http://www.trx-sapmax2.ru";
     private String preauthStatus = "PreAuthorized";
-    private String typePreauth = "PreAuth";
+    //private String typePreauth = "PreAuth";
 
     private String currencyRUB = "RUB";
 
@@ -61,6 +63,17 @@ public class Simple_Sapmax {
 
     private String sapmaxMerchantId = "3199";
     private String lastActionComplete = "Complete";
+
+    @BeforeTest
+    public void createParameters(){
+
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
     @Test
     public void pendingTransaction(){

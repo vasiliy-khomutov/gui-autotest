@@ -3,11 +3,12 @@ package critical.transaction;
 
 import critical.TestUtils;
 import critical.callbacks.DriverFactory;
+import model.Environment;
 import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class ThreeDSTransaction_Sapmax {
@@ -15,14 +16,14 @@ public class ThreeDSTransaction_Sapmax {
     private long id = System.currentTimeMillis();
 
     private String idTransaction;
-    private String baseUrl = "https://secure.payonlinesystem.com/";
+    private String baseUrl;
 
 
-    private String loginMerchant = "crono.ru@gmail.com";
-    private String passwordMerchant = "tester123";
+    private String loginMerchant;
+    private String passwordMerchant;
 
-    private String loginAdmin = "v.khomutov";
-    private String passwordAdmin = "tester123";
+    private String loginAdmin;
+    private String passwordAdmin;
 
     private String captcha = "ability";
 
@@ -38,7 +39,7 @@ public class ThreeDSTransaction_Sapmax {
     private String MIDpreAuth3DS = "59529";
     private String preAuthMercahnt3DSUrl = "http://www.3ds-trx-sapmax2.ru";
     private String preauthStatus = "PreAuthorized";
-    private String lastActionPreAuth = "PreAuth";
+    //private String lastActionPreAuth = "PreAuth";
 
     private String currencyRUB = "RUB";
     private String amount = "888";
@@ -61,6 +62,17 @@ public class ThreeDSTransaction_Sapmax {
     private String cardType = "Visa";
     private String sapmaxMerchantId = "3199";
     private String lastActionComplete = "Complete";
+
+    @BeforeTest
+    public void createParameters(){
+
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
     @Test
     public void threeDSTransactionPending(){

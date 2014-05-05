@@ -6,10 +6,10 @@ import critical.callbacks.DriverFactory;
 import model.Connect;
 import model.Environment;
 import model.Utils;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class Refund {
@@ -19,12 +19,12 @@ public class Refund {
     private String idRefund;
     private String idRefund2;
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
+    private String baseUrl;
 
-    private String loginMerchant = "crono.ru@gmail.com";
-    private String passwordMerchant = "tester123";
-    private String loginAdmin = "f.kunakov";
-    private String passwordAdmin = "123asdqwe";
+    private String loginMerchant;
+    private String passwordMerchant;
+    private String loginAdmin;
+    private String passwordAdmin;
     private String captcha = "ability";
 
     private String orderID = "";
@@ -46,11 +46,11 @@ public class Refund {
     private String currencyRUB = "RUB";
     private String sapmaxMerchantId = "3199";
 
-    private String typePurchase = "Purchase";
+    //private String typePurchase = "Purchase";
     private String typeRefund = "Refund";
 
     private String pendingStatus = "Pending";
-    private String preAuthStatus = "PreAuth";
+    //private String preAuthStatus = "PreAuth";
     private String settledStatus = "Settled";
 
     private String lastActionRefund = "Refund";
@@ -142,10 +142,18 @@ public class Refund {
     private String preAuthMercahnt3DSSapmax = "#59529 - www.3DS-trx-sapmax2.ru";
     private String optionPreAuthMerchant3DSSapmax = "option[value=\"59529\"]";
     private String MIDpreAuth3DSSapmax = "59529";
-
-
     private String completedRefundsAmount0 = "0.00";
 
+    @BeforeTest
+    public void createParameters(){
+
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
     // MERCHANT
     // simple partial

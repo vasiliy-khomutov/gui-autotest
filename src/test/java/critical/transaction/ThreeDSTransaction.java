@@ -8,6 +8,7 @@ import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class ThreeDSTransaction {
@@ -15,13 +16,13 @@ public class ThreeDSTransaction {
     private long id = System.currentTimeMillis();
     private String idTransaction;
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
+    private String baseUrl;
 
-    private String loginMerchant = "crono.ru@gmail.com";
-    private String passwordMerchant = "tester123";
+    private String loginMerchant;
+    private String passwordMerchant;
 
-    private String loginAdmin = "v.khomutov";
-    private String passwordAdmin = "tester123";
+    private String loginAdmin;
+    private String passwordAdmin;
 
     private String captcha = "ability";
 
@@ -38,7 +39,7 @@ public class ThreeDSTransaction {
     private String preAuthMercahnt3DSUrl = "http://www.transactions2.com";
     private String preauthStatus = "PreAuthorized";
 
-    private String lastActionPreAuth = "PreAuth";
+    //private String lastActionPreAuth = "PreAuth";
     private String lastActionComplete = "Complete";
 
 
@@ -61,6 +62,18 @@ public class ThreeDSTransaction {
 
     private String testGateway = "Test gateway";
     private String cardType = "Visa";
+
+
+    @BeforeTest
+    public void createParameters(){
+
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
 
     @Test

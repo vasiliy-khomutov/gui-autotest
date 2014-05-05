@@ -8,7 +8,7 @@ import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
@@ -17,11 +17,11 @@ public class Voided {
 
     private String idTransaction;
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
-    private String loginMerchant = "crono.ru@gmail.com";
-    private String passwordMerchant = "tester123";
-    private String loginAdmin = "v.khomutov";
-    private String passwordAdmin = "tester123";
+    private String baseUrl;
+    private String loginMerchant;
+    private String passwordMerchant;
+    private String loginAdmin;
+    private String passwordAdmin;
     private String captcha = "ability";
 
     // simple
@@ -78,7 +78,7 @@ public class Voided {
     private String voidedStatus = "Voided";
 
     private String lastActionVoid = "Void";
-    private String lastActionComplete = "Complete";
+    //private String lastActionComplete = "Complete";
     private String sapmaxMerchantId = "3199";
 
     private String typePurchase = "Purchase";
@@ -98,6 +98,17 @@ public class Voided {
     private String cardHolderName = "MR.AUTOTEST";
     private String cvc = "111";
     private String bank = "QA-BANK";
+
+    @BeforeTest
+    public void createParameters(){
+
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
     // merchant
     @Test
