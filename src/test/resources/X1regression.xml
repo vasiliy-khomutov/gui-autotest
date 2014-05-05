@@ -15,6 +15,7 @@
             <!--TODO fail case in action-->
             <!--<class name = "critical.callbacks.SetParametersForCallbacks" />-->
             <!--test PUSH!!!! first!!!! -->
+            <!--TEST PUSH!!! second!!!!-->
             <class name = "critical.transaction.Simple"/>
             <class name = "critical.transaction.Simple_Sapmax"/>
             <class name = "critical.transaction.ThreeDSTransaction" />
