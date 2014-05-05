@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM 'http://testng.org/testng-1.0.dtd'>
+
+<suite name = "CallbacksTest" verbose = "1" thread-count="1">
+    <test name = "Callbacks Test">
+
+        <classes>
+            <class name = "critical.callbacks.Callbacks" />
+        </classes>
+    </test>
+</suite>

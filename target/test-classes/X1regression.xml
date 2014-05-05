@@ -1,0 +1,38 @@
+<!DOCTYPE suite SYSTEM 'http://testng.org/testng-1.0.dtd'>
+
+<suite name = "Regression" verbose ="1" parallel="false">
+
+    <!--<suite-files>
+                &lt;!&ndash;<suite-file path = "./critical/callbacks/call/first/suite.xml" />&ndash;&gt;
+                <suite-file path = "./medium/openItem/suite.xml" />
+                <suite-file path = "./low/suite.xml" />&ndash;&gt;
+	</suite-files>-->
+
+   <test name = "Critical Test">
+        <classes>
+            <!--TODO check inset after action-->
+            <!--TODO check links and ............................ in cardTransaction-->
+            <!--TODO fail case in action-->
+            <!--<class name = "critical.callbacks.SetParametersForCallbacks" />-->
+            <class name = "critical.transaction.Simple"/>
+            <class name = "critical.transaction.Simple_Sapmax"/>
+            <class name = "critical.transaction.ThreeDSTransaction" />
+            <class name = "critical.transaction.ThreeDSTransaction_Sapmax" />
+            <class name = "critical.transaction.Voided"/>
+            <class name="critical.transaction.Refund"/>
+            <class name = "critical.transaction.ChargeBack"/>
+
+           <!-- <class name = "critical.callbacks.Callbacks" />
+            <class name = "critical.authorized.Authorized" />
+            <class name = "medium.openItem.MerchantLk"/>
+            <class name="medium.openItem.AdminLK" />-->
+            <!--<class name = "critical.transaction.Settled"/>-->
+        </classes>
+   </test>
+
+    <parameter name = "filenamePathFailLogin" value = "/src/test/resources/failParameters/listFailLogin" />
+    <parameter name = "filenamePathFailLoginAndPassword" value = "/src/test/resources/failParameters/listFailLoginAndPassword" />
+    <parameter name = "filenamePathFailCaptcha" value = "/src/test/resources/failParameters/listFailCaptcha" />
+    <parameter name = "filenamePathListPayments" value = "/src/test/resources/localizationParameter/payments/listPayments" />
+
+</suite>

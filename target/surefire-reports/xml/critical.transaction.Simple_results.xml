@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Critical Test"
+           tests="3"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="115,142">
+  <properties />
+  
+  
+            <testcase name="preAuthTransactionPartial" time="20,253" classname="critical.transaction.Simple" />
+                <testcase name="pendingTransaction" time="72,219" classname="critical.transaction.Simple" />
+                <testcase name="preAuthTransactionFull" time="22,670" classname="critical.transaction.Simple" />
+      
+</testsuite>

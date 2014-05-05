@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM 'http://testng.org/testng-1.0.dtd'>
+
+<suite name = "SecureTest" verbose = "1">
+    <test name = "Secure Test">
+
+        <parameter name = "contentType" value = "ISHOP"/>
+        <classes>
+            <class name = "critical.Transactions"/>
+        </classes>
+    </test>
+</suite>
