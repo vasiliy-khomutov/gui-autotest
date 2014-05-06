@@ -11,7 +11,7 @@ public class Connect {
     private final String portNumber = "1433";
     private final String databaseName= "PayOnlineSystem";
     private final String userName = "externalUser";
-    private final String password = "tester321";
+    private final String password = "tester123";
     public Connect(){}
 
     private String getConnectionUrl(){

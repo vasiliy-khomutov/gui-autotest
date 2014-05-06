@@ -2,12 +2,18 @@ package critical;
 
 import model.Environment;
 import model.Utils;
+import org.apache.http.HttpRequest;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TestUtils {
 
@@ -588,4 +594,71 @@ public class TestUtils {
            // final Wait<WebDriver> wait = new WebDriverWait(driver, 15, 1000).ignoring(ElementNotVisibleException.class, NoSuchElementException.class);
            /// wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(locator))));
     }*/
+
+    public static String getSecurityKey(String...params){
+        StringBuilder result = new StringBuilder();
+        for(String param : params){
+            result.append(param).append("&");
+        }
+        String source = result.substring(0, result.toString().length() - 1);
+        try {
+            MessageDigest md = MessageDigest.getInstance("md5");
+            md.update(source.getBytes());
+            String md5 = convertToHex(md.digest());
+            return md5;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String convertToHex(byte[] srcData) {
+        StringBuilder sbuffer = new StringBuilder();
+        for (int i = 0; i < srcData.length; i++) {
+            int flag = (srcData[i] >>> 4) & 0x0F;
+            int twoHalf = 0;
+            do {
+                if ((0 <= flag) && (flag <= 9)) {
+                    sbuffer.append((char) ('0' + flag));
+                } else {
+                    sbuffer.append((char) ('a' + (flag - 10)));
+                }
+                flag = srcData[i] & 0x0F;
+            } while (twoHalf++ < 1);
+        }
+        return sbuffer.toString();
+    }
+
+    public static String createBodyRequest(String...params){
+        StringBuilder result = new StringBuilder();
+        for(String param : params){
+            result.append(param).append("&");
+        }
+        result.replace(result.length() - 1, result.length(), "");
+        return result.toString();
+    }
+
+    public static HttpRequest setHeader(HttpRequest request, String...headers){
+        for(String header :headers){
+            String[] paramHeader = header.split(":");
+            request.setHeader(paramHeader[0], paramHeader[1]);
+        }
+        return request;
+    }
+
+    public static boolean checkParameter(java.util.List<String> response, String parameter){
+        if(response.toString().contains(parameter)){
+            return true;
+        }
+        return false;
+    }
+
+    public static String getParameter (java.util.List<String> response, String parameter){
+        Pattern pattern = Pattern.compile(parameter);
+        Matcher matcher = pattern.matcher(response.toString());
+        if(matcher.find()){
+            return matcher.group(0);
+        }
+        return null;
+    }
 }

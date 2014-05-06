@@ -5,107 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\Regression\Critical Test.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\Regression\Critical Test.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\TEST-TestSuite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\TestSuite.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\bullet_point.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\collapseall.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\emailable-report.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\failed.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\html\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\html\overview.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\html\reportng.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\html\reportng.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\html\sorttable.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\html\suite1_test1_results.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\html\suites.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\jquery-1.7.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\junitreports\TEST-critical.transaction.ChargeBack.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\junitreports\TEST-critical.transaction.Refund.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\junitreports\TEST-critical.transaction.Simple.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\junitreports\TEST-critical.transaction.Simple_Sapmax.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\junitreports\TEST-critical.transaction.ThreeDSTransaction.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\junitreports\TEST-critical.transaction.ThreeDSTransaction_Sapmax.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\junitreports\TEST-critical.transaction.Voided.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\navigator-bullet.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\Critical Test.properties" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\classes.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\groups.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\main.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\methods-alphabetical.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\methods-not-run.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\methods.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\reporter-output.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\testng.xml.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\Regression\toc.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\old\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\passed.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\skipped.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\testng-reports.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\testng-reports.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\testng-results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\testng.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\xml\critical.transaction.ChargeBack_results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\xml\critical.transaction.Refund_results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\xml\critical.transaction.Simple_Sapmax_results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\xml\critical.transaction.Simple_results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\xml\critical.transaction.ThreeDSTransaction_Sapmax_results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\xml\critical.transaction.ThreeDSTransaction_results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\surefire-reports\xml\critical.transaction.Voided_results.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\X1regression.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\TestUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\authorized\Authorized.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\authorized\suite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\callbacks\Callbacks.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\callbacks\DriverFactory$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\callbacks\DriverFactory.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\callbacks\SetParametersForCallbacks.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\callbacks\call\first\suite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\callbacks\setParameters\suite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\ChargeBack.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\Refund.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\Settled.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\Simple.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\Simple_Sapmax.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\ThreeDSTransaction.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\ThreeDSTransaction_Sapmax.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\Voided.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\critical\transaction\suite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\failParameters\listFailCaptcha" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\failParameters\listFailLogin" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\failParameters\listFailLoginAndPassword" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\localizationParameter\payments\listPayments" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\localizationParameter\sites\listSites" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\low\LocalizationX.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\low\TestUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\low\suite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\medium\openItem\AdminLK.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\medium\openItem\MerchantLk.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\medium\openItem\TestUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\medium\openItem\suite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\medium\suite.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\model\Connect.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\model\DataProviders.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\model\Email.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\model\Environment.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\autotestAPI\AUTOTEST\gui-autotest\target\test-classes\model\Utils.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/transaction/ChargeBack.java" afterPath="$PROJECT_DIR$/src/test/java/critical/transaction/ChargeBack.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/model/Connect.java" afterPath="$PROJECT_DIR$/src/test/java/model/Connect.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/model/Environment.java" afterPath="$PROJECT_DIR$/src/test/java/model/Environment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/transaction/Refund.java" afterPath="$PROJECT_DIR$/src/test/java/critical/transaction/Refund.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/transaction/Simple.java" afterPath="$PROJECT_DIR$/src/test/java/critical/transaction/Simple.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/transaction/Simple_Sapmax.java" afterPath="$PROJECT_DIR$/src/test/java/critical/transaction/Simple_Sapmax.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction.java" afterPath="$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction_Sapmax.java" afterPath="$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction_Sapmax.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/TestUtils.java" afterPath="$PROJECT_DIR$/src/test/java/critical/TestUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/critical/transaction/Voided.java" afterPath="$PROJECT_DIR$/src/test/java/critical/transaction/Voided.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/X1regression.xml" afterPath="$PROJECT_DIR$/src/test/resources/X1regression.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gui_autotest.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/X1regression.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399282415775" ignored="false" />
+    <file path="/X1regression.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399288635818" ignored="false" />
     <file path="/Callbacks.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1396339958253" ignored="false" />
     <file path="/SetParametersForCallbacks.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1395664954350" ignored="false" />
     <file path="/PageFactory.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1395664704021" ignored="false" />
@@ -114,7 +25,7 @@
     <file path="$PROJECT_DIR$/../../v2/QIWI_JAVA_TEST_grid/src/test/java/ru/mw/webui/x1/page/WideLeftMenuFactory.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1395662004361" ignored="false" />
     <file path="/WideLeftMenuFactory.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1395662002057" ignored="false" />
     <file path="/fragment.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1397571404847" ignored="false" />
-    <file path="/Dummy.txt" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399283037164" ignored="false" />
+    <file path="/Dummy.txt" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399283078976" ignored="false" />
     <file path="/pom.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1395662582346" ignored="false" />
     <file path="/suite.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1397468085669" ignored="false" />
     <file path="$PROJECT_DIR$/../../v2/QIWI_JAVA_TEST_grid/src/test/java/ru/mw/webui/x1/page/content/accounts/AccountsFormSetAccountsPageFactory.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1395663990717" ignored="false" />
@@ -127,13 +38,15 @@
     <file path="/Simple.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399280321079" ignored="false" />
     <file path="/ThreeDSTransaction.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1396951477250" ignored="false" />
     <file path="$PROJECT_DIR$/../gui_autotest6/gui_autotest6/src/test/java/critical/transaction/Voided.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1397478435631" ignored="false" />
-    <file path="/Voided.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1397480537369" ignored="false" />
+    <file path="/Voided.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399375866559" ignored="false" />
     <file path="$PROJECT_DIR$/../gui_autotest6/gui_autotest6/src/test/java/critical/transaction/Refund.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1397482929388" ignored="false" />
-    <file path="/Refund.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1397560654845" ignored="false" />
+    <file path="/Refund.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399290719163" ignored="false" />
     <file path="$PROJECT_DIR$/../gui_autotest6/gui_autotest6/src/test/resources/critical/authorized/suite.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1398080242225" ignored="false" />
     <file path="$PROJECT_DIR$/.idea/vcs.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399271835995" ignored="false" />
-    <file path="$PROJECT_DIR$/../../gui-autotests/src/test/resources/X1regression.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399282746981" ignored="false" />
-    <file path="/Environment.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399280124005" ignored="false" />
+    <file path="$PROJECT_DIR$/../../gui-autotests/src/test/resources/X1regression.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399288004071" ignored="false" />
+    <file path="/Environment.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399288532301" ignored="false" />
+    <file path="$PROJECT_DIR$/../../gui-autotests/src/test/resources/critical/transaction/suite.xml" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399289416563" ignored="false" />
+    <file path="$PROJECT_DIR$/../../gui-autotests/src/test/java/model/Environment.java" changelist="f7875cbc-bd27-45af-9be9-e2bc6ab45dbf" time="1399288537134" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,91 +120,16 @@
       <file leaf-file-name="X1regression.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/resources/X1regression.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="53" selection-start="1286" selection-end="1286" vertical-scroll-proportion="0.0">
+            <state line="29" column="79" selection-start="1333" selection-end="1375" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Environment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/model/Environment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Refund.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Refund.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="6" selection-start="1474" selection-end="1474" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ThreeDSTransaction_Sapmax.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction_Sapmax.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="6" selection-start="1342" selection-end="1342" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Simple.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Simple.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="6" selection-start="2229" selection-end="2229" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Voided.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Voided.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Voided.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="6" selection-start="2873" selection-end="2873" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChargeBack.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/ChargeBack.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="6" selection-start="2294" selection-end="2294" vertical-scroll-proportion="0.33275563">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Simple_Sapmax.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Simple_Sapmax.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="6" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ThreeDSTransaction.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="6" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.0">
+            <state line="149" column="32" selection-start="5915" selection-end="5915" vertical-scroll-proportion="0.1098546">
               <folding />
             </state>
           </provider>
@@ -315,22 +153,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/critical/callbacks/DriverFactory.java" />
         <option value="$PROJECT_DIR$/src/test/java/critical/callbacks/Callbacks.java" />
         <option value="$PROJECT_DIR$/src/test/java/medium/openItem/AdminLK.java" />
         <option value="$PROJECT_DIR$/src/test/java/critical/authorized/Authorized.java" />
         <option value="$PROJECT_DIR$/src/test/java/medium/openItem/MerchantLk.java" />
         <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Settled.java" />
-        <option value="$PROJECT_DIR$/src/test/java/critical/TestUtils.java" />
-        <option value="$PROJECT_DIR$/src/test/resources/X1regression.xml" />
-        <option value="$PROJECT_DIR$/src/test/java/model/Environment.java" />
-        <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Refund.java" />
         <option value="$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction_Sapmax.java" />
-        <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Simple.java" />
-        <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Voided.java" />
         <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Simple_Sapmax.java" />
         <option value="$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction.java" />
         <option value="$PROJECT_DIR$/src/test/java/critical/transaction/ChargeBack.java" />
+        <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Simple.java" />
+        <option value="$PROJECT_DIR$/src/test/java/model/Environment.java" />
+        <option value="$PROJECT_DIR$/src/test/java/critical/TestUtils.java" />
+        <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Refund.java" />
+        <option value="$PROJECT_DIR$/src/test/java/model/Connect.java" />
+        <option value="$PROJECT_DIR$/src/test/java/critical/transaction/Voided.java" />
+        <option value="$PROJECT_DIR$/src/test/resources/X1regression.xml" />
       </list>
     </option>
   </component>
@@ -542,6 +380,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="critical" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui_autotest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui-autotest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="critical" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="transaction" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1037,7 +905,11 @@
       <created>1399275682117</created>
       <updated>1399275682117</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="refactor secure">
+      <created>1399283105236</created>
+      <updated>1399283105236</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1054,19 +926,19 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.67964405" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32925472" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19743863" sideWeight="0.67964405" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32925472" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10779082" sideWeight="0.67074525" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10779082" sideWeight="0.73192436" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14140876" sideWeight="0.67074525" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36262515" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14140876" sideWeight="0.73192436" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26807564" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1150,11 +1022,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/critical/callbacks/Callbacks.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="44" selection-start="721" selection-end="721" vertical-scroll-proportion="0.2849162" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/medium/openItem/MerchantLk.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="202" column="65" selection-start="7948" selection-end="7948" vertical-scroll-proportion="0.0" />
@@ -1163,13 +1030,6 @@
     <entry file="file://$PROJECT_DIR$/src/test/java/model/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="43" selection-start="546" selection-end="546" vertical-scroll-proportion="0.36483932">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/critical/TestUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="433" column="145" selection-start="39972" selection-end="39972" vertical-scroll-proportion="0.4598131">
           <folding />
         </state>
       </provider>
@@ -1195,61 +1055,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/X1regression.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="53" selection-start="1286" selection-end="1286" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/model/Environment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Refund.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="6" selection-start="1474" selection-end="1474" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction_Sapmax.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="6" selection-start="1342" selection-end="1342" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Simple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="6" selection-start="2229" selection-end="2229" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Voided.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="6" selection-start="2873" selection-end="2873" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Simple_Sapmax.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="40" column="6" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1261,12 +1071,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/ChargeBack.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/ThreeDSTransaction_Sapmax.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="6" selection-start="2294" selection-end="2294" vertical-scroll-proportion="0.33275563">
+        <state line="41" column="6" selection-start="1342" selection-end="1342" vertical-scroll-proportion="-2.272093">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/model/Environment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="122" column="5" selection-start="4457" selection-end="4457" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/critical/TestUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="597" column="39" selection-start="48082" selection-end="48096" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Simple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="68" selection-start="2440" selection-end="2499" vertical-scroll-proportion="0.41511628">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/ChargeBack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="13" selection-start="355" selection-end="355" vertical-scroll-proportion="-77.61283">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/model/Connect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="92" selection-start="16" selection-end="16" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Refund.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="38" selection-start="2015" selection-end="2015" vertical-scroll-proportion="0.26537785">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/X1regression.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="79" selection-start="1333" selection-end="1375" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/critical/transaction/Voided.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="32" selection-start="5915" selection-end="5915" vertical-scroll-proportion="0.1098546">
+          <folding />
         </state>
       </provider>
     </entry>

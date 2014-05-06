@@ -44,12 +44,6 @@ public class Simple {
     private String expDateMonth = "05";
     private String expDateYear = "2015";
 
-    //private String address = "3-я ул.Строителей, д.25, корп.1, кв.12";
-    //private String city = "Москва";
-    //private String zipCode = "123456";
-    //private String country = "Россия";
-    //private String phone = "+7 495 1234567";
-
     private String pendingMercahntUrl = "http://www.test1.ru";
     private String preAuthMercahntUrl = "http://www.transactions.com";
 
@@ -64,14 +58,13 @@ public class Simple {
     private String testGateway = "Test gateway";
     private String typePurchase = "Purchase";
 
-    //private String lastActionPreAuth = "PreAuth";
     private String lastActionComplete = "Complete";
     private String cardType = "MasterCard";
 
     @BeforeTest
     public void createParameters(){
 
-       String [] parameters = Environment.readFile();
+        String [] parameters = Environment.readFile();
         baseUrl = parameters[0];
         loginAdmin = parameters[1];
         passwordAdmin = parameters[2];
