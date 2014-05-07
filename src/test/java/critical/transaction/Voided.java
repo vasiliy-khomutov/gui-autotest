@@ -23,7 +23,7 @@ import java.util.List;
 public class Voided {
 
     private String idTransaction;
-     private String baseUrl;
+    private String baseUrl;
     private String loginMerchant;
     private String passwordMerchant;
     private String loginAdmin;
@@ -92,15 +92,16 @@ public class Voided {
 
     private String typePurchase = "Purchase";
     private String testGateway = "Test gateway";
-    private String cardType = "MasterCard";
+    private String cardTypeMaster = "MasterCard";
+    private String cardTypeVisa = "Visa";
 
     private String currencyRUB = "RUB";
     private String orderID = "";
     private String email = "autoTEST@test.test";
-    private String numberCardA = "5444";
-    private String numberCardB = "8707";
-    private String numberCardC = "2449";
-    private String numberCardD = "3746";
+    private String numberCardA = "4111";
+    private String numberCardB = "1111";
+    private String numberCardC = "1111";
+    private String numberCardD = "1111";
     private String expDateMonth = "09";
     private String expDateYear = "2014";
     private String expDate = "09 / 2014";
@@ -111,14 +112,19 @@ public class Voided {
     // api trx parameters
     private String URL;
     private String SecurityKey;
-    private String SECURITY_KEY;
-    private String PRIVATE_SECURITY_KEY;
-    private String MERCHANT_ID;
+    private String PRIVATE_SECURITY_KEY_PENDING;
+    private String PRIVATE_SECURITY_KEY_PREAUTH;
+    private String PRIVATE_SECURITY_KEY_3DS_PENDING;
+    private String PRIVATE_SECURITY_KEY_3DS_PREAUTH;
+    private String MERCHANT_ID_PENDING;
+    private String MERCHANT_ID_PREAUTH;
+    private String MERCHANT_ID_3DS_PENDING;
+    private String MERCHANT_ID_3DS_PREAUTH;
     private String ORDER_ID;
     private String AMOUNT;
     private String CURRENCY_RUB;
-    private String CARD_HOLDER_NAME;
     private String CARD_NUMBER;
+    private String CARD_HOLDER_NAME;
     private String CARD_EXP_DATE;
     private String CARD_CVV;
     private String COUNTRY;
@@ -132,20 +138,26 @@ public class Voided {
     HttpPost requestPost;
 
     @BeforeClass
-    @Parameters({"url", "MerchantId","OrderId", "Amount", "CurrencyRub", "PrivateSecurityKey", "CardHolderName", "CardNumber", "CardExpDate", "CardCvv", "Country", "City",
+    @Parameters({"url", "MerchantId","OrderId", "Amount", "CurrencyRub", "PrivateSecurityKey", "CardHolderName", "CardExpDate", "CardCvv", "Country", "City",
             "Ip", "contentType", "Address", "Email", "Issuer"})
     public void createCorrectParameters(String url, String MerchantId, String OrderId, String Amount, String CurrencyRub, String PrivateSecurityKey, String CardHolderName,
-                                        String CardNumber, String CardExpDate, String CardCvv, String Country, String City, String Ip, String contentType, String adress, String email,
+                                        String CardExpDate, String CardCvv, String Country, String City, String Ip, String contentType, String adress, String email,
                                         String issuer){
 
-        URL = url + "/transaction/auth/3ds/";
-        MERCHANT_ID = MerchantId;
+        URL = url + "/transaction/auth/";
+        MERCHANT_ID_PENDING = MerchantId + simpleMIDpending;
+        MERCHANT_ID_PREAUTH = MerchantId + simpleMIDpreAuth;
+        MERCHANT_ID_3DS_PENDING = MerchantId + MIDpending3DS;
+        MERCHANT_ID_3DS_PREAUTH = MerchantId + MIDpreAuth3DS;
         ORDER_ID = OrderId;
-        AMOUNT = Amount;
+        AMOUNT = Amount + simpleamount + ".00";
         CURRENCY_RUB = CurrencyRub;
-        PRIVATE_SECURITY_KEY = PrivateSecurityKey;
+        PRIVATE_SECURITY_KEY_PENDING = PrivateSecurityKey + simplePendingPrivateSecurityKey;
+        PRIVATE_SECURITY_KEY_PREAUTH = PrivateSecurityKey + simplePreauthPrivateSecurityKey;
+        PRIVATE_SECURITY_KEY_3DS_PENDING = PrivateSecurityKey + threeDSPendingPrivateSecurityKey;
+        PRIVATE_SECURITY_KEY_3DS_PREAUTH = PrivateSecurityKey + threeDSPreAuthPrivateSecurityKey;
+        CARD_NUMBER ="CardNumber=" + numberCardA + numberCardB + numberCardC + numberCardD;
         CARD_HOLDER_NAME = CardHolderName;
-        CARD_NUMBER = CardNumber;
         CARD_EXP_DATE = CardExpDate;
         CARD_CVV = CardCvv;
         COUNTRY = Country;
@@ -164,26 +176,26 @@ public class Voided {
         passwordMerchant = parameters[4];
     }
 
-    /*// simple merchant
+    // simple merchant
     @Test
     public void SimplePendingVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpending;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePendingPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PENDING);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
+
+        System.out.print( TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
+                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV)+"===first\n");
+
+
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
+        System.out.println(response+"===answer first");
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
@@ -221,7 +233,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idTransaction, id + orderID, lastActionVoid, voidedStatus, cardType,
+        TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idTransaction, id + orderID, lastActionVoid, voidedStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
@@ -231,19 +243,18 @@ public class Voided {
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpreAuth;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePreauthPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PREAUTH);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
+
+        System.out.print( TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
+                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV)+"===second\n");
+
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
+        System.out.println(response+"===answer second");
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
@@ -283,7 +294,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+        TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
@@ -293,15 +304,10 @@ public class Voided {
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpreAuth;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePreauthPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PREAUTH);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
@@ -359,9 +365,9 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simplepartialCompleteAmount, simplepartialCompleteAmount, testGateway, cardHolderName, email);
-    }     */
+    }
 
     @Test
     public void SimpleFullCompletedPreAuthVoid(){
@@ -369,26 +375,13 @@ public class Voided {
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpreAuth;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePreauthPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-
-        System.out.print(TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
-                CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, EMAIL, ISSUER+"=======request\n"));
-
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PREAUTH);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, EMAIL, ISSUER));
-
-        //requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
-               // CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
@@ -443,26 +436,21 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
-   /* // simple admin
+    // simple admin
     @Test
     public void SimplePendingVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpending;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePendingPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PENDING);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
@@ -494,7 +482,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
                 simpleamount, simpleamount, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
@@ -513,15 +501,10 @@ public class Voided {
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpreAuth;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePreauthPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PREAUTH);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
@@ -552,7 +535,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
@@ -570,15 +553,10 @@ public class Voided {
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpreAuth;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePreauthPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PREAUTH);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
@@ -622,7 +600,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simplepartialCompleteAmount, simplepartialCompleteAmount, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
@@ -640,15 +618,10 @@ public class Voided {
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpreAuth;
-        AMOUNT += simpleamount + ".00";
-        PRIVATE_SECURITY_KEY += simplePreauthPrivateSecurityKey;
-
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PREAUTH);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
@@ -692,7 +665,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
@@ -712,19 +685,13 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpending3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPendingPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -748,7 +715,6 @@ public class Voided {
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("PaReq", PAReq));
             pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
             requestPost.setEntity(new UrlEncodedFormEntity(pairs));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
@@ -760,8 +726,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction, PRIVATE_SECURITY_KEY_3DS_PENDING));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -770,7 +736,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -795,7 +760,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idTransaction, id + orderID, typePurchase, voidedStatus, cardHolderName,
-                threeDSamount, threeDSamount, testGateway, email);
+                simpleamount, simpleamount, testGateway, email);
 
         //authorization admin and check transactionCard
         driver.get(baseUrl + "login/");
@@ -803,9 +768,8 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idTransaction, id + orderID, lastActionVoid, voidedStatus, cardType,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, threeDSamount, threeDSamount, testGateway, cardHolderName, email);
-
+        TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idTransaction, id + orderID, lastActionVoid, voidedStatus, cardTypeVisa,
+                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
         driver.manage().deleteAllCookies();
     }
 
@@ -816,16 +780,11 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey,
+                        CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
         System.out.println(response);
@@ -838,8 +797,6 @@ public class Voided {
         IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
 
         String PD = TestUtils.getParameter(response, "PD=.*&binC");
-        //PD = PD.substring(3, PD.length()-5);
-        // если ip прописан в secure (если не прописан, то не заполняется поле "страна запроса" в карточке транзакции в ЛК мерчанта)
         PD = PD.substring(3, PD.length()-18);
 
         String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
@@ -852,7 +809,6 @@ public class Voided {
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("PaReq", PAReq));
             pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
             requestPost.setEntity(new UrlEncodedFormEntity(pairs));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
@@ -864,8 +820,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -874,7 +830,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -897,7 +852,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8),
-                typePurchase, voidedStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                typePurchase, voidedStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
 
         //authorization admin and check transactionCard
         driver.get(baseUrl + "login/");
@@ -905,8 +860,8 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, threeDSamount, threeDSamount, testGateway, cardHolderName, email);
+        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
     @Test
@@ -916,16 +871,11 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -963,8 +913,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -985,7 +935,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
-                preAuthStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                preAuthStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSpartialCompleteAmount);
@@ -1018,7 +968,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSpartialCompleteAmount, threeDSpartialCompleteAmount, testGateway, cardHolderName, email);
     }
 
@@ -1029,16 +979,11 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
         System.out.println(response);
@@ -1078,8 +1023,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -1100,10 +1045,10 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
-                preAuthStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                                  preAuthStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSamount);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
@@ -1124,7 +1069,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8),
-                typePurchase, voidedStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                typePurchase, voidedStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
 
         //authorization admin and check transactionCard
         driver.get(baseUrl + "login/");
@@ -1133,8 +1078,8 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, threeDSamount, threeDSamount, testGateway, cardHolderName, email);
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
     // 3ds admin
@@ -1145,16 +1090,11 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpending3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPendingPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -1192,8 +1132,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PENDING));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -1225,8 +1165,8 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
-                threeDSamount, threeDSamount, testGateway, cardHolderName, email);
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
+                simpleamount, simpleamount, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -1234,7 +1174,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idTransaction, id + orderID, typePurchase,
-                voidedStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                voidedStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
         driver.manage().deleteAllCookies();
     }
 
@@ -1245,16 +1185,11 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -1292,8 +1227,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -1324,8 +1259,8 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, threeDSamount, threeDSamount, testGateway, cardHolderName, email);
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -1333,7 +1268,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
-                voidedStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                voidedStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
     }
 
     @Test
@@ -1343,16 +1278,11 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -1390,8 +1320,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -1412,7 +1342,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
-                preAuthStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                preAuthStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSpartialCompleteAmount);
@@ -1435,7 +1365,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSpartialCompleteAmount, threeDSpartialCompleteAmount, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
@@ -1454,16 +1384,11 @@ public class Voided {
         WebDriver driver = DriverFactory.getInstance().getDriver();
 
         // api part
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += threeDSamount + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
         System.out.println(response);
@@ -1503,8 +1428,8 @@ public class Voided {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -1525,10 +1450,10 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
-                preAuthStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                preAuthStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSamount);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
@@ -1548,8 +1473,8 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, threeDSamount, threeDSamount, testGateway, cardHolderName, email);
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
         driver.get(baseUrl + "login/");
@@ -1557,7 +1482,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
-                voidedStatus, cardHolderName, threeDSamount, threeDSamount, testGateway, email);
+                voidedStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
     }
 
     // there is no way to complete sapmax api trx :(
@@ -1603,7 +1528,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpending, idTransaction, id + orderID, lastActionVoid, voidedStatus, cardType,
+        TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpending, idTransaction, id + orderID, lastActionVoid, voidedStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxAmount, simpleSapmaxAmount, testGateway, cardHolderName, email);
 
         driver.manage().deleteAllCookies();
@@ -1651,7 +1576,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleSapmaxAmount, simpleSapmaxAmount, testGateway, cardHolderName, email);
     }
 
@@ -1710,7 +1635,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleSapmaxpartialCompleteAmount, simpleSapmaxpartialCompleteAmount, testGateway, cardHolderName, email);
     }
 
@@ -1769,7 +1694,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleSapmaxAmount, simpleSapmaxAmount, testGateway, cardHolderName, email);
     }
 
@@ -1818,7 +1743,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DSSapmax, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
                 threeDSamountSapmax, threeDSamountSapmax, testGateway, cardHolderName, email);
         driver.manage().deleteAllCookies();
     }
@@ -1867,7 +1792,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSamountSapmax, threeDSamountSapmax, testGateway, cardHolderName, email);
     }
 
@@ -1928,7 +1853,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSpartialCompleteAmountSapmax, threeDSpartialCompleteAmountSapmax, testGateway, cardHolderName, email);
     }
 
@@ -1989,7 +1914,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8),
-                lastActionVoid, voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                lastActionVoid, voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSamountSapmax, threeDSamountSapmax, testGateway, cardHolderName, email);
     }
 
@@ -2027,7 +1952,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpending, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
                 simpleSapmaxAmount, simpleSapmaxAmount, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
@@ -2072,7 +1997,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpreAuth, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleSapmaxAmount, simpleSapmaxAmount, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
@@ -2129,7 +2054,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpreAuth, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleSapmaxpartialCompleteAmount, simpleSapmaxpartialCompleteAmount, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
@@ -2186,7 +2111,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleSapmaxMIDpreAuth, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, simpleSapmaxAmount, simpleSapmaxAmount, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
@@ -2232,7 +2157,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DSSapmax, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank,
                 threeDSamountSapmax, threeDSamountSapmax, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
@@ -2277,7 +2202,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DSSapmax, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSamountSapmax, threeDSamountSapmax, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
@@ -2334,7 +2259,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DSSapmax, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSpartialCompleteAmountSapmax, threeDSpartialCompleteAmountSapmax, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
@@ -2391,7 +2316,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DSSapmax, idTransaction, id + orderID, lastActionVoid,
-                voidedStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, threeDSamountSapmax, threeDSamountSapmax, testGateway, cardHolderName, email);
 
         //check voided partially completed preauth at merchant backend
@@ -2401,5 +2326,5 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DSSapmax, idTransaction, id + orderID, typePurchase,
                 voidedStatus, cardHolderName, threeDSamountSapmax, threeDSamountSapmax, testGateway, email);
-    }                      */
+    }
 }
