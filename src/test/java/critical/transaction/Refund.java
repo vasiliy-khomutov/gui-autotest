@@ -26,64 +26,22 @@ import java.util.List;
 public class Refund {
 
     private String idTransaction;
-
-    private String idRefund;
-    private String idRefund2;
-
     private String baseUrl;
-
     private String loginMerchant;
     private String passwordMerchant;
     private String loginAdmin;
     private String passwordAdmin;
     private String captcha = "ability";
 
-    private String orderID = "";
-    private String email = "autoTEST@test.test";
-    private String numberCardA = "5444";
-    private String numberCardB = "8707";
-    private String numberCardC = "2449";
-    private String numberCardD = "3746";
-    private String expDateMonth = "09";
-    private String expDateYear = "2014";
-    private String expDate = "09 / 2014";
-    private String cardHolderName = "MR.AUTOTEST";
-    private String cvc = "111";
-    private String bank = "QA-BANK";
-
-    private String testGateway = "Test gateway";
-    private String cardType = "MasterCard";
-
-    private String currencyRUB = "RUB";
-    private String sapmaxMerchantId = "3199";
-
-    private String typePurchase = "Purchase";
-    private String typeRefund = "Refund";
-
-    private String pendingStatus = "Pending";
-    private String preAuthStatus = "PreAuth";
-    private String settledStatus = "Settled";
-
-    private String lastActionRefund = "Refund";
-
     // simple
-
-    private String simpleamountPending = "222";
-    private String simpleamountPendingPart1 = "22";
-    private String simpleamountPendingPart2 = "200,22";
-    private String simpleamountPendingPart3 = "222,22";
+    private String simpleamount = "222";
+    private String partialRefundAmount = "122";
+    private String simplepartialCompleteAmount = "100";
 
     private String simplependingMercahnt = "#57482 - www.test1.ru";
     private String simpleoptionPendingMerchant = "option[value=\"57482\"]";
     private String simpleMIDpending = "57482";
     private String simplePendingPrivateSecurityKey = "a0dd4eea-8652-4a4d-a9e8-367920163d1a";
-
-    private String simpleamountPreauth1 = "300";
-    private String simpleamountPreauth2 = "224";
-    private String simpleamountPreauthComplete ="224,44";
-    private String simpleamountPreauthPart1 = "24";
-    private String simpleamountPreauthPart2 = "200,44";
-    private String simpleamountPreauthPart3 = "224,44";
 
     private String simplepreAuthMercahnt = "#57483 - www.transactions.com";
     private String simpleoptionPreAuthMerchant = "option[value=\"57483\"]";
@@ -91,18 +49,8 @@ public class Refund {
     private String simplePreauthPrivateSecurityKey = "bc151bea-8c58-40e0-bb44-0a6ae510a5a2";
 
     // simple sapmax
-
-    private String simpleSapmaxamountPending = "444,22";
-    private String simpleSapmaxamountPendingPart1 = "44";
-    private String simpleSapmaxamountPendingPart2 = "400,22";
-    private String simpleSapmaxamountPendingPart3 = "444,22";
-
-    private String simpleSapmaxamountPreauth1 = "600";
-    private String simpleSapmaxamountPreauth2 = "424,44";
-    private String simpleSapmaxamountPreauthComplete ="424,44";
-    private String simpleSapmaxamountPreauthPart1 = "24";
-    private String simpleSapmaxamountPreauthPart2 = "400,44";
-    private String simpleSapmaxamountPreauthPart3 = "424,44";
+    private String simpleSapmaxAmount = "444";
+    private String simpleSapmaxpartialCompleteAmount = "44";
 
     private String simpleSapmaxpendingMercahnt = "#59514 - www.trx-sapmax.ru";
     private String simpleSapmaxoptionPendingMerchant = "option[value=\"59514\"]";
@@ -113,17 +61,8 @@ public class Refund {
     private String simpleSapmaxMIDpreAuth = "59528";
 
     // 3DS
-    private String amount3DSPending = "666";
-    private String amount3DSPendingPart1 = "66";
-    private String amount3DSPendingPart2 = "600,22";
-    private String amount3DSPendingPart3 = "666,22";
-
-    private String amount3DSPreauth1 = "700";
-    private String amount3DSPreauth2 = "624";
-    private String amount3DSPreauthComplete ="624,44";
-    private String amount3DSPreauthPart1 = "24";
-    private String amount3DSPreauthPart2 = "600,44";
-    private String amount3DSPreauthPart3 = "624,44";
+    private String threeDSamount = "666";
+    private String threeDSpartialCompleteAmount = "66";
 
     private String pendingMercahnt3DS = "#59530 - www.test2.com";
     private String optionPendingMerchant3DS = "option[value=\"59530\"]";
@@ -136,18 +75,8 @@ public class Refund {
     private String threeDSPreAuthPrivateSecurityKey = "bccda6cb-e5c8-4bd8-8816-8c015ed457f1";
 
     // 3DS Sapmax
-
-    private String amount3DSSapmaxPending = "666,22";
-    private String amount3DSSapmaxPendingPart1 = "66";
-    private String amount3DSSapmaxPendingPart2 = "600,22";
-    private String amount3DSSapmaxPendingPart3 = "666,22";
-
-    private String amount3DSSapmaxPreauth1 = "700";
-    private String amount3DSSapmaxPreauth2 = "624,44";
-    private String amount3DSSapmaxPreauthComplete ="624,44";
-    private String amount3DSSapmaxPreauthPart1 = "24";
-    private String amount3DSSapmaxPreauthPart2 = "600,44";
-    private String amount3DSSapmaxPreauthPart3 = "624,44";
+    private String threeDSamountSapmax = "888";
+    private String threeDSpartialCompleteAmountSapmax = "88";
 
     private String pendingMercahnt3DSSapmax = "#59523 - www.3DS-trx-sapmax.ru";
     private String optionPendingMerchant3DSSapmax = "option[value=\"59523\"]";
@@ -157,20 +86,55 @@ public class Refund {
     private String optionPreAuthMerchant3DSSapmax = "option[value=\"59529\"]";
     private String MIDpreAuth3DSSapmax = "59529";
 
-    private String completedRefundsAmount0 = "0.00";
+    // additional parameters
+    private String pendingStatus = "Pending";
+    private String preAuthStatus = "PreAuth";
+    private String voidedStatus = "Voided";
+    private String settledStatus = "Settled";
 
-    HttpPost requestPost;
+    private String lastActionVoid = "Void";
+    private String lastActionComplete = "Complete";
+    private String lastActionRefund = "Refund";
+
+    private String sapmaxMerchantId = "3199";
+
+    private String typePurchase = "Purchase";
+    private String typeRefund = "Refund";
+
+    private String testGateway = "Test gateway";
+    private String cardTypeMaster = "MasterCard";
+    private String cardTypeVisa = "Visa";
+
+    private String currencyRUB = "RUB";
+    private String orderID = "";
+    private String email = "autoTEST@test.test";
+    private String numberCardA = "4111";
+    private String numberCardB = "1111";
+    private String numberCardC = "1111";
+    private String numberCardD = "1111";
+    private String expDateMonth = "09";
+    private String expDateYear = "2014";
+    private String expDate = "09 / 2014";
+    private String cardHolderName = "MR.AUTOTEST";
+    private String cvc = "111";
+    private String bank = "QA-BANK";
 
     // api trx parameters
     private String URL;
     private String SecurityKey;
-    private String PRIVATE_SECURITY_KEY;
-    private String MERCHANT_ID;
+    private String PRIVATE_SECURITY_KEY_PENDING;
+    private String PRIVATE_SECURITY_KEY_PREAUTH;
+    private String PRIVATE_SECURITY_KEY_3DS_PENDING;
+    private String PRIVATE_SECURITY_KEY_3DS_PREAUTH;
+    private String MERCHANT_ID_PENDING;
+    private String MERCHANT_ID_PREAUTH;
+    private String MERCHANT_ID_3DS_PENDING;
+    private String MERCHANT_ID_3DS_PREAUTH;
     private String ORDER_ID;
     private String AMOUNT;
     private String CURRENCY_RUB;
-    private String CARD_HOLDER_NAME;
     private String CARD_NUMBER;
+    private String CARD_HOLDER_NAME;
     private String CARD_EXP_DATE;
     private String CARD_CVV;
     private String COUNTRY;
@@ -180,33 +144,39 @@ public class Refund {
     private String EMAIL;
     private String ISSUER;
     private String CONTENT_TYPE;
-    private String SECURITY_KEY;
+
+    HttpPost requestPost;
 
     @BeforeClass
-    @Parameters({"url", "MerchantId", "OrderId", "Amount", "CurrencyRub","CardHolderName", "CardNumber", "CardExpDate", "CardCvv",
-            "Country", "City", "Address", "Ip", "Email", "Issuer", "contentType", "PrivateSecurityKey"})
-    public void createCorrectParameters(String url, String MerchantId, String OrderId, String Amount, String CurrencyRub,
-                                        String CardHolderName, String CardNumber, String CardExpDate, String CardCvv, String Country,
-                                        String City, String Address, String Ip, String Email,
-                                        String Issuer, String contentType, String PrivateSecurityKey){
+    @Parameters({"url", "MerchantId","OrderId", "Amount", "CurrencyRub", "PrivateSecurityKey", "CardHolderName", "CardExpDate", "CardCvv", "Country", "City",
+            "Ip", "contentType", "Address", "Email", "Issuer"})
+    public void createCorrectParameters(String url, String MerchantId, String OrderId, String Amount, String CurrencyRub, String PrivateSecurityKey, String CardHolderName,
+                                        String CardExpDate, String CardCvv, String Country, String City, String Ip, String contentType, String adress, String email,
+                                        String issuer){
 
         URL = url + "/transaction/auth/";
-        MERCHANT_ID = MerchantId;
+        MERCHANT_ID_PENDING = MerchantId + simpleMIDpending;
+        MERCHANT_ID_PREAUTH = MerchantId + simpleMIDpreAuth;
+        MERCHANT_ID_3DS_PENDING = MerchantId + MIDpending3DS;
+        MERCHANT_ID_3DS_PREAUTH = MerchantId + MIDpreAuth3DS;
         ORDER_ID = OrderId;
-        AMOUNT = Amount;
+        AMOUNT = Amount + simpleamount + ".00";
         CURRENCY_RUB = CurrencyRub;
+        PRIVATE_SECURITY_KEY_PENDING = PrivateSecurityKey + simplePendingPrivateSecurityKey;
+        PRIVATE_SECURITY_KEY_PREAUTH = PrivateSecurityKey + simplePreauthPrivateSecurityKey;
+        PRIVATE_SECURITY_KEY_3DS_PENDING = PrivateSecurityKey + threeDSPendingPrivateSecurityKey;
+        PRIVATE_SECURITY_KEY_3DS_PREAUTH = PrivateSecurityKey + threeDSPreAuthPrivateSecurityKey;
+        CARD_NUMBER ="CardNumber=" + numberCardA + numberCardB + numberCardC + numberCardD;
         CARD_HOLDER_NAME = CardHolderName;
-        CARD_NUMBER = CardNumber;
         CARD_EXP_DATE = CardExpDate;
         CARD_CVV = CardCvv;
         COUNTRY = Country;
         CITY = City;
-        ADDRESS = Address;
         IP = Ip;
-        EMAIL = Email;
-        ISSUER = Issuer;
         CONTENT_TYPE = contentType;
-        PRIVATE_SECURITY_KEY = PrivateSecurityKey;
+        ADDRESS =  adress;
+        EMAIL = email;
+        ISSUER = issuer;
 
         String [] parameters = Environment.readFile();
         baseUrl = parameters[0];
@@ -223,20 +193,21 @@ public class Refund {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-
-        // add merchant parameters
-        MERCHANT_ID += simpleMIDpending;
-        AMOUNT += simpleamountPending + ".22";
-        PRIVATE_SECURITY_KEY += simplePendingPrivateSecurityKey;
+        String idRefund;
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT ,
-                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, IP, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
+        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PENDING);
+        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
+                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
+
+        System.out.print( TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
+                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV)+"===first\n");
+
+
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
+        System.out.println(response+"===answer first");
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
@@ -264,21 +235,21 @@ public class Refund {
 
         //check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, simpleMIDpending, idTransaction, id + orderID, cardHolderName,
-                settledStatus, simpleamountPending);
+                settledStatus, simpleamount);
 
         //type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(simpleamountPendingPart1);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(partialRefundAmount);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleamountPendingPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, partialRefundAmount);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpending, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, simpleamountPendingPart1, simpleamountPendingPart1, testGateway, email);
+                cardHolderName, partialRefundAmount, partialRefundAmount, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -287,12 +258,12 @@ public class Refund {
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, simpleamountPendingPart1, simpleamountPendingPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, partialRefundAmount, partialRefundAmount, testGateway, cardHolderName, email);
 
     }
 
-    @Test
+    /*@Test
     public void PartialPreauthRefundSimplePartialMerchant(){
 
         long id = System.currentTimeMillis();
@@ -331,7 +302,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -417,7 +388,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -626,7 +597,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -752,7 +723,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -953,7 +924,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -1040,7 +1011,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -1201,7 +1172,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1288,7 +1259,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1483,7 +1454,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1605,7 +1576,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1800,7 +1771,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1887,7 +1858,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -2130,7 +2101,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2258,7 +2229,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2547,7 +2518,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2715,7 +2686,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2998,7 +2969,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -3127,7 +3098,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -3368,7 +3339,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3497,7 +3468,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3774,7 +3745,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3938,7 +3909,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -4214,7 +4185,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -4343,7 +4314,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -4479,7 +4450,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -4552,7 +4523,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -4726,7 +4697,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -4839,7 +4810,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5014,7 +4985,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5088,7 +5059,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5222,7 +5193,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5296,7 +5267,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5469,7 +5440,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5582,7 +5553,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5756,7 +5727,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5830,7 +5801,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -5964,7 +5935,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -6038,7 +6009,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -6213,7 +6184,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -6326,7 +6297,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -6499,7 +6470,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -6573,7 +6544,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxamountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -6707,7 +6678,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -6781,7 +6752,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -6955,7 +6926,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -7068,7 +7039,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -7240,7 +7211,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -7314,7 +7285,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSSapmaxPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -7360,5 +7331,5 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DSSapmax, idRefund, id + orderID, typeRefund, pendingStatus,
                 cardHolderName, amount3DSSapmaxPreauthPart3, amount3DSSapmaxPreauthPart3, testGateway, email);
-    }
+    }*/
 }
