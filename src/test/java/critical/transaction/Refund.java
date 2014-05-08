@@ -97,6 +97,7 @@ public class Refund {
     private String lastActionRefund = "Refund";
 
     private String sapmaxMerchantId = "3199";
+    private String idRefund;
 
     private String typePurchase = "Purchase";
     private String typeRefund = "Refund";
@@ -193,30 +194,17 @@ public class Refund {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-        String idRefund;
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
         SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PENDING);
         requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
-
-        System.out.print( TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
-                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV)+"===first\n");
-
-
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response+"===answer first");
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=Pending" ), "Incorrect status type.");
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -260,7 +248,6 @@ public class Refund {
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idRefund, id + orderID, lastActionRefund, pendingStatus,
                 cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, partialRefundAmount, partialRefundAmount, testGateway, cardHolderName, email);
-
     }
 
     /*@Test
