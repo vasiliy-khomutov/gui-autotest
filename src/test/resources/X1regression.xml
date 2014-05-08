@@ -15,8 +15,8 @@
             <class name = "critical.transaction.ThreeDSTransaction" />
             <class name = "critical.transaction.ThreeDSTransaction_Sapmax" />-->
             <class name = "critical.transaction.Voided"/>
-            <!--<class name="critical.transaction.Refund"/>
-            <class name = "critical.transaction.ChargeBack"/>-->
+            <!--<class name="critical.transaction.Refund"/>-->
+            <!--<class name = "critical.transaction.ChargeBack"/>-->
 
            <!-- <class name = "critical.callbacks.Callbacks" /> -->
            <!-- <class name = "critical.authorized.Authorized" />

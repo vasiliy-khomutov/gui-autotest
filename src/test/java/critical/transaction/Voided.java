@@ -188,23 +188,11 @@ public class Voided {
         SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PENDING);
         requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
-
-        System.out.print( TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
-                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV)+"===first\n");
-
-
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response+"===answer first");
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=Pending" ), "Incorrect status type.");
 
         // merchant authorization
         driver.get(baseUrl + "login/");
@@ -248,22 +236,11 @@ public class Voided {
         SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_PREAUTH);
         requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
-
-        System.out.print( TestUtils.createBodyRequest(MERCHANT_ID_PREAUTH, ORDER_ID + id, AMOUNT ,
-                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV)+"===second\n");
-
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response+"===answer second");
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=PreAuthorized" ), "Incorrect status type.");
 
         // merchant authorization
         driver.get(baseUrl + "login/");
@@ -311,16 +288,9 @@ public class Voided {
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=PreAuthorized" ), "Incorrect status type.");
 
         // merchant authorization
         driver.get(baseUrl + "login/");
@@ -385,13 +355,6 @@ public class Voided {
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-        System.out.print(response.toString()+ "==========response\n");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=PreAuthorized" ), "Incorrect status type.");
 
         // merchant authorization
         driver.get(baseUrl + "login/");
@@ -454,16 +417,9 @@ public class Voided {
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=Pending" ), "Incorrect status type.");
 
         //authorization admin and voided
         driver.get(baseUrl + "login/");
@@ -508,16 +464,9 @@ public class Voided {
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=PreAuthorized" ), "Incorrect status type.");
 
         //authorization admin and voided
         driver.get(baseUrl + "login/");
@@ -560,16 +509,9 @@ public class Voided {
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=PreAuthorized" ), "Incorrect status type.");
 
         // partial preauth complete
         driver.get(baseUrl + "login/");
@@ -625,16 +567,9 @@ public class Voided {
                 CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         // get trx id from response message
         idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
-
-        // check response details
-        Assert.assertTrue(TestUtils.checkParameter(response, "Operation=Auth"), "Incorrect operation type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Result=Ok" ), "Incorrect result type.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Code=200" ), "Incorrect code.");
-        Assert.assertTrue(TestUtils.checkParameter(response,"Status=PreAuthorized" ), "Incorrect status type.");
 
         // full preauth complete
         driver.get(baseUrl + "login/");
@@ -787,7 +722,6 @@ public class Voided {
                         CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -923,7 +857,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -986,7 +919,6 @@ public class Voided {
                 CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -1033,7 +965,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -1142,7 +1073,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -1237,7 +1167,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -1330,7 +1259,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -1391,7 +1319,6 @@ public class Voided {
                 CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -1438,7 +1365,6 @@ public class Voided {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
