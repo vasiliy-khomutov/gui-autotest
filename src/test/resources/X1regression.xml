@@ -5,27 +5,26 @@
    <test name = "Critical Test">
         <classes>
             <!--TODO check inset after action-->
-            <!--TODO check links and ............................ in cardTransaction-->
+            <!--TODO check links and ... in cardTransaction-->
             <!--TODO fail case in action-->
             <!--TODO разделить @логику@ апи и гуи-->
             <!--<class name = "critical.callbacks.SetParametersForCallbacks" />-->
-
-            <!--<class name = "critical.transaction.Simple"/>
-            <class name = "critical.transaction.Simple_Sapmax"/>
-            <class name = "critical.transaction.ThreeDSTransaction" />
-            <class name = "critical.transaction.ThreeDSTransaction_Sapmax" />-->
-            <class name = "critical.transaction.Voided"/>
+            <!--<class name = "critical.transaction.Simple"/>-->
+            <!--<class name = "critical.transaction.Simple_Sapmax"/>-->
+            <!--<class name = "critical.transaction.ThreeDSTransaction" />-->
+            <!--<class name = "critical.transaction.ThreeDSTransaction_Sapmax" />-->
+            <!--<class name = "critical.transaction.Voided"/>-->
             <!--<class name="critical.transaction.Refund"/>-->
             <!--<class name = "critical.transaction.ChargeBack"/>-->
-
            <!-- <class name = "critical.callbacks.Callbacks" /> -->
            <!-- <class name = "critical.authorized.Authorized" />
             <class name = "medium.openItem.MerchantLk"/>
             <class name="medium.openItem.AdminLK" />-->
             <!--<class name = "critical.transaction.Settled"/>-->
+            <class name = "gateways.A2S"/>
+
         </classes>
    </test>
-
 
     <parameter name = "url" value = "https://secure.payonlinesystem.com/payment" />
     <parameter name = "contentType" value = "Content-Type:application/x-www-form-urlencoded" />
@@ -36,6 +35,8 @@
     <parameter name = "OrderId" value = "OrderId=" />
     <parameter name = "Amount" value = "Amount=" />
     <parameter name = "CurrencyRub" value = "Currency=RUB" />
+    <parameter name = "CurrencyEur" value = "Currency=EUR" />
+    <parameter name = "CurrencyUsd" value = "Currency=USD" />
     <parameter name = "CardHolderName" value = "CardHolderName=MR.AUTOTEST" />
     <parameter name = "CardNumber" value = "CardNumber=4111111111111111" />
     <parameter name = "CardExpDate" value = "CardExpDate=0914" />
@@ -46,10 +47,10 @@
     <parameter name = "Ip" value = "Ip=192.168.220.1" />
     <parameter name = "Email" value = "Email=autoTEST@test.test" />
     <parameter name = "Issuer" value = "Issuer=QA-BANK" />
-    <parameter name = "CurrencyEur" value = "Currency=EUR" />
-    <parameter name = "CurrencyUsd" value = "Currency=USD" />
-
-
+    <parameter name = "Commission" value = "Commission=" />
+    <parameter name = "Pnr" value = "PNR=M0BXCQ" />
+    <parameter name = "ReturnUrl" value = "ReturnUrl=http://www.ya.ru" />
+    <parameter name = "Idata" value = "IData=01        N2V VKO                     000000000000082121510MCXTEST TEST           " />
 
     <parameter name = "filenamePathFailLogin" value = "/src/test/resources/failParameters/listFailLogin" />
     <parameter name = "filenamePathFailLoginAndPassword" value = "/src/test/resources/failParameters/listFailLoginAndPassword" />
