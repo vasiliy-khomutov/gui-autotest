@@ -5,6 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Utils {
 
     public static boolean checkResultPageTransaction(WebDriver driver, String parameter){
@@ -67,5 +70,39 @@ public class Utils {
         }
 
         return false;
+    }
+
+    public static String getA2SSecurityKey(String...params){
+        StringBuilder result = new StringBuilder();
+        for(String param : params){
+            result.append(param).append("&");
+        }
+        String source = result.substring(0, result.toString().length() - 1);
+        try {
+            MessageDigest md = MessageDigest.getInstance("md5");
+            md.update(source.getBytes());
+            String md5 = convertToHex(md.digest());
+            return md5;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String convertToHex(byte[] srcData) {
+        StringBuilder sbuffer = new StringBuilder();
+        for (int i = 0; i < srcData.length; i++) {
+            int flag = (srcData[i] >>> 4) & 0x0F;
+            int twoHalf = 0;
+            do {
+                if ((0 <= flag) && (flag <= 9)) {
+                    sbuffer.append((char) ('0' + flag));
+                } else {
+                    sbuffer.append((char) ('a' + (flag - 10)));
+                }
+                flag = srcData[i] & 0x0F;
+            } while (twoHalf++ < 1);
+        }
+        return sbuffer.toString();
     }
 }
