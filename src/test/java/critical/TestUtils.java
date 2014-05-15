@@ -1,5 +1,6 @@
 package critical;
 
+
 import model.Environment;
 import model.Utils;
 import org.apache.http.HttpRequest;
@@ -16,6 +17,40 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TestUtils {
+
+    private static String convertToHex(byte[] srcData) {
+        StringBuilder sbuffer = new StringBuilder();
+        for (int i = 0; i < srcData.length; i++) {
+            int flag = (srcData[i] >>> 4) & 0x0F;
+            int twoHalf = 0;
+            do {
+                if ((0 <= flag) && (flag <= 9)) {
+                    sbuffer.append((char) ('0' + flag));
+                } else {
+                    sbuffer.append((char) ('a' + (flag - 10)));
+                }
+                flag = srcData[i] & 0x0F;
+            } while (twoHalf++ < 1);
+        }
+        return sbuffer.toString();
+    }
+
+    public static String getSecurityKey(String...params){
+        StringBuilder result = new StringBuilder();
+        for(String param : params){
+            result.append(param).append("&");
+        }
+        String source = result.substring(0, result.toString().length() - 1);
+        try {
+            MessageDigest md = MessageDigest.getInstance("md5");
+            md.update(source.getBytes());
+            String md5 = convertToHex(md.digest());
+            return md5;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private static void generateTransaction(WebDriver driver, String merchant, String optionMerchant, String currency, String amount, String orderId, String email){
 
@@ -596,40 +631,6 @@ public class TestUtils {
            // final Wait<WebDriver> wait = new WebDriverWait(driver, 15, 1000).ignoring(ElementNotVisibleException.class, NoSuchElementException.class);
            /// wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(locator))));
     }*/
-
-    public static String getSecurityKey(String...params){
-        StringBuilder result = new StringBuilder();
-        for(String param : params){
-            result.append(param).append("&");
-        }
-        String source = result.substring(0, result.toString().length() - 1);
-        try {
-            MessageDigest md = MessageDigest.getInstance("md5");
-            md.update(source.getBytes());
-            String md5 = convertToHex(md.digest());
-            return md5;
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private static String convertToHex(byte[] srcData) {
-        StringBuilder sbuffer = new StringBuilder();
-        for (int i = 0; i < srcData.length; i++) {
-            int flag = (srcData[i] >>> 4) & 0x0F;
-            int twoHalf = 0;
-            do {
-                if ((0 <= flag) && (flag <= 9)) {
-                    sbuffer.append((char) ('0' + flag));
-                } else {
-                    sbuffer.append((char) ('a' + (flag - 10)));
-                }
-                flag = srcData[i] & 0x0F;
-            } while (twoHalf++ < 1);
-        }
-        return sbuffer.toString();
-    }
 
     public static String createBodyRequest(String...params){
         StringBuilder result = new StringBuilder();
