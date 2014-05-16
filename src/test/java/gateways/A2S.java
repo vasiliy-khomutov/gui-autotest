@@ -587,7 +587,7 @@ public class A2S {
         //check result page
         Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountEven));
         Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
+        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedFrom));
 
         //check link - successful case
         // занимает время из-за ожидания перехода по ссылке
@@ -638,10 +638,14 @@ public class A2S {
         TestUtils.initiateA2STransactionId(driver, numberCardA_a3ds, numberCardB_a3ds, numberCardC_a3ds, numberCardD_a3ds, expDateMonth,
                 expDateYear, cardHolderName, cvc_a3ds, bank, email);
 
+        driver.findElement(By.cssSelector("input.process")).click();
+        critical.TestUtils.closeAlertAndGetItsText(driver);
+        driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+
         //check 3DS page
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']")).getText().contains(totalAmountOdd));
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']")).getText().contains(id+""));
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//**//*//**//**//**//*[@id='mainContent']")).getText().contains(totalAmountOdd));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//**//*//**//**//**//*[@id='mainContent']")).getText().contains(id+""));
+        Assert.assertTrue(driver.findElement(By.xpath(".*//**//*//**//**//**//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
 
         // trx doesn't completed, testing aw3ds status only
 
