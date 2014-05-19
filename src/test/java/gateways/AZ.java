@@ -125,6 +125,7 @@ public class AZ {
                 amount, amountUSD, gateway, email);
     }
 
+    // TODO - continue after Azeri preauth
     @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = true)
     public void preauth(String currency, String amount){
 

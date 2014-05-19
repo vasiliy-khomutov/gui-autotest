@@ -45,10 +45,10 @@ public class A2S {
     private String numberCardB = "1111";
     private String numberCardC = "1111";
     private String numberCardD = "1111";
-    private String numberCardA_a3ds = "4563";
-    private String numberCardB_a3ds = "9601";
-    private String numberCardC_a3ds = "2200";
-    private String numberCardD_a3ds = "1056";
+    private String numberCardA_a3ds = "4444";
+    private String numberCardB_a3ds = "4444";
+    private String numberCardC_a3ds = "4444";
+    private String numberCardD_a3ds = "6666";
     private String expDateMonth = "09";
     private String expDateYear = "2014";
     private String expDate = "09 / 2014";
@@ -638,14 +638,10 @@ public class A2S {
         TestUtils.initiateA2STransactionId(driver, numberCardA_a3ds, numberCardB_a3ds, numberCardC_a3ds, numberCardD_a3ds, expDateMonth,
                 expDateYear, cardHolderName, cvc_a3ds, bank, email);
 
-        driver.findElement(By.cssSelector("input.process")).click();
-        critical.TestUtils.closeAlertAndGetItsText(driver);
-        driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-
         //check 3DS page
-        Assert.assertTrue(driver.findElement(By.xpath(".*//**//*//**//**//**//*[@id='mainContent']")).getText().contains(totalAmountOdd));
-        Assert.assertTrue(driver.findElement(By.xpath(".*//**//*//**//**//**//*[@id='mainContent']")).getText().contains(id+""));
-        Assert.assertTrue(driver.findElement(By.xpath(".*//**//*//**//**//**//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']")).getText().contains(totalAmountOdd));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']")).getText().contains(id+""));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
 
         // trx doesn't completed, testing aw3ds status only
 
