@@ -2,10 +2,9 @@ package critical.callbacks;
 
 
 import critical.TestUtils;
-import model.Environment;
+import model.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.*;

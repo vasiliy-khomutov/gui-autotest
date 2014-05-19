@@ -2,24 +2,18 @@ package critical.transaction;
 
 
 import critical.TestUtils;
-import critical.callbacks.DriverFactory;
+import model.DriverFactory;
 import model.Connect;
 import model.Environment;
 import model.Utils;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -1699,8 +1693,8 @@ public class Refund {
     }
 
 
-
-    /*// MERCHANT
+    /*
+    // MERCHANT
     // 3DS partial
     @Test
     public void PendingRefund3DSPartialMerchant(){
@@ -2067,7 +2061,7 @@ public class Refund {
                 cardType, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
     }
-
+    /*
     // 3DS partial + partial
     @Test
     public void PendingRefund3DSPartPartMerchant(){

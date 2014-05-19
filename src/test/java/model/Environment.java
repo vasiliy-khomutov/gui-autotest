@@ -37,6 +37,40 @@ public class Environment {
         return driver;
     }
 
+
+    // TODO readfiles
+    public static String [] readConnFile() {
+        String [] parameters = new String[5];
+        try {
+            FileReader reader = new FileReader("C:\\secureParametersAutotest\\db_connect.txt");
+            BufferedReader in = new BufferedReader(reader);
+            String string;
+            while ((string = in.readLine()) != null){
+                parameters=string.split("=");
+            }
+            in.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return parameters;
+    }
+
+    public static String [] readQueryFile() {
+        String [] parameters = new String[5];
+        try {
+            FileReader reader = new FileReader("C:\\secureParametersAutotest\\db_query.txt");
+            BufferedReader in = new BufferedReader(reader);
+            String string;
+            while ((string = in.readLine()) != null){
+                parameters=string.split(";");
+            }
+            in.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return parameters;
+    }
+
     public static String [] readFile() {
         String [] parameters = new String[5];
             try {

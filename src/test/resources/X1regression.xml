@@ -2,12 +2,17 @@
 
 <suite name = "Regression" verbose ="1" parallel="false">
 
+    <suite-files>
+        <suite-file path = "gateways/suite.xml"/>
+    </suite-files>
+
    <test name = "Critical Test">
         <classes>
             <!--TODO check inset after action-->
             <!--TODO check links and ... in cardTransaction-->
             <!--TODO fail case in action-->
             <!--TODO разделить @логику@ апи и гуи-->
+
             <!--<class name = "critical.callbacks.SetParametersForCallbacks" />-->
             <!--<class name = "critical.transaction.Simple"/>-->
             <!--<class name = "critical.transaction.Simple_Sapmax"/>-->
@@ -16,13 +21,12 @@
             <!--<class name = "critical.transaction.Voided"/>-->
             <!--<class name="critical.transaction.Refund"/>-->
             <!--<class name = "critical.transaction.ChargeBack"/>-->
-           <!-- <class name = "critical.callbacks.Callbacks" /> -->
-           <!-- <class name = "critical.authorized.Authorized" />
+            <!-- <class name = "critical.callbacks.Callbacks" /> -->
+            <!-- <class name = "critical.authorized.Authorized" />
             <class name = "medium.openItem.MerchantLk"/>
             <class name="medium.openItem.AdminLK" />-->
             <!--<class name = "critical.transaction.Settled"/>-->
-            <class name = "gateways.A2S"/>
-
+            <!--<class name = "gateways.A2S"/>-->
         </classes>
    </test>
 

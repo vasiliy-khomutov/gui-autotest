@@ -11,6 +11,31 @@ import java.lang.reflect.Method;
 
 public class TestUtils {
 
+    public static void checkRefundFormMerchant(WebDriver driver, String MID, String idTransaction, String orderId, String cardHolderName, String status, String amount) {
+        //TODO amount and parameters + refactor
+        //3
+        WebElement element = driver.findElement(By.className("infoBlock"));
+        Assert.assertTrue(driver.findElement(By.xpath("//span[@id ='ctl00_content_refundTransaction_refundMaxAmountInfo']")).isDisplayed(), "Failure refundForm!");
+        Assert.assertTrue(driver.findElement(By.id("ctl00_content_refundTransaction_refundMaxAmountInfo")).getText().contains(amount), "Failure refundForm!");
+        Assert.assertTrue(element.findElement(By.xpath("//tr[3]")).getText().contains(MID),"Failure refundForm!");
+        Assert.assertTrue(element.findElement(By.xpath("//tr[4]")).getText().contains(idTransaction),"Failure refundForm!");
+        Assert.assertTrue(element.findElement(By.xpath("//tr[5]")).getText().contains(orderId),"Failure refundForm!");
+        Assert.assertTrue(element.findElement(By.xpath("//tr[13]")).getText().contains(cardHolderName),"Failure refundForm!");
+        Assert.assertTrue(element.findElement(By.xpath("//tr[8]")).getText().contains(status),"Failure refundForm!");
+    }
+
+    //TODO refactor #2
+    public static String getIdTransactionRefund(WebDriver driver, String idTransaction, String amount) {
+        driver.findElement(By.linkText(idTransaction)).click();
+        WebElement element = driver.findElement(By.id("refunds"));
+        for (WebElement e: element.findElements(By.tagName("tr"))){
+            if(e.getText().contains(amount)){
+                return e.findElement(By.tagName("a")).getText();
+            }
+        }
+        return null;
+    }
+
     public static String getA2SIdTransactionLink(String...params){
         StringBuilder result = new StringBuilder();
         for(String param : params){
@@ -120,7 +145,9 @@ public class TestUtils {
         Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[12]/td", null), "Card number field is empty on transaction card (Merchant Login).");
         Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[13]/td", cardHolderName), "Incorrect Cardholder field on transaction card (Merchant Login).");
         Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[14]/td", amount), "Amount field is empty on transaction card (Merchant Login).");
-        Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[15]/td", amountTr), "TRX amount field is empty on transaction card (Merchant Login).");
+        //Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[15]/td", amountTr), "TRX amount field is empty on transaction card (Merchant Login).");
+        // TODO - при конвертации передавется другая сумма
+        Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[15]/td", null), "TRX amount field is empty on transaction card (Merchant Login).");
         Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[16]/td", gateway), "Gateway field is empty on transaction card (Merchant Login).");
         //TODO refactor for api transaction!!!!
         //Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[17]/td", null), "IP field is empty on transaction card (Merchant Login).");
@@ -178,4 +205,61 @@ public class TestUtils {
         }
     }
 
+    public static String getNewIdTransaction(WebDriver driver, String merchant, String optionMerchant, String orderId, String amount,
+                                             String numberCardA, String numberCardB, String numberCardC, String numberCardD, String expDateMonth,
+                                             String expDateYear, String cvc, String bank, String email, String currency, String cardHolderName){
+
+        generateTransaction(driver, merchant, optionMerchant, currency, amount, orderId, email);
+
+        //type value in  payment form
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberA")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberA")).sendKeys(numberCardA);
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberB")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberB")).sendKeys(numberCardB);
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberC")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberC")).sendKeys(numberCardC);
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberD")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_cardNumberD")).sendKeys(numberCardD);
+
+        new Select(driver.findElement(By.id("ctl00_content_cardForm_expDateMonth"))).selectByVisibleText(expDateMonth);
+        new Select(driver.findElement(By.id("ctl00_content_cardForm_expDateYear"))).selectByVisibleText(expDateYear);
+
+        driver.findElement(By.id("ctl00_content_cardForm_cardHolderName")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_cardHolderName")).sendKeys(cardHolderName);
+        driver.findElement(By.id("ctl00_content_cardForm_cardCVC")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_cardCVC")).sendKeys(cvc);
+        driver.findElement(By.id("ctl00_content_cardForm_bankName")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_bankName")).sendKeys(bank);
+        driver.findElement(By.id("ctl00_content_cardForm_email")).clear();
+        driver.findElement(By.id("ctl00_content_cardForm_email")).sendKeys(email);
+        driver.findElement(By.id("ctl00_content_cardForm_cmdProcess")).click();
+
+        return Utils.getIdTransaction(driver);
+    }
+
+    private static void generateTransaction(WebDriver driver, String merchant, String optionMerchant, String currency, String amount, String orderId, String email){
+
+        //generate transaction and open link
+        driver.findElement(By.id("ctl00_ctl11_mhlTools")).click();
+        new Select(driver.findElement(By.id("ctl00_content_ddlSiteList"))).selectByVisibleText(merchant);
+        driver.findElement(By.cssSelector(optionMerchant)).click();
+        new Select(driver.findElement(By.id("ctl00_content_ddlCurrencies"))).selectByVisibleText(currency);
+        driver.findElement(By.id("ctl00_content_tbAmount")).clear();
+        driver.findElement(By.id("ctl00_content_tbAmount")).sendKeys(amount);
+        driver.findElement(By.name("ctl00$content$tbOrderId")).clear();
+        driver.findElement(By.name("ctl00$content$tbOrderId")).sendKeys(orderId);
+        driver.findElement(By.name("ctl00$content$tbCardHolderEmail")).clear();
+        driver.findElement(By.name("ctl00$content$tbCardHolderEmail")).sendKeys(email);
+        driver.findElement(By.name("ctl00$content$cmdProcess")).click();
+        driver.findElement(By.id("ctl00_content_lnkPayment")).click();
+        driver.close();
+    }
 }

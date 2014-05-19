@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM 'http://testng.org/testng-1.0.dtd'>
+
+<suite name = "Gateways Test" verbose = "1">
+    <test name = "GW Test">
+        <classes>
+            <!--<class name = "gateways.A2S"/>-->
+            <class name = "gateways.AZ"/>
+        </classes>
+    </test>
+
+    <parameter name = "currencyList" value = "/src/test/resources/gateways/currencyList" />
+
+</suite>

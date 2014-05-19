@@ -2,7 +2,7 @@ package critical.transaction;
 
 
 import critical.TestUtils;
-import critical.callbacks.DriverFactory;
+import model.DriverFactory;
 import model.Environment;
 import model.Utils;
 import org.apache.http.NameValuePair;
@@ -34,17 +34,12 @@ public class Voided {
     private String simpleamount = "222";
     private String simplepartialCompleteAmount = "22";
 
-    private String simplependingMercahnt = "#57482 - www.test1.ru";
-    private String simpleoptionPendingMerchant = "option[value=\"57482\"]";
     private String simpleMIDpending = "57482";
     private String simplePendingPrivateSecurityKey = "a0dd4eea-8652-4a4d-a9e8-367920163d1a";
-
-    private String simplepreAuthMercahnt = "#57483 - www.transactions.com";
-    private String simpleoptionPreAuthMerchant = "option[value=\"57483\"]";
     private String simpleMIDpreAuth = "57483";
     private String simplePreauthPrivateSecurityKey = "bc151bea-8c58-40e0-bb44-0a6ae510a5a2";
 
-
+    // simple sapmax
     private String simpleSapmaxAmount = "444";
     private String simpleSapmaxpartialCompleteAmount = "44";
 
@@ -150,7 +145,7 @@ public class Voided {
         MERCHANT_ID_3DS_PENDING = MerchantId + MIDpending3DS;
         MERCHANT_ID_3DS_PREAUTH = MerchantId + MIDpreAuth3DS;
         ORDER_ID = OrderId;
-        AMOUNT = Amount + simpleamount + ".00";
+        AMOUNT = Amount;
         CURRENCY_RUB = CurrencyRub;
         PRIVATE_SECURITY_KEY_PENDING = PrivateSecurityKey + simplePendingPrivateSecurityKey;
         PRIVATE_SECURITY_KEY_PREAUTH = PrivateSecurityKey + simplePreauthPrivateSecurityKey;
@@ -182,6 +177,7 @@ public class Voided {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT += simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);

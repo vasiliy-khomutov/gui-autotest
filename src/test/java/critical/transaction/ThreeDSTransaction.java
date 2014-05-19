@@ -2,7 +2,7 @@ package critical.transaction;
 
 
 import critical.TestUtils;
-import critical.callbacks.DriverFactory;
+import model.DriverFactory;
 import model.Environment;
 import model.Utils;
 import org.openqa.selenium.By;

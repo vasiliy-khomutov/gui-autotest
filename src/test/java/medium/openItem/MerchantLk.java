@@ -1,13 +1,11 @@
 package medium.openItem;
 
 
-import critical.callbacks.DriverFactory;
-import model.Environment;
+import model.DriverFactory;
 import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 public class MerchantLk {

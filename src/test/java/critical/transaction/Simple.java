@@ -2,7 +2,7 @@ package critical.transaction;
 
 
 import critical.TestUtils;
-import critical.callbacks.DriverFactory;
+import model.DriverFactory;
 import model.Environment;
 import model.Utils;
 import org.openqa.selenium.By;
@@ -18,8 +18,8 @@ public class Simple {
     private String baseUrl;
     private String loginMerchant;
     private String passwordMerchant;
-    private String loginAdmin; //= "v.khomutov";
-    private String passwordAdmin; //= "tester123";
+    private String loginAdmin;
+    private String passwordAdmin;
     private String captcha = "ability";
 
     private String pendingMercahnt = "#57482 - www.test1.ru";

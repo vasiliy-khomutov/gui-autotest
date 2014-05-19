@@ -1,4 +1,4 @@
-package critical.callbacks;
+package model;
 
 
 import org.openqa.selenium.WebDriver;

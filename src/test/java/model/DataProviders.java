@@ -62,6 +62,20 @@ public class DataProviders {
         return dataToBeReturned.iterator();
     }
 
+    @DataProvider (name = "pendingAZ" )
+    public static Iterator<Object[]> getCurrencies (ITestContext context) {
+        String inputFile = context.getCurrentXmlTest().getParameter("currencyList");
+        String workingDir = System.getProperty("user.dir");
+        List<String> testData = getFileContentList(workingDir.substring(0, workingDir.length()) + inputFile);
+        List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+
+        for (String userData : testData ) {
+            String[] to = userData.split(";") ;
+            dataToBeReturned.add(to);
+        }
+        return dataToBeReturned.iterator();
+    }
+
     private static List<String> getFileContentList(String filenamePath) {
 
         InputStream inputStream;
