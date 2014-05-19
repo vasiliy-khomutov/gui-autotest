@@ -121,6 +121,7 @@ public class Utils {
     }
 
     public static String getUSDAmount(String amount, String currency) {
+        // TODO - Currency Exchange service
         // rouble
         if(currency.equals("RUB")){
             Connect connectDb = new Connect();
