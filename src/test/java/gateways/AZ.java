@@ -29,7 +29,7 @@ public class AZ {
     private String pendingMercahntUrl = "http://www.test-az.ru";
 
     // merchant details - preauth
-    private String preAuthMercahnt = "#61838 - www.test-az.ru";
+    private String preAuthMercahnt = "#61838 - www.test-az2.ru";
     private String optionPreAuthMerchant = "option[value=\"61838\"]";
     private String MIDpreAuth = "61838";
     private String preAuthMercahntUrl = "http://www.test-az2.ru";
@@ -56,6 +56,7 @@ public class AZ {
     private String cardTypeMasterCard = "MasterCard";
 
     private String typePurchase = "Purchase";
+    private String typePreAuth = "PreAuth";
     private String typeRefund = "Refund";
 
     private String gateway = "AzeriCard Test";
@@ -65,6 +66,7 @@ public class AZ {
 
     @BeforeTest
     public void createParameters(){
+
         // initialize authorization parameters
         String [] parameters = Environment.readFile();
         baseUrl = parameters[0];
@@ -75,7 +77,7 @@ public class AZ {
     }
 
     // PENDING, PREAUTH, COMPLETE
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = true)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = false)
     public void pending(String currency, String amount){
 
         long id = System.currentTimeMillis();
@@ -123,7 +125,7 @@ public class AZ {
                 amount, amountUSD, gateway, email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = true)
     public void preauth(String currency, String amount){
 
         long id = System.currentTimeMillis();
@@ -159,7 +161,7 @@ public class AZ {
         amountUSD = Utils.getUSDAmount(amount, currency);
 
         System.out.println(amount + " " + amountUSD);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardTypeVisa,
+        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
         //check in lk merchant
@@ -167,12 +169,12 @@ public class AZ {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardHolderName,
                 amount, amountUSD, gateway, email);
     }
 
 
-    @Test
+    /*@Test
     public void preauthAndPartialComplete(){}
 
     @Test
@@ -213,7 +215,7 @@ public class AZ {
 
     @Test
     public void preauthAndFullCompleteAndCBK(){}
-
+*/
     // REFUNDS - ?
 /*    @Test
     public void pendingAndRefund(){}
