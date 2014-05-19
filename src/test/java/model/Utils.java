@@ -103,23 +103,6 @@ public class Utils {
         return sbuffer.toString();
     }
 
-    public static void changeGW(WebDriver driver, int[] list) {
-        for(int i = 0; i < list.length; i++){
-            String mid = list[i] + "";
-            driver.findElement(By.id("ctl00_content_filter_merchantId")).clear();
-            driver.findElement(By.id("ctl00_content_filter_merchantId")).sendKeys(mid);
-            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
-            driver.findElement(By.linkText(mid)).click();
-            driver.findElement(By.linkText("Шлюз")).click();
-            driver.findElement(By.linkText("Изменить")).click();
-            new Select(driver.findElement(By.id("ctl00_content_gateway_gatewaysList"))).selectByValue("1059");
-
-            driver.findElement(By.id("ctl00_content_filter_merchantId")).clear();
-            driver.findElement(By.id("ctl00_content_filter_merchantId")).sendKeys(mid);
-
-        }
-    }
-
     public static String getUSDAmount(String amount, String currency) {
         // TODO - Currency Exchange service
         // rouble
