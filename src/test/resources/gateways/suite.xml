@@ -3,7 +3,10 @@
 <suite name = "Gateways Test" verbose = "1">
     <test name = "GW Test">
         <classes>
+            <!--DONE-->
             <!--<class name = "gateways.A2S"/>-->
+
+            <!--IN PROGRESS-->
             <class name = "gateways.AZ"/>
         </classes>
     </test>
