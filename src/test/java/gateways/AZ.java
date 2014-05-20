@@ -1,6 +1,5 @@
 package gateways;
 
-import model.Connect;
 import model.DriverFactory;
 import model.Environment;
 import model.Utils;
@@ -9,8 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import javax.rmi.CORBA.Util;
 
 public class AZ {
 
@@ -58,13 +55,12 @@ public class AZ {
 
     private String typePurchase = "Purchase";
     private String typePreAuth = "PreAuth";
-    private String typeRefund = "Refund";
     private String typeVoid = "Void";
 
     private String gateway = "AzeriCard Test";
+
     private String amountUSD;
     private String idTransaction;
-
     private String idChargeBack;
 
     private String lastActionCharge = "Chargeback";
@@ -176,8 +172,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -224,8 +218,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -293,8 +285,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -312,8 +302,6 @@ public class AZ {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
-
-        String completedAmountUSD = Utils.getUSDAmount(amount, currency);
 
         Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
                 amount, amountUSD, gateway, email);
@@ -344,16 +332,16 @@ public class AZ {
         idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
                 numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        /*//check result page
+        //check result page
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));*/
+        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        /*//check link
+        //check link
         driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));*/
+        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
@@ -363,9 +351,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -435,8 +420,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -447,7 +430,6 @@ public class AZ {
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
                 amount, amountUSD, gateway, email);
-
 
         //open voidedForm and check
         driver.findElement(By.linkText(idTransaction)).click();
@@ -508,8 +490,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -529,7 +509,6 @@ public class AZ {
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
-
         Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
                 partialCompleteAmount, completedAmountUSD, gateway, email);
 
@@ -605,8 +584,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -682,16 +659,16 @@ public class AZ {
         idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
                 numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        /*//check result page
+        //check result page
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
         Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));*/
+        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        /*//check link
+        //check link
         driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));*/
+        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
@@ -701,9 +678,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -792,8 +766,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -882,8 +854,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -903,7 +873,6 @@ public class AZ {
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
-
         Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
                 partialCompleteAmount, completedAmountUSD, gateway, email);
 
@@ -990,8 +959,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -1009,8 +976,6 @@ public class AZ {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
-
-        String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
 
         Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
                 amount, amountUSD, gateway, email);
