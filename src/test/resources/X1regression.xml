@@ -22,9 +22,9 @@
             <!--<class name="critical.transaction.Refund"/>-->
             <!--<class name = "critical.transaction.ChargeBack"/>-->
             <!-- <class name = "critical.callbacks.Callbacks" /> -->
-            <!-- <class name = "critical.authorized.Authorized" />
-            <class name = "medium.openItem.MerchantLk"/>
-            <class name="medium.openItem.AdminLK" />-->
+            <!-- <class name = "critical.authorized.Authorized" />-->
+            <!--<class name = "medium.openItem.MerchantLk"/>-->
+            <!--<class name="medium.openItem.AdminLK" />-->
             <!--<class name = "critical.transaction.Settled"/>-->
             <!--<class name = "gateways.A2S"/>-->
         </classes>

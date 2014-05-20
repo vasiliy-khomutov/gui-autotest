@@ -11,6 +11,9 @@
         </classes>
     </test>
 
-    <parameter name = "currencyList" value = "/src/test/resources/gateways/currencyList" />
+    <parameter name = "pendingList" value = "/src/test/resources/gateways/pendingList" />
+    <parameter name = "preauthList" value = "/src/test/resources/gateways/preauthList" />
+    <parameter name = "voidList" value = "/src/test/resources/gateways/voidList" />
+    <parameter name = "cbkList" value = "/src/test/resources/gateways/cbkList" />
 
 </suite>
