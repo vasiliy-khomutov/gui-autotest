@@ -87,6 +87,22 @@ public class Environment {
         return parameters;
     }
 
+    public static String [] readAZFile() {
+        String [] parameters = new String[5];
+        try {
+            FileReader reader = new FileReader("C:\\secureParametersAutotest\\gw_azeri.txt");
+            BufferedReader in = new BufferedReader(reader);
+            String string;
+            while ((string = in.readLine()) != null){
+                parameters=string.split("=");
+            }
+            in.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return parameters;
+    }
+
     public static HttpPost createPOSTRequest(String url){
         HttpPost request = new HttpPost(url);
         return request;
