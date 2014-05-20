@@ -55,7 +55,6 @@ public class AZ {
     private String settledStatus = "Settled";
 
     private String cardTypeVisa = "Visa";
-    private String cardTypeMasterCard = "MasterCard";
 
     private String typePurchase = "Purchase";
     private String typePreAuth = "PreAuth";
@@ -65,7 +64,6 @@ public class AZ {
     private String gateway = "AzeriCard Test";
     private String amountUSD;
     private String idTransaction;
-    private String idRefund;
 
     private String idChargeBack;
 
@@ -99,7 +97,7 @@ public class AZ {
     // GW + Currency Exchange service testing
 
     // PENDING, PREAUTH, COMPLETE
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = true)
     public void pending(String currency, String amount){
 
         long id = System.currentTimeMillis();
@@ -144,7 +142,7 @@ public class AZ {
                 amount, amountUSD, gateway, email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
     public void preauth(String currency, String amount, String partialCompleteAmount){
 
         long id = System.currentTimeMillis();
@@ -192,7 +190,7 @@ public class AZ {
                 amount, amountUSD, gateway, email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
     public void preauthAndPartialComplete(String currency, String amount, String partialCompleteAmount){
 
         long id = System.currentTimeMillis();
@@ -261,7 +259,7 @@ public class AZ {
                 gateway, cardHolderName, email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
     public void preauthAndFullComplete(String currency, String amount, String partialCompleteAmount){
 
         long id = System.currentTimeMillis();
@@ -332,7 +330,7 @@ public class AZ {
 
 
     // VOIDS
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "voidAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "voidAZ", enabled = true)
     public void pendingAndVoid(String currency, String amount){
 
         long id = System.currentTimeMillis();
@@ -403,7 +401,7 @@ public class AZ {
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
     public void preauthAndVoid(String currency, String amount, String partialCompleteAmount){
 
         long id = System.currentTimeMillis();
@@ -477,7 +475,7 @@ public class AZ {
                 expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
     public void preauthAndPartialCompleteAndVoid(String currency, String amount, String partialCompleteAmount){
 
         long id = System.currentTimeMillis();
@@ -574,7 +572,7 @@ public class AZ {
                 expDate, bank, partialCompleteAmount, completedAmountUSD, gateway, cardHolderName, email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
     public void preauthAndFullCompleteAndVoid(String currency, String amount, String partialCompleteAmount){
 
         long id = System.currentTimeMillis();
