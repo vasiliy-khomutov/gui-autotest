@@ -63,8 +63,50 @@ public class DataProviders {
     }
 
     @DataProvider (name = "pendingAZ" )
-    public static Iterator<Object[]> getCurrencies (ITestContext context) {
-        String inputFile = context.getCurrentXmlTest().getParameter("currencyList");
+         public static Iterator<Object[]> getPendingParams (ITestContext context) {
+        String inputFile = context.getCurrentXmlTest().getParameter("pendingList");
+        String workingDir = System.getProperty("user.dir");
+        List<String> testData = getFileContentList(workingDir.substring(0, workingDir.length()) + inputFile);
+        List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+
+        for (String userData : testData ) {
+            String[] to = userData.split(";") ;
+            dataToBeReturned.add(to);
+        }
+        return dataToBeReturned.iterator();
+    }
+
+    @DataProvider (name = "preauthAZ" )
+    public static Iterator<Object[]> getPreauthParams (ITestContext context) {
+        String inputFile = context.getCurrentXmlTest().getParameter("preauthList");
+        String workingDir = System.getProperty("user.dir");
+        List<String> testData = getFileContentList(workingDir.substring(0, workingDir.length()) + inputFile);
+        List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+
+        for (String userData : testData ) {
+            String[] to = userData.split(";") ;
+            dataToBeReturned.add(to);
+        }
+        return dataToBeReturned.iterator();
+    }
+
+    @DataProvider (name = "voidAZ" )
+    public static Iterator<Object[]> getVoidParams (ITestContext context) {
+        String inputFile = context.getCurrentXmlTest().getParameter("voidList");
+        String workingDir = System.getProperty("user.dir");
+        List<String> testData = getFileContentList(workingDir.substring(0, workingDir.length()) + inputFile);
+        List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+
+        for (String userData : testData ) {
+            String[] to = userData.split(";") ;
+            dataToBeReturned.add(to);
+        }
+        return dataToBeReturned.iterator();
+    }
+
+    @DataProvider (name = "cbkAZ" )
+    public static Iterator<Object[]> getCbkParams (ITestContext context) {
+        String inputFile = context.getCurrentXmlTest().getParameter("cbkList");
         String workingDir = System.getProperty("user.dir");
         List<String> testData = getFileContentList(workingDir.substring(0, workingDir.length()) + inputFile);
         List<Object[]> dataToBeReturned = new ArrayList<Object[]>();

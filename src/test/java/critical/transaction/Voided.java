@@ -199,11 +199,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, simpleMIDpending, idTransaction, id + orderID, cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, simpleMIDpending, idTransaction, id + orderID, cardHolderName, pendingStatus);
 
         // void trx
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         // open all transaction tab and check transaction card
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -249,11 +249,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
+        Utils.checkVoidedForm(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -312,11 +312,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -376,11 +376,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, simpleMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -681,11 +681,11 @@ public class Voided {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
 
-        TestUtils.checkVoidedForm(driver, MIDpending3DS, idTransaction, id + orderID, cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, MIDpending3DS, idTransaction, id + orderID, cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -772,11 +772,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
+        Utils.checkVoidedForm(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -878,11 +878,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -986,11 +986,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, MIDpreAuth3DS, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1432,11 +1432,11 @@ public class Voided {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
 
-        TestUtils.checkVoidedForm(driver, simpleSapmaxMIDpending, idTransaction, id + orderID, cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, simpleSapmaxMIDpending, idTransaction, id + orderID, cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1479,11 +1479,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
+        Utils.checkVoidedForm(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1538,11 +1538,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1597,11 +1597,11 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        TestUtils.checkVoidedForm(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, simpleSapmaxMIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1645,11 +1645,11 @@ public class Voided {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
 
-        TestUtils.checkVoidedForm(driver, MIDpending3DSSapmax, idTransaction, id + orderID, cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, MIDpending3DSSapmax, idTransaction, id + orderID, cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.id("ctl00_content_voidTransaction_cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1695,11 +1695,11 @@ public class Voided {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
 
-        TestUtils.checkVoidedForm(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
+        Utils.checkVoidedForm(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8), cardHolderName, preAuthStatus);
 
         //voided
         driver.findElement(By.id("ctl00_content_voidTransaction_cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1756,11 +1756,11 @@ public class Voided {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
 
-        TestUtils.checkVoidedForm(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.id("ctl00_content_voidTransaction_cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1817,11 +1817,11 @@ public class Voided {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
 
-        TestUtils.checkVoidedForm(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+        Utils.checkVoidedForm(driver, MIDpreAuth3DSSapmax, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
         //voided
         driver.findElement(By.id("ctl00_content_voidTransaction_cmdVoid")).click();
-        Assert.assertTrue(TestUtils.checkMessage(driver), "Message voided is not displayed!");
+        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
         //open transaction all and check cardTransaction
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();

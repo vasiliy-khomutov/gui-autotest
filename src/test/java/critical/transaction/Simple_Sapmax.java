@@ -154,7 +154,7 @@ public class Simple_Sapmax {
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        TestUtils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName, partialCompleteAmount, partialCompleteAmount, testGateway, email);
+        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName, partialCompleteAmount, partialCompleteAmount, testGateway, email);
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
@@ -204,7 +204,7 @@ public class Simple_Sapmax {
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        TestUtils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + "1" + orderID, typePurchase, pendingStatus, cardHolderName, amount, amount, testGateway, email);
+        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + "1" + orderID, typePurchase, pendingStatus, cardHolderName, amount, amount, testGateway, email);
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");

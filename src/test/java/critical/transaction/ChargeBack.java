@@ -173,7 +173,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -187,11 +187,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPending, simpleamountPending, testGateway);
 
@@ -200,10 +200,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPending, simpleamountPending, testGateway,
                 email);
     }
@@ -230,7 +230,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -244,11 +244,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
                 cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauth1, simpleamountPreauth1, testGateway);
 
@@ -257,10 +257,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauth1, simpleamountPreauth1, testGateway,
                 email);
     }
@@ -300,7 +300,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -314,11 +314,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
                 cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthComplete, simpleamountPreauthComplete, testGateway);
 
@@ -327,10 +327,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauthComplete, simpleamountPreauthComplete, testGateway,
                 email);
     }
@@ -370,7 +370,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -384,11 +384,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
                 cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthComplete, simpleamountPreauthComplete, testGateway);
 
@@ -397,10 +397,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction, cause,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction, cause,
                 settledStatus, cardHolderName, simpleamountPreauthComplete, simpleamountPreauthComplete, testGateway,
                 email);
     }
@@ -430,7 +430,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -444,11 +444,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPending, simpleSapmaxamountPending, testGateway);
 
@@ -457,10 +457,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPending, simpleSapmaxamountPending, testGateway,
                 email);
     }
@@ -488,7 +488,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -502,11 +502,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauth1, simpleSapmaxamountPreauth1, testGateway);
 
@@ -515,10 +515,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauth1, simpleSapmaxamountPreauth1, testGateway,
                 email);
     }
@@ -559,7 +559,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -573,11 +573,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
                 lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthComplete,
                 simpleSapmaxamountPreauthComplete, testGateway);
@@ -587,10 +587,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
                 typeTransaction, cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthComplete, simpleSapmaxamountPreauthComplete, testGateway,
                 email);
     }
@@ -631,7 +631,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -645,11 +645,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthComplete, simpleSapmaxamountPreauthComplete, testGateway);
 
@@ -658,10 +658,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthComplete, simpleSapmaxamountPreauthComplete, testGateway,
                 email);
     }
@@ -689,7 +689,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -703,11 +703,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPending, amount3DSPending, testGateway);
 
@@ -716,10 +716,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPending, amount3DSPending, testGateway,
                 email);
     }
@@ -746,7 +746,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -760,11 +760,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauth1, amount3DSPreauth1, testGateway);
 
@@ -773,10 +773,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauth1, amount3DSPreauth1, testGateway,
                 email);
     }
@@ -816,7 +816,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -830,11 +830,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthComplete, amount3DSPreauthComplete, testGateway);
 
@@ -843,10 +843,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthComplete, amount3DSPreauthComplete, testGateway,
                 email);
     }
@@ -886,7 +886,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -900,11 +900,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthComplete, amount3DSPreauthComplete, testGateway);
 
@@ -913,10 +913,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthComplete, amount3DSPreauthComplete, testGateway,
                 email);
     }
@@ -946,7 +946,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -960,11 +960,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPending, amount3DSSapmaxPending, testGateway);
 
@@ -973,10 +973,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPending, amount3DSSapmaxPending, testGateway,
                 email);
     }
@@ -1004,7 +1004,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1018,11 +1018,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauth1, amount3DSSapmaxPreauth1, testGateway);
 
@@ -1031,10 +1031,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauth1, amount3DSSapmaxPreauth1, testGateway,
                 email);
     }
@@ -1075,7 +1075,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1089,11 +1089,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthComplete, amount3DSSapmaxPreauthComplete, testGateway);
 
         //check in lk merch
@@ -1101,10 +1101,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthComplete, amount3DSSapmaxPreauthComplete, testGateway,
                 email);
     }
@@ -1145,7 +1145,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1159,11 +1159,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthComplete, amount3DSSapmaxPreauthComplete, testGateway);
 
         //check in lk merch
@@ -1171,10 +1171,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthComplete, amount3DSSapmaxPreauthComplete, testGateway,
                 email);
     }
@@ -1211,7 +1211,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1225,11 +1225,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPending, simpleamountPending, testGateway);
 
@@ -1238,10 +1238,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPending, simpleamountPending, testGateway,
                 email);
     }
@@ -1287,7 +1287,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1301,11 +1301,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthPart3, simpleamountPreauthPart3, testGateway);
 
@@ -1314,10 +1314,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauthPart3, simpleamountPreauthPart3, testGateway,
                 email);
     }
@@ -1363,7 +1363,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1377,11 +1377,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthPart3, simpleamountPreauthPart3, testGateway);
 
@@ -1390,10 +1390,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauthPart3, simpleamountPreauthPart3, testGateway,
                 email);
     }
@@ -1430,7 +1430,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1444,11 +1444,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPending, simpleSapmaxamountPending, testGateway);
 
@@ -1457,10 +1457,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPending, simpleSapmaxamountPending, testGateway,
                 email);
     }
@@ -1507,7 +1507,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1521,11 +1521,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthPart3, simpleSapmaxamountPreauthPart3, testGateway);
 
@@ -1534,10 +1534,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthPart3, simpleSapmaxamountPreauthPart3, testGateway,
                 email);
     }
@@ -1584,7 +1584,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1598,11 +1598,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthPart3, simpleSapmaxamountPreauthPart3, testGateway);
 
@@ -1611,10 +1611,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthPart3, simpleSapmaxamountPreauthPart3, testGateway,
                 email);
     }
@@ -1650,7 +1650,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1664,11 +1664,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPending, amount3DSPending, testGateway);
 
@@ -1677,10 +1677,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPending, amount3DSPending, testGateway,
                 email);
     }
@@ -1725,7 +1725,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1739,11 +1739,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway);
 
@@ -1752,10 +1752,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway,
                 email);
     }
@@ -1800,7 +1800,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1814,11 +1814,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway);
 
@@ -1827,10 +1827,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway,
                 email);
     }
@@ -1865,7 +1865,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1879,11 +1879,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPending, amount3DSSapmaxPending, testGateway);
 
@@ -1892,10 +1892,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPending, amount3DSSapmaxPending, testGateway,
                 email);
     }
@@ -1942,7 +1942,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -1956,11 +1956,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthPart3, amount3DSSapmaxPreauthPart3, testGateway);
 
@@ -1969,10 +1969,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthPart3, amount3DSSapmaxPreauthPart3, testGateway,
                 email);
     }
@@ -2019,7 +2019,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$reason")).clear();
@@ -2033,11 +2033,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthPart3, amount3DSSapmaxPreauthPart3, testGateway);
 
@@ -2046,10 +2046,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthPart3, amount3DSSapmaxPreauthPart3, testGateway,
                 email);
     }
@@ -2078,7 +2078,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2095,11 +2095,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPending, partialCBKAmount2, testGateway);
 
@@ -2108,10 +2108,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2138,7 +2138,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2155,11 +2155,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
                 cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauth1, partialCBKAmount2, testGateway);
 
@@ -2168,10 +2168,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauth1, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2211,7 +2211,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2228,11 +2228,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
                 cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthComplete, partialCBKAmount2, testGateway);
 
@@ -2241,10 +2241,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2284,7 +2284,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2301,11 +2301,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
                 cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthComplete, partialCBKAmount2, testGateway);
 
@@ -2314,10 +2314,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction, cause,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction, cause,
                 settledStatus, cardHolderName, simpleamountPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2347,7 +2347,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2364,11 +2364,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPending, partialCBKAmount2, testGateway);
 
@@ -2377,10 +2377,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2408,7 +2408,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2425,11 +2425,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauth1, partialCBKAmount2, testGateway);
 
@@ -2438,10 +2438,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauth1, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2482,7 +2482,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2499,11 +2499,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
                 lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthComplete,
                 partialCBKAmount2, testGateway);
@@ -2513,10 +2513,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID,
                 typeTransaction, cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2557,7 +2557,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2574,11 +2574,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthComplete, partialCBKAmount2, testGateway);
 
@@ -2587,10 +2587,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2619,7 +2619,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2636,11 +2636,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPending, partialCBKAmount2, testGateway);
 
@@ -2649,10 +2649,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2679,7 +2679,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2696,11 +2696,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauth1, partialCBKAmount2, testGateway);
 
@@ -2709,10 +2709,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauth1, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2752,7 +2752,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2769,11 +2769,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthComplete, partialCBKAmount2, testGateway);
 
@@ -2782,10 +2782,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2825,7 +2825,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2842,11 +2842,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthComplete, partialCBKAmount2, testGateway);
 
@@ -2855,10 +2855,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2888,7 +2888,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2905,11 +2905,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPending, partialCBKAmount2, testGateway);
 
@@ -2918,10 +2918,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -2949,7 +2949,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauth1, preAuthStatus2, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauth1, preAuthStatus2, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -2966,11 +2966,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauth1, partialCBKAmount2, testGateway);
 
@@ -2979,10 +2979,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauth1, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3023,7 +3023,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3040,11 +3040,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthComplete, partialCBKAmount2, testGateway);
 
         //check in lk merch
@@ -3052,10 +3052,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3096,7 +3096,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthComplete, pendingStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3112,11 +3112,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge, settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthComplete, partialCBKAmount2, testGateway);
 
         //check in lk merch
@@ -3124,10 +3124,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthComplete, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3164,7 +3164,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3181,11 +3181,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPending, partialCBKAmount2, testGateway);
 
@@ -3194,10 +3194,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3243,7 +3243,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3260,11 +3260,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -3273,10 +3273,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3322,7 +3322,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3339,11 +3339,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamountPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -3352,10 +3352,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleamountPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3392,7 +3392,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3409,11 +3409,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPending, partialCBKAmount2, testGateway);
 
@@ -3422,10 +3422,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpending, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3472,7 +3472,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3489,11 +3489,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -3502,10 +3502,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3552,7 +3552,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, simpleSapmaxamountPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3569,11 +3569,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleSapmaxamountPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -3582,10 +3582,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, simpleSapmaxMIDpreAuth, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, simpleSapmaxamountPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3621,7 +3621,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3638,11 +3638,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPending, partialCBKAmount2, testGateway);
 
@@ -3651,10 +3651,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3699,7 +3699,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3716,11 +3716,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -3729,10 +3729,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3777,7 +3777,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3793,11 +3793,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DS, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -3806,10 +3806,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DS, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3845,7 +3845,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPending, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3862,11 +3862,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPending, partialCBKAmount2, testGateway);
 
@@ -3875,10 +3875,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPending, partialCBKAmount2, testGateway,
                 email);
     }
@@ -3925,7 +3925,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -3942,11 +3942,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -3955,10 +3955,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
@@ -4005,7 +4005,7 @@ public class ChargeBack {
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
         //check registrationChargeBackForm
-        TestUtils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
+        Utils.checkChargeBackForm(driver, idTransaction, amount3DSSapmaxPreauthPart3, settledStatus, testGateway, cardHolderName);
 
         //type all value in form and click nextButton
         driver.findElement(By.name("ctl00$content$editor$amount")).clear();
@@ -4022,11 +4022,11 @@ public class ChargeBack {
         //check in lk admin
         driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = TestUtils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(TestUtils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
+        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, lastActionCharge,
                 settledStatus, cause, cbcode, cbindicator, cardType,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSSapmaxPreauthPart3, partialCBKAmount2, testGateway);
 
@@ -4035,10 +4035,10 @@ public class ChargeBack {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(TestUtils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
         //check card transaction
-        TestUtils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
+        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth3DSSapmax, idChargeBack, id + orderID, typeTransaction,
                 cause, settledStatus, cardHolderName, amount3DSSapmaxPreauthPart3, partialCBKAmount2, testGateway,
                 email);
     }
