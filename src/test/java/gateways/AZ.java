@@ -37,10 +37,10 @@ public class AZ {
     // trx details
     private String orderID = "";
     private String email = "autotest@test.test";
-    private String numberCardA = "4127";
-    private String numberCardB = "2099";
-    private String numberCardC = "9999";
-    private String numberCardD = "9581";
+    private String numberCardA;
+    private String numberCardB;
+    private String numberCardC;
+    private String numberCardD;
     private String expDateMonth = "04";
     private String expDateYear = "2015";
     private String expDate = "04 / 2015";
@@ -88,6 +88,12 @@ public class AZ {
         passwordAdmin = parameters[2];
         loginMerchant = parameters[3];
         passwordMerchant = parameters[4];
+
+        String [] az = Environment.readAZFile();
+        numberCardA = az[0];
+        numberCardB = az[1];
+        numberCardC = az[2];
+        numberCardD = az[3];
     }
 
     // GW + Currency Exchange service testing
@@ -126,8 +132,6 @@ public class AZ {
 
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
-
-        System.out.println(amount + " " + amountUSD);
         TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -175,7 +179,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -223,7 +227,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -292,7 +296,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -362,7 +366,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
 
         TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
@@ -434,7 +438,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -507,7 +511,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -604,7 +608,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -700,7 +704,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
 
         TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
@@ -791,7 +795,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -881,7 +885,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
@@ -989,7 +993,7 @@ public class AZ {
         // get USD amount
         amountUSD = Utils.getUSDAmount(amount, currency);
 
-        System.out.println(amount + " " + amountUSD);
+
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
