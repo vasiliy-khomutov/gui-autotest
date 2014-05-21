@@ -11,13 +11,12 @@ import org.testng.annotations.Test;
 
 public class Settled {
 
-
     private long id = System.currentTimeMillis();
     private String idTransaction;
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
-    private String loginMerchant = "info@smart-travel.ru";
-    private String passwordMerchant = "123QWE!@#";
+    private String baseUrl = "";
+    private String loginMerchant = "";
+    private String passwordMerchant = "";
     private String captcha = "ability";
     private String pendingMercahnt = "#55477 - www.autotest.gui.com";
     private String optionPendingMerchant = "option[value=\"55477\"]";
