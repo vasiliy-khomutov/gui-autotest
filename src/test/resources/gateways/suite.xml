@@ -15,5 +15,6 @@
     <parameter name = "preauthList" value = "/src/test/resources/gateways/preauthList" />
     <parameter name = "voidList" value = "/src/test/resources/gateways/voidList" />
     <parameter name = "cbkList" value = "/src/test/resources/gateways/cbkList" />
+    <parameter name = "refundList" value = "/src/test/resources/gateways/refundList" />
 
 </suite>
