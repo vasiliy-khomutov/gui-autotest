@@ -6,7 +6,10 @@ import model.DriverFactory;
 import model.Connect;
 import model.Environment;
 import model.Utils;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -14,6 +17,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,12 +57,17 @@ public class Refund {
 
 
     // 3DS
-    private String threeDSAmountPending = "648";
+    private String threeDSAmountPending = "668";
     private String threeDSAmountPendingRefund1 = "68";
-    private String threeDSAmountPendingRefund2 = "600,40";
-    private String threeDSAmountPendingRefund3 = "648,40";
+    private String threeDSAmountPendingRefund2 = "600,44";
+    private String threeDSAmountPendingRefund3 = "668,44";
 
-    private String threeDSpartialCompleteAmount = "66";
+    private String threeDSAmountPreauth1 = "600";
+    private String threeDSAmountPreauth2 = "444";
+    private String threeDSAmountPreauthComplete ="444,44";
+    private String threeDSAmountPreauthRefund1 = "44";
+    private String threeDSAmountPreauthRefund2 = "400,44";
+    private String threeDSAmountPreauthRefund3 = "444,44";
 
     private String pendingMercahnt3DS = "#59530 - www.test2.com";
     private String optionPendingMerchant3DS = "option[value=\"59530\"]";
@@ -175,8 +185,8 @@ public class Refund {
 
     // MERCHANT
     // simple partial
-    @Test
-    public void PendingRefundSimplePartialMerchant(){
+    @Test (enabled = true)
+    public void SimplePending_PartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -237,8 +247,8 @@ public class Refund {
                 expDate, bank, simpleAmountPendingRefund1, simpleAmountPendingRefund1, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void PartialPreauthRefundSimplePartialMerchant(){
+    @Test (enabled = true)
+    public void SimplePreauth_PartialComplete_PartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -265,7 +275,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -312,8 +322,8 @@ public class Refund {
                 expDate, bank, simpleAmountPreauthRefund1, simpleAmountPreauthRefund1, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void FullPreauthRefundSimplePartialMerchant(){
+    @Test (enabled = true)
+    public void SimplePreauth_FullComplete_PartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -340,7 +350,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -388,8 +398,8 @@ public class Refund {
     }
 
     // simple partial + partial
-    @Test
-    public void PendingRefundSimplePartPartMerchant(){
+    @Test (enabled = true)
+    public void SimplePending_PartialPartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -498,8 +508,8 @@ public class Refund {
                 simpleAmountPendingRefund2, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void PartialPreauthRefundSimplePartPartMerchant(){
+    @Test (enabled = true)
+    public void SimplePreauth_PartialComplete_PartialPartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -526,7 +536,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -613,8 +623,8 @@ public class Refund {
                 simpleAmountPreauthRefund2, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void FullPreauthRefundSimplePartPartMerchant(){
+    @Test (enabled = true)
+    public void SimplePreauth_FullComplete_PartialPartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -641,7 +651,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -729,8 +739,8 @@ public class Refund {
     }
 
     // simple full
-    @Test
-    public void PendingRefundSimpleFullMerchant(){
+    @Test (enabled = true)
+    public void SimplePending_FullRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -792,8 +802,8 @@ public class Refund {
                 expDate, bank, simpleAmountPendingRefund3, simpleAmountPendingRefund3, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void PartialPreauthRefundSimpleFullMerchant(){
+    @Test (enabled = true)
+    public void SimplePreauth_PartialComplete_FullRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -820,7 +830,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -868,8 +878,8 @@ public class Refund {
                 expDate, bank, simpleAmountPreauthRefund3, simpleAmountPreauthRefund3, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void FullPreauthRefundSimpleFullMerchant(){
+    @Test (enabled = true)
+    public void SimplePreauth_FullComplete_FullRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -896,7 +906,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -946,8 +956,8 @@ public class Refund {
 
     // ADMIN
     // simple partial
-    @Test
-    public void PendingRefundSimplePartialAdmin(){
+    @Test (enabled = true)
+    public void SimplePending_PartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1007,8 +1017,8 @@ public class Refund {
                 cardHolderName, simpleAmountPendingRefund1, simpleAmountPendingRefund1, testGateway, email);
     }
 
-    @Test
-    public void PartialPreauthRefundSimplePartialAdmin(){
+    @Test (enabled = true)
+    public void SimplePreauth_PartialComplete_PartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1035,7 +1045,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1083,8 +1093,8 @@ public class Refund {
                 cardHolderName, simpleAmountPreauthRefund1, simpleAmountPreauthRefund1, testGateway, email);
     }
 
-    @Test
-    public void FullPreauthRefundSimplePartialAdmin(){
+    @Test (enabled = true)
+    public void SimplePreauth_FullComplete_PartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1111,7 +1121,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1160,8 +1170,8 @@ public class Refund {
     }
 
     // simple partial + partial
-    @Test
-    public void PendingRefundSimplePartPartAdmin(){
+    @Test (enabled = true)
+    public void SimplePending_PartialPartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1256,8 +1266,8 @@ public class Refund {
                 cardHolderName, simpleAmountPendingRefund2, simpleAmountPendingRefund2, testGateway, email);
     }
 
-    @Test
-    public void PartialPreauthRefundSimplePartPartAdmin(){
+    @Test (enabled = true)
+    public void SimplePreauth_PartialComplete_PartialPartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1284,7 +1294,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1367,8 +1377,8 @@ public class Refund {
                 cardHolderName, simpleAmountPreauthRefund2, simpleAmountPreauthRefund2, testGateway, email);
     }
 
-    @Test
-    public void FullPreauthRefundSimplePartPartAdmin(){
+    @Test (enabled = true)
+    public void SimplePreauth_FullComplete_PartialPartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1395,7 +1405,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1479,8 +1489,8 @@ public class Refund {
     }
 
     // simple full
-    @Test
-    public void PendingRefundSimpleFullAdmin(){
+    @Test (enabled = true)
+    public void SimplePending_FullRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1540,8 +1550,8 @@ public class Refund {
                 cardHolderName, simpleAmountPendingRefund3, simpleAmountPendingRefund3, testGateway, email);
     }
 
-    @Test
-    public void PartialPreauthRefundSimpleFullAdmin(){
+    @Test (enabled = true)
+    public void SimplePreauth_PartialComplete_FullRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1568,7 +1578,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1616,8 +1626,8 @@ public class Refund {
                 cardHolderName, simpleAmountPreauthRefund3, simpleAmountPreauthRefund3, testGateway, email);
     }
 
-    @Test
-    public void FullPreauthRefundSimpleFullAdmin(){
+    @Test (enabled = true)
+    public void SimplePreauth_FullComplete_FullRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -1644,7 +1654,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -1693,31 +1703,27 @@ public class Refund {
     }
 
 
-    /*
+
     // MERCHANT
     // 3DS partial
-    @Test
-    public void PendingRefund3DSPartialMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPending_PartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-        AMOUNT = "Amount=" + threeDSAmountPending + ".40";
+        AMOUNT  = "Amount=" + threeDSAmountPending + ".44";
 
-        // complete gw trx
+        //create transaction
         requestPost = Environment.createPOSTRequest(URL);
-        SecurityKey = "SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
-        requestPost = (HttpPost) Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_PENDING, ORDER_ID + id, AMOUNT ,
-                CURRENCY_RUB, SecurityKey, COUNTRY, CITY, ADDRESS, EMAIL, ISSUER, CARD_HOLDER_NAME, CARD_NUMBER, CARD_EXP_DATE, CARD_CVV));
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-
-        // get trx id from response message
-        idTransaction = Arrays.asList(response.get(0).split("&")).get(0).replace("Id=","");
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
         PAReq =  PAReq.substring(3, PAReq.length()-2).replace(" ", "").replace(",", "");
-
         String IdTransaction = TestUtils.getParameter(response, "Id=.*&Oper");
         IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
 
@@ -1736,11 +1742,9 @@ public class Refund {
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("PaReq", PAReq));
             pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
             requestPost.setEntity(new UrlEncodedFormEntity(pairs));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -1748,8 +1752,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction, PRIVATE_SECURITY_KEY_3DS_PENDING));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -1758,7 +1762,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -1781,21 +1784,21 @@ public class Refund {
 
         //check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpending3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPending);
+                settledStatus, threeDSAmountPending);
 
         //type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPendingPart1);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPendingRefund1);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPendingPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart1, amount3DSPendingPart1, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -1804,26 +1807,23 @@ public class Refund {
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPendingPart1, amount3DSPendingPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void PartialPreauthRefund3DSPartialMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_PartialComplete_PartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth1 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth1 + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -1861,8 +1861,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -1871,7 +1871,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -1882,12 +1881,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth1, threeDSAmountPreauth1, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -1906,21 +1906,21 @@ public class Refund {
 
         // check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPreauthComplete);
+                settledStatus, threeDSAmountPreauthComplete);
 
         // type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart1);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPendingRefund1);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -1930,158 +1930,25 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
 
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void FullPreauthRefund3DSPartialMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_FullComplete_PartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth2 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth2 + ".44";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
-
-        //get parameters
-        String PAReq = TestUtils.getParameter(response, "eq=.*&A");
-        PAReq =  PAReq.substring(3, PAReq.length()-2).replace(" ", "").replace(",", "");
-
-        String IdTransaction = TestUtils.getParameter(response, "Id=.*&Oper");
-        IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
-
-        String PD = TestUtils.getParameter(response, "PD=.*&binC");
-        //PD = PD.substring(3, PD.length()-5);
-
-        // если ip прописан в secure (если не прописан, то не отсутствует поле "страна запроса" в карточке транзакции в ЛК мерчанта)
-        PD = PD.substring(3, PD.length()-18);
-
-        String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
-        ACSUrl = ACSUrl.substring(4, ACSUrl.length()-4);
-
-        //send parameter PAReq
-        requestPost = Environment.createPOSTRequest(ACSUrl);
-
-        try {
-            List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-            pairs.add(new BasicNameValuePair("PaReq", PAReq));
-            pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
-            requestPost.setEntity(new UrlEncodedFormEntity(pairs));
-            requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
-            response = Environment.getResponceRequest(requestPost);
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String x = response.get(15).substring(49, response.get(15).length()-3);
-        String y = response.get(16).substring(46, response.get(16).length()-3);
-
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
-        List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
-        pair2.add(new BasicNameValuePair("PARes", x));
-        pair2.add(new BasicNameValuePair("MD", y));
-
-        try {
-            requestPost.setEntity(new UrlEncodedFormEntity(pair2));
-            requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
-            response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
-            idTransaction = response.toString().substring(25,response.toString().length()- 16);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        // full preauth complete
-        driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
-
-        // change status transaction
-        Connect connectDb = new Connect();
-        connectDb.executeQuery(idTransaction);
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
-        }
-
-        // authorization merchant and open registrationRefundForm
-        driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant,captcha);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
-
-        // check registrationRefundForm
-        TestUtils.checkRefundFormMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPreauthComplete);
-
-        // type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart1);
-        driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
-
-        // get idRefund
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
-
-        // check transaction card
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
-
-        // admin authorization and transaction card checking
-        driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
-
-        driver.findElement(By.linkText("Транзакции")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
-    }
-    /*
-    // 3DS partial + partial
-    @Test
-    public void PendingRefund3DSPartPartMerchant(){
-
-        long id = System.currentTimeMillis();
-        WebDriver driver = DriverFactory.getInstance().getDriver();
-
-        // add merchant parameters
-        MERCHANT_ID += MIDpending3DS;
-        AMOUNT +=  amount3DSPending + ".22";
-        PRIVATE_SECURITY_KEY += threeDSPendingPrivateSecurityKey;
-
-        //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
-        requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
-        List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -2117,8 +1984,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -2127,7 +1994,126 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
+            idTransaction = response.toString().substring(25,response.toString().length()- 16);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        // partial preauth complete
+        driver.get(baseUrl + "login/");
+        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+        driver.findElement(By.id("ctl00_content_all")).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth2, threeDSAmountPreauth2, testGateway, email);
+        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+
+        // change status transaction
+        Connect connectDb = new Connect();
+        connectDb.executeQuery(idTransaction);
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+
+        // authorization merchant and open registrationRefundForm
+        driver.get(baseUrl + "login/");
+        Utils.authorized(driver, loginMerchant, passwordMerchant,captcha);
+        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+        driver.findElement(By.id("ctl00_content_all")).click();
+        driver.findElement(By.linkText(idTransaction)).click();
+        driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
+
+        // check registrationRefundForm
+        TestUtils.checkRefundFormMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, cardHolderName,
+                settledStatus, threeDSAmountPreauthComplete);
+
+        // type amount and refund
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPendingRefund1);
+        driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
+
+        // get idRefund
+        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+        driver.findElement(By.id("ctl00_content_all")).click();
+        driver.findElement(By.linkText(idTransaction)).click();
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
+
+        // check transaction card
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
+                cardHolderName, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, email);
+
+        // admin authorization and transaction card checking
+        driver.get(baseUrl + "login/");
+        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+
+        driver.findElement(By.linkText("Транзакции")).click();
+        driver.findElement(By.id("ctl00_content_all")).click();
+
+        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, cardHolderName, email);
+    }
+
+    // 3DS partial + partial
+    @Test (enabled = true)
+    public void ThreeDSPending_PartialPartialRefund_Merchant(){
+
+        long id = System.currentTimeMillis();
+        WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPending + ".44";
+
+        //create transaction
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
+        requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
+        List<String> response = Environment.getResponceRequest(requestPost);
+
+        //get parameters
+        String PAReq = TestUtils.getParameter(response, "eq=.*&A");
+        PAReq =  PAReq.substring(3, PAReq.length()-2).replace(" ", "").replace(",", "");
+        String IdTransaction = TestUtils.getParameter(response, "Id=.*&Oper");
+        IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
+
+        String PD = TestUtils.getParameter(response, "PD=.*&binC");
+        //PD = PD.substring(3, PD.length()-5);
+        // если ip прописан в secure (если не прописан, то не заполняется поле "страна запроса" в карточке транзакции в ЛК мерчанта)
+        PD = PD.substring(3, PD.length()-18);
+
+        String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
+        ACSUrl = ACSUrl.substring(4, ACSUrl.length()-4);
+
+        //send parameter PAReq
+        requestPost = Environment.createPOSTRequest(ACSUrl);
+
+        try {
+            List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+            pairs.add(new BasicNameValuePair("PaReq", PAReq));
+            pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
+            requestPost.setEntity(new UrlEncodedFormEntity(pairs));
+            requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
+            response = Environment.getResponceRequest(requestPost);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String x = response.get(15).substring(49, response.get(15).length()-3);
+        String y = response.get(16).substring(46, response.get(16).length()-3);
+
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction, PRIVATE_SECURITY_KEY_3DS_PENDING));
+        List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
+        pair2.add(new BasicNameValuePair("PARes", x));
+        pair2.add(new BasicNameValuePair("MD", y));
+
+        try {
+            requestPost.setEntity(new UrlEncodedFormEntity(pair2));
+            requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
+            response = Environment.getResponceRequest(requestPost);
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -2140,49 +2126,41 @@ public class Refund {
             driver.switchTo().window(winHandle);
         }
 
-        // merchant authorization
+        //authorization merchant and open registrationRefundForm
         driver.get(baseUrl + "login/");
         Utils.authorized(driver, loginMerchant, passwordMerchant,captcha);
-
-        // go to transactions list (all)
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-
-        // open transaction card and open refund form
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
 
-        //check opened refund form
+        //check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpending3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPending);
+                settledStatus, threeDSAmountPending);
 
-        //type amount and make FIRST refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPendingPart1);
+        //type amount and refund
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPendingRefund1);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
-        // get first refund id
+        // get idRefund
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPendingPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart1, amount3DSPendingPart1, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, email);
 
-        // admin authorization
+        // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
         Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
 
-        // go to all transactions list
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-
-        // check provided fields
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPendingPart1,
-                amount3DSPendingPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, cardHolderName, email);
 
         // make SECOND refund
         driver.get(baseUrl + "login/");
@@ -2197,7 +2175,7 @@ public class Refund {
         driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
 
         //type amount
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPendingPart2);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPendingRefund2);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get second refund id
@@ -2205,11 +2183,11 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund2(driver, idTransaction, amount3DSPendingPart2);
+        idRefund2 = TestUtils.getIdTransactionRefund2(driver, idTransaction, threeDSAmountPendingRefund2);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund2, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart2, amount3DSPendingPart2, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund2, threeDSAmountPendingRefund2, testGateway, email);
 
         // admin authorization
         driver.get(baseUrl + "login/");
@@ -2221,26 +2199,23 @@ public class Refund {
 
         // check provided fields
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPendingPart2,
-                amount3DSPendingPart2, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, threeDSAmountPendingRefund2,
+                threeDSAmountPendingRefund2, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void PartialPreauthRefund3DSPartPartMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_PartialComplete_PartialPartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth1 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth1 + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -2278,8 +2253,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -2288,7 +2263,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -2299,12 +2273,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth1, threeDSAmountPreauth1, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2323,21 +2298,21 @@ public class Refund {
 
         // check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPreauthComplete);
+                settledStatus, threeDSAmountPreauthComplete);
 
         // type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart1);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPreauthRefund1);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -2347,8 +2322,8 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
 
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, cardHolderName, email);
 
         // make SECOND refund
         driver.get(baseUrl + "login/");
@@ -2363,7 +2338,7 @@ public class Refund {
         driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
 
         //type amount
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart2);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPreauthRefund2);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get second refund id
@@ -2371,11 +2346,11 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund2(driver, idTransaction, amount3DSPreauthPart2);
+        idRefund2 = TestUtils.getIdTransactionRefund2(driver, idTransaction, threeDSAmountPreauthRefund2);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund2, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart2, amount3DSPreauthPart2, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund2, threeDSAmountPreauthRefund2, testGateway, email);
 
         // admin authorization
         driver.get(baseUrl + "login/");
@@ -2387,29 +2362,25 @@ public class Refund {
 
         // check provided fields
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthPart2,
-                amount3DSPreauthPart2, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, threeDSAmountPreauthRefund2,
+                threeDSAmountPreauthRefund2, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void FullPreauthRefund3DSPartPartMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_FullComplete_PartialPartialRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth2 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth2 + ".44";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -2420,8 +2391,7 @@ public class Refund {
 
         String PD = TestUtils.getParameter(response, "PD=.*&binC");
         //PD = PD.substring(3, PD.length()-5);
-
-        // если ip прописан в secure (если не прописан, то не отсутствует поле "страна запроса" в карточке транзакции в ЛК мерчанта)
+        // если ip прописан в secure (если не прописан, то не заполняется поле "страна запроса" в карточке транзакции в ЛК мерчанта)
         PD = PD.substring(3, PD.length()-18);
 
         String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
@@ -2446,8 +2416,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -2456,7 +2426,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -2467,12 +2436,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth2, threeDSAmountPreauth2, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2491,21 +2461,21 @@ public class Refund {
 
         // check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPreauthComplete);
+                settledStatus, threeDSAmountPreauthComplete);
 
         // type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart1);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPreauthRefund1);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -2515,8 +2485,8 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
 
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, cardHolderName, email);
 
         // make SECOND refund
         driver.get(baseUrl + "login/");
@@ -2531,7 +2501,7 @@ public class Refund {
         driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
 
         //type amount
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart2);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPreauthRefund2);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get second refund id
@@ -2539,11 +2509,11 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund2(driver, idTransaction, amount3DSPreauthPart2);
+        idRefund2 = TestUtils.getIdTransactionRefund2(driver, idTransaction, threeDSAmountPreauthRefund2);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund2, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart2, amount3DSPreauthPart2, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund2, threeDSAmountPreauthRefund2, testGateway, email);
 
         // admin authorization
         driver.get(baseUrl + "login/");
@@ -2555,35 +2525,29 @@ public class Refund {
 
         // check provided fields
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount3DSPreauthPart2,
-                amount3DSPreauthPart2, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, threeDSAmountPreauthRefund2,
+                threeDSAmountPreauthRefund2, testGateway, cardHolderName, email);
     }
 
     // 3DS full
-    @Test
-    public void PendingRefund3DSFullMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPending_FullRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-
-        // add merchant parameters
-        MERCHANT_ID += MIDpending3DS;
-        AMOUNT +=  amount3DSPending + ".22";
-        PRIVATE_SECURITY_KEY += threeDSPendingPrivateSecurityKey;
+        AMOUNT  = "Amount=" + threeDSAmountPending + ".44";
 
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
         PAReq =  PAReq.substring(3, PAReq.length()-2).replace(" ", "").replace(",", "");
-
         String IdTransaction = TestUtils.getParameter(response, "Id=.*&Oper");
         IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
 
@@ -2602,11 +2566,9 @@ public class Refund {
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("PaReq", PAReq));
             pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
             requestPost.setEntity(new UrlEncodedFormEntity(pairs));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -2614,8 +2576,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction, PRIVATE_SECURITY_KEY_3DS_PENDING));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -2624,7 +2586,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -2647,10 +2608,10 @@ public class Refund {
 
         //check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpending3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPending);
+                settledStatus, threeDSAmountPending);
 
         //type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPendingPart3);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPendingRefund3);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
@@ -2658,11 +2619,11 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPendingPart3);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart3, amount3DSPendingPart3, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund3, threeDSAmountPendingRefund3, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -2671,27 +2632,24 @@ public class Refund {
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPendingPart3, amount3DSPendingPart3, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund3, threeDSAmountPendingRefund3, testGateway, cardHolderName, email);
 
     }
 
-    @Test
-    public void PartialPreauthRefund3DSFullMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_PartialComplete_FullRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth1 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth1 + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -2729,8 +2687,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -2739,7 +2697,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -2750,12 +2707,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth1, threeDSAmountPreauth1, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2774,10 +2732,10 @@ public class Refund {
 
         // check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPreauthComplete);
+                settledStatus, threeDSAmountPreauthComplete);
 
         // type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart3);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPreauthRefund3);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
@@ -2785,11 +2743,11 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart3);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -2799,29 +2757,25 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
 
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, cardHolderName, email);
     }
 
-    @Test
-    public void FullPreauthRefund3DSFullMerchant(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_FullComplete_FullRefund_Merchant(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth2 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth2 + ".44";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -2832,8 +2786,7 @@ public class Refund {
 
         String PD = TestUtils.getParameter(response, "PD=.*&binC");
         //PD = PD.substring(3, PD.length()-5);
-
-        // если ip прописан в secure (если не прописан, то не отсутствует поле "страна запроса" в карточке транзакции в ЛК мерчанта)
+        // если ip прописан в secure (если не прописан, то не заполняется поле "страна запроса" в карточке транзакции в ЛК мерчанта)
         PD = PD.substring(3, PD.length()-18);
 
         String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
@@ -2858,8 +2811,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -2868,7 +2821,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -2879,12 +2831,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth2, threeDSAmountPreauth2, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         // change status transaction
         Connect connectDb = new Connect();
@@ -2903,21 +2856,22 @@ public class Refund {
 
         // check registrationRefundForm
         TestUtils.checkRefundFormMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount3DSPreauthComplete);
+                settledStatus, threeDSAmountPreauthComplete);
 
         // type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount3DSPreauthPart3);
+        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(threeDSAmountPreauthRefund3);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
 
         // get idRefund
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart3);
+
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, email);
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
@@ -2927,36 +2881,31 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
 
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, cardHolderName, email);
     }
+
 
     // ADMIN
     // 3DS partial
-    @Test
-    public void PendingRefund3DSPartialAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPending_PartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-
-        // add merchant parameters
-        MERCHANT_ID += MIDpending3DS;
-        AMOUNT +=  amount3DSPending + ".22";
-        PRIVATE_SECURITY_KEY += threeDSPendingPrivateSecurityKey;
+        AMOUNT  = "Amount=" + threeDSAmountPending + ".44";
 
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
         PAReq =  PAReq.substring(3, PAReq.length()-2).replace(" ", "").replace(",", "");
-
         String IdTransaction = TestUtils.getParameter(response, "Id=.*&Oper");
         IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
 
@@ -2975,11 +2924,9 @@ public class Refund {
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("PaReq", PAReq));
             pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
             requestPost.setEntity(new UrlEncodedFormEntity(pairs));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -2987,8 +2934,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction, PRIVATE_SECURITY_KEY_3DS_PENDING));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -2997,7 +2944,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3018,11 +2964,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPending);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPending);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPendingPart1);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPendingRefund1);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3030,12 +2976,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPendingPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPendingPart1, amount3DSPendingPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3043,25 +2989,22 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart1, amount3DSPendingPart1, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, email);
     }
 
-    @Test
-    public void PartialPreauthRefund3DSPartialAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_PartialComplete_PartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth1 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth1 + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -3099,8 +3042,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -3109,7 +3052,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3120,12 +3062,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth1, threeDSAmountPreauth1, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3142,27 +3085,24 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPreauthComplete);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPreauthComplete);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart1);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund1);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
         //authorization admin and get idRefund
-        driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
-        driver.findElement(By.linkText("Транзакции")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3170,28 +3110,24 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, email);
     }
 
-    @Test
-    public void FullPreauthRefund3DSPartialAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_FullComplete_PartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth2 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth2 + ".44";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -3202,8 +3138,7 @@ public class Refund {
 
         String PD = TestUtils.getParameter(response, "PD=.*&binC");
         //PD = PD.substring(3, PD.length()-5);
-
-        // если ip прописан в secure (если не прописан, то не отсутствует поле "страна запроса" в карточке транзакции в ЛК мерчанта)
+        // если ip прописан в secure (если не прописан, то не заполняется поле "страна запроса" в карточке транзакции в ЛК мерчанта)
         PD = PD.substring(3, PD.length()-18);
 
         String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
@@ -3228,8 +3163,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -3238,7 +3173,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3249,12 +3183,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth2, threeDSAmountPreauth2, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3271,27 +3206,24 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPreauthComplete);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPreauthComplete);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart3);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund1);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
         //authorization admin and get idRefund
-        driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
-        driver.findElement(By.linkText("Транзакции")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3299,34 +3231,28 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, email);
     }
 
     // 3DS partial + partial
-    @Test
-    public void PendingRefund3DSPartPartAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPending_PartialPartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-
-        // add merchant parameters
-        MERCHANT_ID += MIDpending3DS;
-        AMOUNT +=  amount3DSPending + ".22";
-        PRIVATE_SECURITY_KEY += threeDSPendingPrivateSecurityKey;
+        AMOUNT  = "Amount=" + threeDSAmountPending + ".44";
 
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
         PAReq =  PAReq.substring(3, PAReq.length()-2).replace(" ", "").replace(",", "");
-
         String IdTransaction = TestUtils.getParameter(response, "Id=.*&Oper");
         IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
 
@@ -3345,11 +3271,9 @@ public class Refund {
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("PaReq", PAReq));
             pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
             requestPost.setEntity(new UrlEncodedFormEntity(pairs));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -3357,8 +3281,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction, PRIVATE_SECURITY_KEY_3DS_PENDING));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -3367,7 +3291,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3388,11 +3311,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPending);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPending);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPendingPart1);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPendingRefund1);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3400,12 +3323,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPendingPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPendingPart1, amount3DSPendingPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3413,7 +3336,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart1, amount3DSPendingPart1, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund1, threeDSAmountPendingRefund1, testGateway, email);
 
         // second refund
         driver.get(baseUrl + "login/");
@@ -3423,11 +3346,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, amount3DSPendingPart1, amount3DSPendingPart2);
+        TestUtils.checkRefundFormAdmin(driver, threeDSAmountPendingRefund1, threeDSAmountPendingRefund2);
 
         //type amount and make refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPendingPart2);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPendingRefund2);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3435,12 +3358,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPendingPart2);
+        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPendingPart2, amount3DSPendingPart2, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund2, threeDSAmountPendingRefund2, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3448,25 +3371,22 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund2, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart2, amount3DSPendingPart2, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund2, threeDSAmountPendingRefund2, testGateway, email);
     }
 
-    @Test
-    public void PartialPreauthRefund3DSPartPartAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_PartialComplete_PartialPartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth1 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth1 + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -3504,8 +3424,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -3514,7 +3434,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3525,12 +3444,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth1, threeDSAmountPreauth1, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3547,11 +3467,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPreauthComplete);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPreauthComplete);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart1);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund1);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3562,12 +3482,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3575,7 +3495,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, email);
 
         // second refund
         driver.get(baseUrl + "login/");
@@ -3585,11 +3505,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, amount3DSPreauthPart1, amount3DSPreauthPart2);
+        TestUtils.checkRefundFormAdmin(driver, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund2);
 
         //type amount and make refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart2);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund2);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3597,12 +3517,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart2);
+        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart2, amount3DSPreauthPart2, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund2, threeDSAmountPreauthRefund2, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3610,28 +3530,24 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund2, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart2, amount3DSPreauthPart2, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund2, threeDSAmountPreauthRefund2, testGateway, email);
     }
 
-    @Test
-    public void FullPreauthRefund3DSPartPartAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_FullComplete_PartialPartialRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth2 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth2 + ".44";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -3642,8 +3558,7 @@ public class Refund {
 
         String PD = TestUtils.getParameter(response, "PD=.*&binC");
         //PD = PD.substring(3, PD.length()-5);
-
-        // если ip прописан в secure (если не прописан, то не отсутствует поле "страна запроса" в карточке транзакции в ЛК мерчанта)
+        // если ip прописан в secure (если не прописан, то не заполняется поле "страна запроса" в карточке транзакции в ЛК мерчанта)
         PD = PD.substring(3, PD.length()-18);
 
         String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
@@ -3668,8 +3583,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -3678,7 +3593,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3689,12 +3603,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth2, threeDSAmountPreauth2, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3711,11 +3626,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPreauthComplete);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPreauthComplete);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart1);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund1);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3726,12 +3641,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart1);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3739,7 +3654,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart1, amount3DSPreauthPart1, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund1, testGateway, email);
 
         // second refund
         driver.get(baseUrl + "login/");
@@ -3749,11 +3664,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, amount3DSPreauthPart1, amount3DSPreauthPart2);
+        TestUtils.checkRefundFormAdmin(driver, threeDSAmountPreauthRefund1, threeDSAmountPreauthRefund2);
 
         //type amount and make refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart2);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund2);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3761,12 +3676,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart2);
+        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart2, amount3DSPreauthPart2, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund2, threeDSAmountPreauthRefund2, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3774,34 +3689,28 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund2, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart2, amount3DSPreauthPart2, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund2, threeDSAmountPreauthRefund2, testGateway, email);
     }
 
     // 3DS full
-    @Test
-    public void PendingRefund3DSFullAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPending_FullRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-
-        // add merchant parameters
-        MERCHANT_ID += MIDpending3DS;
-        AMOUNT +=  amount3DSPending + ".22";
-        PRIVATE_SECURITY_KEY += threeDSPendingPrivateSecurityKey;
+        AMOUNT  = "Amount=" + threeDSAmountPending + ".44";
 
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PENDING);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PENDING, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
         PAReq =  PAReq.substring(3, PAReq.length()-2).replace(" ", "").replace(",", "");
-
         String IdTransaction = TestUtils.getParameter(response, "Id=.*&Oper");
         IdTransaction = IdTransaction.substring(3, IdTransaction.length()-5);
 
@@ -3820,11 +3729,9 @@ public class Refund {
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("PaReq", PAReq));
             pairs.add(new BasicNameValuePair("MD", IdTransaction + ";" + PD));
-            //pairs.add(new BasicNameValuePair("TermUrl", "https://secure.payonlinesystem.com/3ds/complete.3ds?merchantId=13680&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId="+IdTransaction,PRIVATE_SECURITY_KEY)));
             requestPost.setEntity(new UrlEncodedFormEntity(pairs));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -3832,8 +3739,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PENDING
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PENDING,"TransactionId=" + IdTransaction, PRIVATE_SECURITY_KEY_3DS_PENDING));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -3842,7 +3749,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3863,11 +3769,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPending);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPending);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPendingPart3);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPendingRefund3);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -3875,12 +3781,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPendingPart3);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPendingPart3, amount3DSPendingPart3, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPendingRefund3, threeDSAmountPendingRefund3, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -3888,25 +3794,22 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPendingPart3, amount3DSPendingPart3, testGateway, email);
+                cardHolderName, threeDSAmountPendingRefund3, threeDSAmountPendingRefund3, testGateway, email);
     }
 
-    @Test
-    public void PartialPreauthRefund3DSFullAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_PartialComplete_FullRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth1 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth1 + ".00";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
 
@@ -3944,8 +3847,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -3954,7 +3857,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -3965,12 +3867,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth1, threeDSAmountPreauth1, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -3987,11 +3890,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPreauthComplete);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPreauthComplete);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart3);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund3);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -4002,12 +3905,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart3);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -4015,28 +3918,24 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, email);
+                cardHolderName, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, email);
     }
 
-    @Test
-    public void FullPreauthRefund3DSFullAdmin(){
+    @Test (enabled = true)
+    public void ThreeDSPreauth_FullComplete_FullRefund_Admin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT  = "Amount=" + threeDSAmountPreauth2 + ".44";
 
-        // add merchant parameters
-        MERCHANT_ID += MIDpreAuth3DS;
-        AMOUNT += amount3DSPreauth2 + ".44";
-        PRIVATE_SECURITY_KEY += threeDSPreAuthPrivateSecurityKey;
-
+        // api part
         //create transaction
-        requestPost = Environment.createPOSTRequest(URL.replace("3ds/", ""));
-        SECURITY_KEY ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY);
-        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SECURITY_KEY, CARD_HOLDER_NAME,
-                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP));
+        requestPost = Environment.createPOSTRequest(URL);
+        SecurityKey ="SecurityKey=" + TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT, CURRENCY_RUB, PRIVATE_SECURITY_KEY_3DS_PREAUTH);
+        requestPost = (HttpPost)Environment.setEntityRequest(requestPost, TestUtils.createBodyRequest(MERCHANT_ID_3DS_PREAUTH, ORDER_ID + id, AMOUNT,CURRENCY_RUB, SecurityKey, CARD_HOLDER_NAME,
+                CARD_NUMBER, CARD_EXP_DATE, CARD_CVV, COUNTRY, CITY, IP, EMAIL, ISSUER));
         requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
         List<String> response = Environment.getResponceRequest(requestPost);
-        System.out.println(response);
 
         //get parameters
         String PAReq = TestUtils.getParameter(response, "eq=.*&A");
@@ -4047,8 +3946,7 @@ public class Refund {
 
         String PD = TestUtils.getParameter(response, "PD=.*&binC");
         //PD = PD.substring(3, PD.length()-5);
-
-        // если ip прописан в secure (если не прописан, то не отсутствует поле "страна запроса" в карточке транзакции в ЛК мерчанта)
+        // если ip прописан в secure (если не прописан, то не заполняется поле "страна запроса" в карточке транзакции в ЛК мерчанта)
         PD = PD.substring(3, PD.length()-18);
 
         String ACSUrl = TestUtils.getParameter(response, "Url=.*&PD=");
@@ -4073,8 +3971,8 @@ public class Refund {
         String x = response.get(15).substring(49, response.get(15).length()-3);
         String y = response.get(16).substring(46, response.get(16).length()-3);
 
-        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID
-                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY));
+        requestPost = Environment.createPOSTRequest("https://secure.payonlinesystem.com/3ds/complete.3ds?" + MERCHANT_ID_3DS_PREAUTH
+                + "&publicKey="+TestUtils.getSecurityKey(MERCHANT_ID_3DS_PREAUTH,"TransactionId=" + IdTransaction,PRIVATE_SECURITY_KEY_3DS_PREAUTH));
         List<NameValuePair> pair2 = new ArrayList<NameValuePair>();
         pair2.add(new BasicNameValuePair("PARes", x));
         pair2.add(new BasicNameValuePair("MD", y));
@@ -4083,7 +3981,6 @@ public class Refund {
             requestPost.setEntity(new UrlEncodedFormEntity(pair2));
             requestPost = (HttpPost) Environment.setHeadersRequest(requestPost, CONTENT_TYPE);
             response = Environment.getResponceRequest(requestPost);
-            System.out.print(response.toString()+ " Pares-------------\n");
             idTransaction = response.toString().substring(25,response.toString().length()- 16);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -4094,12 +3991,13 @@ public class Refund {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idTransaction, id + orderID, typePurchase,
+                preAuthStatus, cardHolderName, threeDSAmountPreauth2, threeDSAmountPreauth2, testGateway, email);
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount3DSPreauthComplete);
+        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSAmountPreauthComplete);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue(driver.findElement(By.xpath(".*//*//**//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //change status transaction
         Connect connectDb = new Connect();
@@ -4116,11 +4014,11 @@ public class Refund {
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Вернуть деньги")).click();
 
-        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, amount3DSPreauthComplete);
+        TestUtils.checkRefundFormAdmin(driver, completedRefundsAmount0, threeDSAmountPreauthComplete);
 
         //type amount and refund
         driver.findElement(By.name("ctl00$content$actions$refundAmount")).clear();
-        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(amount3DSPreauthPart3);
+        driver.findElement(By.name("ctl00$content$actions$refundAmount")).sendKeys(threeDSAmountPreauthRefund3);
         driver.findElement(By.name("ctl00$content$actions$cmdRefund")).click();
         TestUtils.closeAlertAndGetItsText(driver);
 
@@ -4131,12 +4029,12 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount3DSPreauthPart3);
+        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, cardHolderName, email);
+                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                expDate, bank, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, cardHolderName, email);
 
         //authorization merchant and check cardTransaction
         driver.get(baseUrl + "login/");
@@ -4144,6 +4042,6 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount3DSPreauthPart3, amount3DSPreauthPart3, testGateway, email);
-    }*/
+                cardHolderName, threeDSAmountPreauthRefund3, threeDSAmountPreauthRefund3, testGateway, email);
+    }
 }
