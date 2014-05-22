@@ -3,26 +3,27 @@
 <suite name = "Regression" verbose ="1" parallel="false">
 
     <suite-files>
-
+        <!--DONE-->
         <!--<suite-file path = "gateways/suite.xml"/>-->
         <suite-file path = "critical/transaction/suite.xml"/>
 
+        <!--TODO-->
     </suite-files>
 
     <test name = "Critical Test">
         <classes>
+            <!--DONE-->
+            <!--<class name = "medium.openItem.MerchantLk"/>
+            <class name = "medium.openItem.AdminLK" />-->
+
             <!--TODO check inset after action-->
             <!--TODO check links and ... in cardTransaction-->
             <!--TODO fail case in action-->
             <!--TODO разделить @логику@ апи и гуи-->
 
             <!--<class name = "critical.callbacks.SetParametersForCallbacks" />-->
-            <!--<class name = "critical.callbacks.Callbacks" /> -->
+            <!--<class name = "critical.callbacks.Callbacks" />-->
             <!--<class name = "critical.authorized.Authorized" />-->
-
-            <!--<class name = "medium.openItem.MerchantLk"/>-->
-            <!--<class name = "medium.openItem.AdminLK" />-->
-
         </classes>
     </test>
 
