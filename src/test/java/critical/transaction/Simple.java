@@ -1,7 +1,7 @@
 package critical.transaction;
 
-
 import critical.TestUtils;
+import model.Captcha;
 import model.DriverFactory;
 import model.Environment;
 import model.Utils;
@@ -20,7 +20,6 @@ public class Simple {
     private String passwordMerchant;
     private String loginAdmin;
     private String passwordAdmin;
-    private String captcha = "ability";
 
     private String pendingMercahnt = "#57482 - www.test1.ru";
     private String optionPendingMerchant = "option[value=\"57482\"]";
@@ -35,7 +34,7 @@ public class Simple {
     private String amount = "222";
     private String partialCompleteAmount = "22";
 
-    private String orderID = "GUI-autotest";
+    private String orderID = "";
     private String email = "autoTEST@test.test";
     private String numberCardA = "5555";
     private String numberCardB = "5555";
@@ -72,16 +71,17 @@ public class Simple {
         passwordMerchant = parameters[4];
     }
 
-    @Test
+    @Test (enabled = true)
     public void pendingTransaction(){
 
         WebDriver driver = DriverFactory.getInstance().getDriver();
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
 
         //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount, numberCardA, numberCardB, numberCardC, numberCardD,
+        idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID,
+                amount, numberCardA, numberCardB, numberCardC, numberCardD,
                 expDateMonth, expDateYear, cvc, bank, email, currencyRUB,cardHolderName);
 
         //check result page
@@ -97,30 +97,33 @@ public class Simple {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName, amount, amount, testGateway, email);
+        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus,
+                cardHolderName, amount, amount, testGateway, email);
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.authorized(driver, loginAdmin, passwordAdmin, Captcha.getCaptcha(driver));
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardType, numberCardA + numberCardB + numberCardC + numberCardD,
+        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus,
+                cardType, numberCardA + numberCardB + numberCardC + numberCardD,
                 expDate, bank, amount, amount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void preAuthTransactionPartial(){
 
         WebDriver driver = DriverFactory.getInstance().getDriver();
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
 
         //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount, numberCardA, numberCardB, numberCardC, numberCardD,
+        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID,
+                amount, numberCardA, numberCardB, numberCardC, numberCardD,
                 expDateMonth, expDateYear, cvc, bank, email, currencyRUB,cardHolderName);
 
         //check result page
@@ -136,10 +139,11 @@ public class Simple {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preAuthStatus, cardHolderName, amount, amount, testGateway, email);
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preAuthStatus,
+                cardHolderName, amount, amount, testGateway, email);
 
         // partial preauth complete
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
@@ -148,28 +152,31 @@ public class Simple {
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName, partialCompleteAmount, partialCompleteAmount, testGateway, email);
+        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                partialCompleteAmount, partialCompleteAmount, testGateway, email);
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.authorized(driver, loginAdmin, passwordAdmin, Captcha.getCaptcha(driver));
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardType,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, partialCompleteAmount, testGateway, cardHolderName, email);
+                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, partialCompleteAmount,
+                testGateway, cardHolderName, email);
 
     }
 
-    @Test
+    @Test (enabled = true)
     public void preAuthTransactionFull(){
 
         WebDriver driver = DriverFactory.getInstance().getDriver();
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
 
         //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + "1" + orderID, amount, numberCardA, numberCardB, numberCardC, numberCardD,
+        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + "1" + orderID,
+                amount, numberCardA, numberCardB, numberCardC, numberCardD,
                 expDateMonth, expDateYear, cvc, bank, email, currencyRUB,cardHolderName);
 
         //check result page
@@ -185,10 +192,11 @@ public class Simple {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + "1" + orderID, typePurchase, preAuthStatus, cardHolderName, amount, amount, testGateway, email);
+        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + "1" + orderID, typePurchase, preAuthStatus,
+                cardHolderName, amount, amount, testGateway, email);
 
         // full preauth complete
         driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
@@ -197,11 +205,12 @@ public class Simple {
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
         Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + "1" + orderID, typePurchase, pendingStatus, cardHolderName, amount, amount, testGateway, email);
+        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + "1" + orderID, typePurchase, pendingStatus,
+                cardHolderName, amount, amount, testGateway, email);
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.authorized(driver, loginAdmin, passwordAdmin, Captcha.getCaptcha(driver));
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id +"1" + orderID, lastActionComplete, pendingStatus, cardType,
