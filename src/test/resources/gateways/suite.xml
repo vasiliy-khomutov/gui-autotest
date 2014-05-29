@@ -4,10 +4,10 @@
     <test name = "GW Test">
         <classes>
             <!--DONE-->
-            <!--<class name = "gateways.A2S"/>-->
+            <class name = "gateways.A2S"/>
 
             <!--IN PROGRESS-->
-            <class name = "gateways.AZ"/>
+            <!--<class name = "gateways.AZ"/>-->
         </classes>
     </test>
 
@@ -16,5 +16,31 @@
     <parameter name = "voidList" value = "/src/test/resources/gateways/voidList" />
     <parameter name = "cbkList" value = "/src/test/resources/gateways/cbkList" />
     <parameter name = "refundList" value = "/src/test/resources/gateways/refundList" />
+
+    <parameter name = "url" value = "https://secure.payonlinesystem.com/payment" />
+    <parameter name = "contentType" value = "Content-Type:application/x-www-form-urlencoded" />
+    <parameter name = "MerchantId" value = "MerchantId=" />
+    <parameter name = "PrivateSecurityKey" value = "PrivateSecurityKey=" />
+
+    <!--TRX Details-->
+    <parameter name = "OrderId" value = "OrderId=" />
+    <parameter name = "Amount" value = "Amount=" />
+    <parameter name = "CurrencyRub" value = "Currency=RUB" />
+    <parameter name = "CurrencyEur" value = "Currency=EUR" />
+    <parameter name = "CurrencyUsd" value = "Currency=USD" />
+    <parameter name = "CardHolderName" value = "CardHolderName=MR.AUTOTEST" />
+    <parameter name = "CardNumber" value = "CardNumber=4111111111111111" />
+    <parameter name = "CardExpDate" value = "CardExpDate=0914" />
+    <parameter name = "CardCvv" value = "CardCvv=855" />
+    <parameter name = "Country" value = "Country=RU" />
+    <parameter name = "City" value = "City=London" />
+    <parameter name = "Address" value = "Address=ул.Строителей, 13" />
+    <parameter name = "Ip" value = "Ip=192.168.220.1" />
+    <parameter name = "Email" value = "Email=autoTEST@test.test" />
+    <parameter name = "Issuer" value = "Issuer=QA-BANK" />
+    <parameter name = "Commission" value = "Commission=" />
+    <parameter name = "Pnr" value = "PNR=M0BXCQ" />
+    <parameter name = "ReturnUrl" value = "ReturnUrl=http://www.ya.ru" />
+    <parameter name = "Idata" value = "IData=01        N2V VKO                     000000000000082121510MCXTEST TEST           " />
 
 </suite>
