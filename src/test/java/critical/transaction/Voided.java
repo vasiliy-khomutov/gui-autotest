@@ -145,7 +145,7 @@ public class Voided {
         MERCHANT_ID_3DS_PENDING = MerchantId + MIDpending3DS;
         MERCHANT_ID_3DS_PREAUTH = MerchantId + MIDpreAuth3DS;
         ORDER_ID = OrderId;
-        AMOUNT = Amount;
+        //AMOUNT = Amount;
         CURRENCY_RUB = CurrencyRub;
         PRIVATE_SECURITY_KEY_PENDING = PrivateSecurityKey + simplePendingPrivateSecurityKey;
         PRIVATE_SECURITY_KEY_PREAUTH = PrivateSecurityKey + simplePreauthPrivateSecurityKey;
@@ -171,13 +171,14 @@ public class Voided {
         passwordMerchant = parameters[4];
     }
 
+
     // simple merchant
-    @Test
+    @Test (enabled = true)
     public void SimplePendingVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-        AMOUNT += simpleamount + ".00";
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -221,11 +222,12 @@ public class Voided {
                 numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimplePreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -271,11 +273,12 @@ public class Voided {
                 expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimplePartialCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -303,7 +306,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simplepartialCompleteAmount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
@@ -335,11 +338,12 @@ public class Voided {
                 expDate, bank, simplepartialCompleteAmount, simplepartialCompleteAmount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleFullCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -367,7 +371,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
@@ -400,11 +404,12 @@ public class Voided {
     }
 
     // simple admin
-    @Test
+    @Test (enabled = true)
     public void SimplePendingVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -447,11 +452,12 @@ public class Voided {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimplePreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -492,11 +498,12 @@ public class Voided {
                 voidedStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimplePartialCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -520,7 +527,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simplepartialCompleteAmount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //admin authorization and void completed preauth
         driver.get(baseUrl + "login/");
@@ -550,11 +557,12 @@ public class Voided {
                 voidedStatus, cardHolderName, simplepartialCompleteAmount, simplepartialCompleteAmount, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleFullCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // complete gw trx
         requestPost = Environment.createPOSTRequest(URL);
@@ -578,7 +586,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleamount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //admin authorization and void completed preauth
         driver.get(baseUrl + "login/");
@@ -609,11 +617,12 @@ public class Voided {
     }
 
     // 3ds merchant
-    @Test
+    @Test (enabled = true)
     public void threeDSPendingVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -704,11 +713,12 @@ public class Voided {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -794,11 +804,12 @@ public class Voided {
                 expDate, bank, simpleamount, simpleamount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSPartialCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -901,11 +912,12 @@ public class Voided {
                 expDate, bank, threeDSpartialCompleteAmount, threeDSpartialCompleteAmount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSFullCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -1010,11 +1022,12 @@ public class Voided {
     }
 
     // 3ds admin
-    @Test
+    @Test (enabled = true)
     public void threeDSPendingVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -1104,11 +1117,12 @@ public class Voided {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -1196,11 +1210,12 @@ public class Voided {
                 voidedStatus, cardHolderName, simpleamount, simpleamount, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSPartialCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -1301,11 +1316,12 @@ public class Voided {
                 voidedStatus, cardHolderName, threeDSpartialCompleteAmount, threeDSpartialCompleteAmount, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSFullCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         // api part
         //create transaction
@@ -1408,11 +1424,12 @@ public class Voided {
     }
 
     // there is no way to complete sapmax api trx :(
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxPendingVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1456,11 +1473,12 @@ public class Voided {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1502,11 +1520,12 @@ public class Voided {
                 expDate, bank, simpleSapmaxAmount, simpleSapmaxAmount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxPartialCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1529,7 +1548,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxpartialCompleteAmount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
@@ -1561,11 +1580,12 @@ public class Voided {
                 expDate, bank, simpleSapmaxpartialCompleteAmount, simpleSapmaxpartialCompleteAmount, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxFullCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1588,7 +1608,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxAmount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
@@ -1621,11 +1641,12 @@ public class Voided {
     }
 
     // 3ss sapmax api = :(
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxPendingVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1670,11 +1691,12 @@ public class Voided {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1718,11 +1740,12 @@ public class Voided {
                 expDate, bank, threeDSamountSapmax, threeDSamountSapmax, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxPartialCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1746,7 +1769,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSpartialCompleteAmountSapmax);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
@@ -1779,11 +1802,12 @@ public class Voided {
                 expDate, bank, threeDSpartialCompleteAmountSapmax, threeDSpartialCompleteAmountSapmax, testGateway, cardHolderName, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxFullCompletedPreAuthVoid(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1807,7 +1831,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSamountSapmax);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
@@ -1841,7 +1865,7 @@ public class Voided {
     }
 
     // sapmax api = :/
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxPendingVoidAdmin(){
 
         long id = System.currentTimeMillis();
@@ -1887,11 +1911,12 @@ public class Voided {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -1931,11 +1956,12 @@ public class Voided {
                 voidedStatus, cardHolderName, simpleSapmaxAmount, simpleSapmaxAmount, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxPartialCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //merchant authorization
         driver.get(baseUrl + "login/");
@@ -1958,7 +1984,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxpartialCompleteAmount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //admin authorization and void completed preauth
         driver.get(baseUrl + "login/");
@@ -1988,11 +2014,12 @@ public class Voided {
                 voidedStatus, cardHolderName, simpleSapmaxpartialCompleteAmount, simpleSapmaxpartialCompleteAmount, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void SimpleSapmaxFullCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //merchant authorization
         driver.get(baseUrl + "login/");
@@ -2015,7 +2042,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(simpleSapmaxAmount);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //admin authorization and void completed preauth
         driver.get(baseUrl + "login/");
@@ -2046,11 +2073,12 @@ public class Voided {
     }
 
     // sapmax api = :\
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxPendingVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -2092,11 +2120,12 @@ public class Voided {
         driver.manage().deleteAllCookies();
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //authorization
         driver.get(baseUrl + "login/");
@@ -2136,11 +2165,12 @@ public class Voided {
                 voidedStatus, cardHolderName, threeDSamountSapmax, threeDSamountSapmax, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxPartialCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //merchant authorization
         driver.get(baseUrl + "login/");
@@ -2163,7 +2193,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSpartialCompleteAmountSapmax);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //admin authorization and void completed preauth
         driver.get(baseUrl + "login/");
@@ -2193,11 +2223,12 @@ public class Voided {
                 voidedStatus, cardHolderName, threeDSpartialCompleteAmountSapmax, threeDSpartialCompleteAmountSapmax, testGateway, email);
     }
 
-    @Test
+    @Test (enabled = true)
     public void threeDSSapmaxFullCompletedPreAuthVoidAdmin(){
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        AMOUNT = "Amount=" + simpleamount + ".00";
 
         //merchant authorization
         driver.get(baseUrl + "login/");
@@ -2220,7 +2251,7 @@ public class Voided {
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
         driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(threeDSamountSapmax);
         driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+        Assert.assertTrue( driver.findElement(By.xpath(".//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
         //admin authorization and void completed preauth
         driver.get(baseUrl + "login/");
