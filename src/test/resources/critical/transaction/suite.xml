@@ -48,9 +48,4 @@
     <parameter name = "ReturnUrl" value = "ReturnUrl=http://www.ya.ru" />
     <parameter name = "Idata" value = "IData=01        N2V VKO                     000000000000082121510MCXTEST TEST           " />
 
-    <parameter name = "filenamePathFailLogin" value = "/src/test/resources/failParameters/listFailLogin" />
-    <parameter name = "filenamePathFailLoginAndPassword" value = "/src/test/resources/failParameters/listFailLoginAndPassword" />
-    <parameter name = "filenamePathFailCaptcha" value = "/src/test/resources/failParameters/listFailCaptcha" />
-    <parameter name = "filenamePathListPayments" value = "/src/test/resources/localizationParameter/payments/listPayments" />
-
 </suite>

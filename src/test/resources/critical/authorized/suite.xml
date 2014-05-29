@@ -7,4 +7,10 @@
             <class name = "critical.authorized.Authorized" />
         </classes>
     </test>
+
+    <parameter name = "filenamePathFailLogin" value = "/src/test/resources/failParameters/listFailLogin" />
+    <parameter name = "filenamePathFailLoginAndPassword" value = "/src/test/resources/failParameters/listFailLoginAndPassword" />
+    <parameter name = "filenamePathFailCaptcha" value = "/src/test/resources/failParameters/listFailCaptcha" />
+    <parameter name = "filenamePathListPayments" value = "/src/test/resources/localizationParameter/payments/listPayments" />
+
 </suite>
