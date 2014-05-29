@@ -2,18 +2,28 @@ package medium.openItem;
 
 
 import model.DriverFactory;
+import model.Environment;
 import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AdminLK {
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
-    private String loginAdmin = "v.khomutov";
-    private String passwordAdmin = "tester123";
+    private String baseUrl;
+    private String loginAdmin;
+    private String passwordAdmin;
     private String captcha = "ability";
+
+    @BeforeClass
+    public void createCorrectParameters(){
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginAdmin = parameters[1];
+        passwordAdmin = parameters[2];
+    }
 
     @Test
     public void itemClient(){
