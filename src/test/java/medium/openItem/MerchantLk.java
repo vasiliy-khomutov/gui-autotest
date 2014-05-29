@@ -2,19 +2,31 @@ package medium.openItem;
 
 
 import model.DriverFactory;
+import model.Environment;
 import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class MerchantLk {
 
-    private String baseUrl = "https://secure.payonlinesystem.com/";
-    private String loginMerchant = "info@smart-travel.ru";
-    private String passwordMerchant = "tester123";
+    String [] parameters = Environment.readFile();
+
+    private String baseUrl;
+    private String loginMerchant;
+    private String passwordMerchant;
     private String captcha = "ability";
 
+    @BeforeClass
+    public void createCorrectParameters(){
+        String [] parameters = Environment.readFile();
+        baseUrl = parameters[0];
+        loginMerchant = parameters[3];
+        passwordMerchant = parameters[4];
+    }
 
     @Test
     public void itemSites(){
@@ -25,7 +37,7 @@ public class MerchantLk {
         Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
 
         //check item
-        Assert.assertTrue(TestUtils.checkItem(driver, "a", "55469"), "Fail open item Sites!");
+        Assert.assertTrue(TestUtils.checkItem(driver, "a", "55442"), "Fail open item Sites!");
         Assert.assertTrue(TestUtils.checkItem(driver, "a", "Настройки"), "Fail open item Sites!");
         Assert.assertTrue(TestUtils.checkItem(driver, "td", "Активный"), "Fail open item Sites!");
 
@@ -131,7 +143,7 @@ public class MerchantLk {
 
         //check
         driver.findElement(By.id("ctl00_ctl11_mhlPlatron")).click();
-        Assert.assertTrue(TestUtils.checkItem(driver, "h2", "Счета Platron"), "Fail open item Platron!");
+        Assert.assertTrue(TestUtils.checkItem(driver, "h2", "Счета РИБ"), "Fail open item Platron!");
         Assert.assertTrue(TestUtils.checkItem(driver, "th", "ID заказа"), "Fail open item Platron!");
         Assert.assertTrue(TestUtils.checkItem(driver, "th", "Сумма"), "Fail open item Platron!");
     }
