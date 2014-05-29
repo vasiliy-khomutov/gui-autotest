@@ -120,7 +120,7 @@ public class A2S {
     }
 
     // case 1
-    @Test
+    @Test (enabled = true)
     public void commissionGWDeclinedTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -170,7 +170,7 @@ public class A2S {
     }
 
     // case 2
-    @Test
+    @Test (enabled = true)
     public void aviaGWDeclinedTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -226,7 +226,7 @@ public class A2S {
     }
 
     // case 3
-    @Test
+    @Test (enabled = true)
     public void successfulTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -287,7 +287,7 @@ public class A2S {
     }
 
     // case 4
-    @Test
+    @Test (enabled = true)
     public void zeroCommissionDeclinedTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -336,7 +336,7 @@ public class A2S {
     }
 
     // case 5
-    @Test
+    @Test (enabled = true)
     public void zeroCommissionSuccesfulTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -392,7 +392,7 @@ public class A2S {
 
     // TODO cases 6,7,8 - add rebill flag checking
     // case 6
-    @Test
+    @Test (enabled = true)
     public void commissionGWDeclinedTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -447,7 +447,7 @@ public class A2S {
     }
 
     // case 7
-    @Test
+    @Test (enabled = true)
     public void aviaGWDeclinedTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -510,7 +510,7 @@ public class A2S {
     }
 
     // case 8
-    @Test
+    @Test (enabled = true)
     public void zeroCommissionDeclinedTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -565,7 +565,7 @@ public class A2S {
     }
 
     // case 9
-    @Test
+    @Test (enabled = true)
     public void zeroCommissionSuccesfulTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -621,7 +621,7 @@ public class A2S {
     }
 
     // case 10
-    @Test
+    @Test (enabled = true)
     public void getAW3DSStatusTrx(){
 
         long id = System.currentTimeMillis();
