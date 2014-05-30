@@ -65,18 +65,12 @@ public class Filters {
 
     @Test (enabled = true)
     public void MatchEmailZip(){
+
         WebDriver driver = DriverFactory.getInstance().getDriver();
         long id = System.currentTimeMillis();
 
         //enable MatchEmailZip Filter
         TestUtilsFilters.enableMatchEmailZipFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID);
-
-        // conditions
-        /*
-        Период времени	                                999.09:09:00
-        Искать среди транзакций с любым статусом	    Да
-        Действие	                                    Блокировать транзакцию
-        */
 
         // transaction 1: zip 1 - email 1
         driver.get(baseUrl + "login/");
