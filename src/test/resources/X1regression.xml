@@ -5,8 +5,9 @@
     <suite-files>
         <!--DONE-->
         <!--<suite-file path = "gateways/suite.xml"/>-->
-        <suite-file path = "critical/transaction/suite.xml"/>
-
+        <!--<suite-file path = "critical/transaction/suite.xml"/>-->
+        <!--<suite-file path = "critical/authorized/suite.xml"/>-->
+        <suite-file path = "medium/filters/suite.xml"/>
         <!--IN PROGRESS-->
 
     </suite-files>
@@ -25,7 +26,6 @@
             <!--IN PROGRESS-->
             <!--<class name = "critical.callbacks.SetParametersForCallbacks" />-->
             <!--<class name = "critical.callbacks.Callbacks" />-->
-            <!--<class name = "critical.authorized.Authorized" />-->
             <!--<class name = "low.LocalizationX" />-->
         </classes>
     </test>

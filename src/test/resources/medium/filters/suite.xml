@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM 'http://testng.org/testng-1.0.dtd'>
+
+<suite name = "Filters" verbose = "1">
+    <test name = "Filters Testing">
+
+
+        <classes>
+            <class name = "medium.filters.Filters"/>
+        </classes>
+    </test>
+</suite>
