@@ -22,7 +22,10 @@ public class Utils {
     }
 
     public static String getIdTransaction(WebDriver driver){
-         return driver.findElement(By.xpath("//tr[6]/td[2]")).getText();
+        if (!(driver.findElements(By.xpath("//tr[6]/td[2]")).size() > 0)){
+            return "failed";
+        }
+        return driver.findElement(By.xpath("//tr[6]/td[2]")).getText();
     }
 
     public static boolean checkTransactionInLK(WebDriver driver, String id){
