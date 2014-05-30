@@ -25,7 +25,7 @@ public class TestUtilsFilters {
         if(driver.findElement(By.xpath("//*[@id='filtersView']/table/tbody/tr[24]")).getText().contains("Настройка")){
             driver.findElement(By.xpath("//*[@id='filtersView']/table/tbody/tr[24]/td[2]/a[1]")).click();
         }else {
-            driver.findElement(By.xpath("//*[@id='filtersView']/table/tbody/tr[24]/td[2]")).click();
+            driver.findElement(By.id("ctl00_content_filtersContainer_filterList_viewList_ctl23_lnkTurnOn")).click();
         }
         WebElement day = driver.findElement(By.id("ctl00_content_filtersContainer_filterSettings_day"));
         day.clear();

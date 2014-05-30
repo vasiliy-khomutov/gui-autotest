@@ -11,6 +11,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Utils {
+    public static void login (WebDriver driver, String baseUrl, String login, String password) {
+        driver.get(baseUrl + "login/");
+        Utils.authorized(driver, login, password, Captcha.getCaptcha(driver));
+    }
 
     public static boolean checkResultPageTransaction(WebDriver driver, String parameter){
         for (WebElement e: driver.findElements(By.tagName("td"))){

@@ -1,6 +1,5 @@
 package medium.filters;
 
-import critical.TestUtils;
 import model.Captcha;
 import model.DriverFactory;
 import model.Environment;
@@ -73,33 +72,29 @@ public class Filters {
         TestUtilsFilters.enableMatchEmailZipFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID);
 
         // transaction 1: zip 1 - email 1
-        driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         idTransaction = TestUtilsFilters.getNewIdTransaction_Filter(driver, pendingMercahnt, optionPendingMerchant, id + orderID,
                 amount1, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, address,
                 city, zip1, country, phone, email1, currencyRUB, cardHolderName, baseUrl, loginAdmin, passwordAdmin);
         // check trx
-        driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, Captcha.getCaptcha(driver));
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email1, zip1, code200);
 
         // transaction 2: zip 2 - email 1
         driver.get(baseUrl + "login/");
-
-        Utils.authorized(driver, loginMerchant, passwordMerchant, Captcha.getCaptcha(driver));
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         idTransaction = TestUtilsFilters.getNewIdTransaction_Filter(driver, pendingMercahnt, optionPendingMerchant, id + orderID + "1",
                 amount2, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, address,
                 city, zip2, country, phone, email1, currencyRUB, cardHolderName, baseUrl, loginAdmin, passwordAdmin);
-        // check trx
 
+        // check trx
         driver.findElement(By.id("ctl00_content_filter_cmdClear")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email1, zip2, code1100);
 
         //disable MatchEmailZip Filter
         TestUtilsFilters.disableMatchEmailZipFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID);
-
     }
 }
