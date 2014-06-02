@@ -111,7 +111,10 @@ public class TestUtilsFilters {
             driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
             driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(orderId);
             driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
-            return driver.findElement(By.xpath("//table[@id='list_transactions']/tbody/tr[2]/td[2]")).getText();
+            String result1 = driver.findElement(By.xpath("//table[@id='list_transactions']/tbody/tr[2]/td[2]")).getText();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            return result1;
         }
         return result;
     }
