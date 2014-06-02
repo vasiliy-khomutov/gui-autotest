@@ -105,7 +105,7 @@ public class Filters {
         Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email1, zip1, code200);
+        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email2, zip2, code200);
 
         // case 4: transaction 2: zip 1 - email 2
         Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
@@ -116,7 +116,7 @@ public class Filters {
         // check trx
         driver.findElement(By.id("ctl00_content_filter_cmdClear")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email1, zip2, code1100);
+        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email2, zip1, code1100);
 
         //disable MatchEmailZip Filter
         TestUtilsFilters.disableMatchEmailZipFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID);
