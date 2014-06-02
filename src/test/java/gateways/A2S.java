@@ -120,7 +120,7 @@ public class A2S {
     }
 
     // case 1
-    @Test (enabled = true)
+    @Test
     public void commissionGWDeclinedTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -147,7 +147,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -162,7 +162,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus,
@@ -170,7 +170,7 @@ public class A2S {
     }
 
     // case 2
-    @Test (enabled = true)
+    @Test
     public void aviaGWDeclinedTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -197,7 +197,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -216,7 +216,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, voidedStatus,
@@ -226,7 +226,7 @@ public class A2S {
     }
 
     // case 3
-    @Test (enabled = true)
+    @Test
     public void successfulTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -258,7 +258,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -277,7 +277,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus,
@@ -287,7 +287,7 @@ public class A2S {
     }
 
     // case 4
-    @Test (enabled = true)
+    @Test
     public void zeroCommissionDeclinedTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -313,7 +313,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl , loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -328,7 +328,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus,
@@ -336,7 +336,7 @@ public class A2S {
     }
 
     // case 5
-    @Test (enabled = true)
+    @Test
     public void zeroCommissionSuccesfulTRX_RoutingOFF(){
 
         long id = System.currentTimeMillis();
@@ -368,7 +368,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -383,7 +383,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus,
@@ -392,7 +392,7 @@ public class A2S {
 
     // TODO cases 6,7,8 - add rebill flag checking
     // case 6
-    @Test (enabled = true)
+    @Test
     public void commissionGWDeclinedTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -418,7 +418,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -437,7 +437,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedTo, idTransactionRouted, id + orderID, typePurchase, pendingStatus,
@@ -447,7 +447,7 @@ public class A2S {
     }
 
     // case 7
-    @Test (enabled = true)
+    @Test
     public void aviaGWDeclinedTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -473,7 +473,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -495,7 +495,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
 
@@ -510,7 +510,7 @@ public class A2S {
     }
 
     // case 8
-    @Test (enabled = true)
+    @Test
     public void zeroCommissionDeclinedTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -536,7 +536,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver,baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -555,7 +555,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionRouted, id + orderID, typePurchase, routedStatus,
@@ -565,7 +565,7 @@ public class A2S {
     }
 
     // case 9
-    @Test (enabled = true)
+    @Test
     public void zeroCommissionSuccesfulTRX_RoutingON(){
 
         long id = System.currentTimeMillis();
@@ -597,7 +597,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -612,7 +612,7 @@ public class A2S {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
 
@@ -621,7 +621,7 @@ public class A2S {
     }
 
     // case 10
-    @Test (enabled = true)
+    @Test
     public void getAW3DSStatusTrx(){
 
         long id = System.currentTimeMillis();
@@ -647,7 +647,7 @@ public class A2S {
 
         // administrator interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
@@ -662,7 +662,7 @@ public class A2S {
 
         // merchant interface
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchantA2S, passwordMerchantA2S, captcha);
+        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDA2S_3DS, idTransaction, id + orderID, typePurchase, aw3dsStatus,
