@@ -45,7 +45,7 @@ public class Filters {
     private String email2;
 
     private String code200 = "200";
-    private String code1100 = "1100";
+    private String code2102 = "2102";
 
     @BeforeTest
     public void setUp(){
@@ -93,7 +93,7 @@ public class Filters {
         // check trx
         driver.findElement(By.id("ctl00_content_filter_cmdClear")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email1, zip2, code1100);
+        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email1, zip2, code2102);
 
         // case 3: transaction 2: zip 2 - email 2
         Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
@@ -116,7 +116,7 @@ public class Filters {
         // check trx
         driver.findElement(By.id("ctl00_content_filter_cmdClear")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email2, zip1, code1100);
+        TestUtilsFilters.checkTransactionCard_Admin_MatchEmailZip(driver, idTransaction, email2, zip1, code2102);
 
         //disable MatchEmailZip Filter
         TestUtilsFilters.disableMatchEmailZipFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID);
