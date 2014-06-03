@@ -62,7 +62,7 @@ public class Filters {
         email2 = "autotest2_" + idzipemail + "@test.test";
     }
 
-    @Test (enabled = true)
+    @Test
     public void MatchEmailZip(){
 
         WebDriver driver = DriverFactory.getInstance().getDriver();

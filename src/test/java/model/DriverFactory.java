@@ -2,6 +2,7 @@ package model;
 
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -24,8 +25,8 @@ public class DriverFactory {
         @Override
         protected WebDriver initialValue(){
             WebDriver driver = new FirefoxDriver();
+            //WebDriver driver = new ChromeDriver();
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            //return new FirefoxDriver(); // can be replaced with other browser drivers
             return driver;
         }
     };

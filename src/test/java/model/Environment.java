@@ -16,6 +16,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import javax.net.ssl.SSLContext;
@@ -31,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class Environment {
 
     public static WebDriver createDriver(){
-        WebDriver driver = new FirefoxDriver();
+        WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //other driver and setting
         return driver;

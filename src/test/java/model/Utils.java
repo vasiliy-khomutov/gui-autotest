@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Utils {
+
     public static void login (WebDriver driver, String baseUrl, String login, String password) {
         driver.get(baseUrl + "login/");
         Utils.authorized(driver, login, password, Captcha.getCaptcha(driver));

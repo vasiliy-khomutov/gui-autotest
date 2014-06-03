@@ -105,7 +105,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
@@ -124,7 +124,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
 
@@ -135,7 +135,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
@@ -150,7 +150,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -169,7 +169,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -181,7 +181,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -196,7 +196,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -215,7 +215,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -227,7 +227,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -247,7 +247,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -263,7 +263,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -282,7 +282,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -294,7 +294,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -312,7 +312,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -330,7 +330,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
@@ -349,7 +349,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
 
@@ -360,7 +360,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
@@ -382,7 +382,7 @@ public class AZ {
 
         // admin authorization and check transaction card
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -398,7 +398,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -417,7 +417,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -429,7 +429,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -452,7 +452,7 @@ public class AZ {
 
         //authorization admin and check transactionCard
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin,captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -469,7 +469,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -488,7 +488,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
 
@@ -499,7 +499,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -518,7 +518,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -527,7 +527,7 @@ public class AZ {
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -546,7 +546,7 @@ public class AZ {
 
         //authorization admin and check transactionCard
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin,captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -563,7 +563,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -582,7 +582,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
 
@@ -593,7 +593,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -610,7 +610,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -619,7 +619,7 @@ public class AZ {
 
         //open voidedForm and check
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -638,7 +638,7 @@ public class AZ {
 
         //authorization admin and check transactionCard
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin,captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -657,7 +657,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
@@ -676,7 +676,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
 
@@ -687,7 +687,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
@@ -695,7 +695,7 @@ public class AZ {
 
         //authorization admin and open registrationChargeBackForm
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin,captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
@@ -725,7 +725,7 @@ public class AZ {
 
         //check in lk merch
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
@@ -744,7 +744,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -763,7 +763,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -775,7 +775,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -783,7 +783,7 @@ public class AZ {
 
         //authorization admin and open registrationChargeBackForm
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin,captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.linkText(idTransaction)).click();
         driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
@@ -813,7 +813,7 @@ public class AZ {
 
         //check in lk merch
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
@@ -832,7 +832,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -851,7 +851,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -863,7 +863,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -882,7 +882,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -918,7 +918,7 @@ public class AZ {
 
         //check in lk merch
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
@@ -937,7 +937,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -956,7 +956,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         amountUSD = Utils.getUSDAmount(amount, currency);
@@ -965,7 +965,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -983,7 +983,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -1019,7 +1019,7 @@ public class AZ {
 
         //check in lk merch
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
@@ -1040,7 +1040,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
@@ -1057,7 +1057,7 @@ public class AZ {
 
         //check in administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         amountUSD = Utils.getUSDAmount(amount, currency);
@@ -1066,7 +1066,7 @@ public class AZ {
 
         //check in merchant backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
@@ -1081,7 +1081,7 @@ public class AZ {
 
         // authorization merchant and open registrationRefundForm
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant,captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -1107,7 +1107,7 @@ public class AZ {
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -1124,7 +1124,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -1143,7 +1143,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -1155,7 +1155,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -1170,7 +1170,7 @@ public class AZ {
 
         // authorization merchant and open registrationRefundForm
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant,captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -1196,7 +1196,7 @@ public class AZ {
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -1214,7 +1214,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -1233,7 +1233,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -1245,7 +1245,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -1264,7 +1264,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -1280,7 +1280,7 @@ public class AZ {
 
         // authorization merchant and open registrationRefundForm
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant,captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -1306,7 +1306,7 @@ public class AZ {
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
@@ -1323,7 +1323,7 @@ public class AZ {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
         //generate link and payment
         idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
@@ -1342,7 +1342,7 @@ public class AZ {
 
         //check in lk administrator
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         amountUSD = Utils.getUSDAmount(amount, currency);
@@ -1351,7 +1351,7 @@ public class AZ {
 
         //check in lk merchant
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant, captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
@@ -1369,7 +1369,7 @@ public class AZ {
 
         //check completed preauth at administrator backend
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
@@ -1385,7 +1385,7 @@ public class AZ {
 
         // authorization merchant and open registrationRefundForm
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginMerchant, passwordMerchant,captcha);
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
@@ -1411,7 +1411,7 @@ public class AZ {
 
         // admin authorization and transaction card checking
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordAdmin, captcha);
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
         driver.findElement(By.linkText("Транзакции")).click();
         driver.findElement(By.id("ctl00_content_all")).click();

@@ -2,14 +2,20 @@ package gateways;
 
 import model.DriverFactory;
 import model.Environment;
+
+
 import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import testlink.api.java.client.TestLinkAPIException;
+import testlink.api.java.client.TestLinkAPIResults;
 
-public class A2S {
 
+public class A2S extends TestClass {
+
+    
     String [] parameters = Environment.readFile();
     private String baseUrl = parameters[0];
     private String loginAdmin = parameters[1];;
@@ -121,551 +127,670 @@ public class A2S {
 
     // case 1
     @Test
-    public void commissionGWDeclinedTRX_RoutingOFF(){
+    public void commissionGWDeclinedTRX_RoutingOFF()throws TestLinkAPIException{
 
+        String result=null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-
         AMOUNT  = "Amount=" + totalAmountOdd + ".00";
         COMMISSION  = "Commission=" + commAmountOdd + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        //check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
 
-        idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountOdd, MIDA2S);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountOdd, commAmountOdd,
-                commTestGateway, cardHolderName, email);
+            idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountOdd, MIDA2S);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus,
-                cardHolderName, commAmountOdd, commAmountOdd, commTestGateway, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountOdd, commAmountOdd,
+                    commTestGateway, cardHolderName, email);
+
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus,
+                    cardHolderName, commAmountOdd, commAmountOdd, commTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "commissionGWDeclinedTRX_RoutingOFF", BUILDNAME, null, result);
+        }
     }
 
     // case 2
     @Test
-    public void aviaGWDeclinedTRX_RoutingOFF(){
+    public void aviaGWDeclinedTRX_RoutingOFF()throws TestLinkAPIException{
 
+        String result=null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
-
         AMOUNT  = "Amount=" + totalAmountOdd + ".00";
         COMMISSION  = "Commission=" + commAmountEven + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        //check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
 
-        idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountEven, MIDA2S);
-        idTransactionAvia = TestUtils.getA2STransactionId(driver, ticketAmountOdd, MIDA2S);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, voidedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountEven, commAmountEven,
-                commTestGateway, cardHolderName, email);
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, declinedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, ticketAmountOdd, ticketAmountOdd,
-                aviaTestGateway, cardHolderName, email);
+            idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountEven, MIDA2S);
+            idTransactionAvia = TestUtils.getA2STransactionId(driver, ticketAmountOdd, MIDA2S);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, voidedStatus,
-                cardHolderName, commAmountEven, commAmountEven, commTestGateway, email);
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, declinedStatus,
-                cardHolderName, ticketAmountOdd, ticketAmountOdd, aviaTestGateway, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, voidedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountEven, commAmountEven,
+                    commTestGateway, cardHolderName, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, declinedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, ticketAmountOdd, ticketAmountOdd,
+                    aviaTestGateway, cardHolderName, email);
+
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, voidedStatus,
+                    cardHolderName, commAmountEven, commAmountEven, commTestGateway, email);
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, declinedStatus,
+                    cardHolderName, ticketAmountOdd, ticketAmountOdd, aviaTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "aviaGWDeclinedTRX_RoutingOFF", BUILDNAME, null, result);
+        }
     }
 
     // case 3
     @Test
-    public void successfulTRX_RoutingOFF(){
+    public void successfulTRX_RoutingOFF()throws TestLinkAPIException{
 
+        String result = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountEven + ".00";
         COMMISSION  = "Commission=" + commAmountEven + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
 
-        // intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        //check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, ticketAmountEven));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
+            // intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        //check link - successful case
-        // занимает время из-за ожидания перехода по ссылке
-        //driver.findElement(By.linkText("Завершить")).click();
-        //Assert.assertTrue(driver.getCurrentUrl().contains(yaUrl));
-        driver.findElement(By.linkText("Завершить")).getText().contains(yaUrl);
+            //check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, ticketAmountEven));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check link - successful case
+            // занимает время из-за ожидания перехода по ссылке
+            //driver.findElement(By.linkText("Завершить")).click();
+            //Assert.assertTrue(driver.getCurrentUrl().contains(yaUrl));
+            driver.findElement(By.linkText("Завершить")).getText().contains(yaUrl);
 
-        idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountEven, MIDA2S);
-        idTransactionAvia = TestUtils.getA2STransactionId(driver, ticketAmountEven, MIDA2S);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountEven, commAmountEven,
-                commTestGateway, cardHolderName, email);
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, ticketAmountEven, ticketAmountEven,
-                aviaTestGateway, cardHolderName, email);
+            idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountEven, MIDA2S);
+            idTransactionAvia = TestUtils.getA2STransactionId(driver, ticketAmountEven, MIDA2S);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus,
-                cardHolderName, commAmountEven, commAmountEven, commTestGateway, email);
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, pendingStatus,
-                cardHolderName, ticketAmountEven, ticketAmountEven, aviaTestGateway, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountEven, commAmountEven,
+                    commTestGateway, cardHolderName, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, ticketAmountEven, ticketAmountEven,
+                    aviaTestGateway, cardHolderName, email);
+
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus,
+                    cardHolderName, commAmountEven, commAmountEven, commTestGateway, email);
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionAvia, id + orderID, typePurchase, pendingStatus,
+                    cardHolderName, ticketAmountEven, ticketAmountEven, aviaTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "successfulTRX_RoutingOFF", BUILDNAME, null, result);
+        }
     }
 
     // case 4
     @Test
-    public void zeroCommissionDeclinedTRX_RoutingOFF(){
+    public void zeroCommissionDeclinedTRX_RoutingOFF()throws TestLinkAPIException{
 
+        String result = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountOdd + ".00";
         COMMISSION  = "Commission=" + commAmountZero + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        // check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl , loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            // check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
 
-        idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountZero, MIDA2S);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl , loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
-                aviaTestGateway, cardHolderName, email);
+            idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountZero, MIDA2S);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus,
-                cardHolderName, totalAmountOdd, totalAmountOdd, aviaTestGateway, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
+                    aviaTestGateway, cardHolderName, email);
+
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus,
+                    cardHolderName, totalAmountOdd, totalAmountOdd, aviaTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "zeroCommissionDeclinedTRX_RoutingOFF", BUILDNAME, null, result);
+        }
     }
 
     // case 5
     @Test
-    public void zeroCommissionSuccesfulTRX_RoutingOFF(){
+    public void zeroCommissionSuccesfulTRX_RoutingOFF()throws TestLinkAPIException{
 
+        String result = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountEven + ".00";
         COMMISSION  = "Commission=" + commAmountZero + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        // check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountEven));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        //check link - successful case
-        // занимает время из-за ожидания перехода по ссылке
-        //driver.findElement(By.linkText("Завершить")).click();
-        //Assert.assertTrue(driver.getCurrentUrl().contains(yaUrl));
-        driver.findElement(By.linkText("Завершить")).getText().contains(yaUrl);
+            // check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountEven));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl));
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check link - successful case
+            // занимает время из-за ожидания перехода по ссылке
+            //driver.findElement(By.linkText("Завершить")).click();
+            //Assert.assertTrue(driver.getCurrentUrl().contains(yaUrl));
+            driver.findElement(By.linkText("Завершить")).getText().contains(yaUrl);
 
-        idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountZero, MIDA2S);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountEven, totalAmountEven,
-                aviaTestGateway, cardHolderName, email);
+            idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountZero, MIDA2S);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus,
-                cardHolderName, totalAmountEven, totalAmountEven, aviaTestGateway, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountEven, totalAmountEven,
+                    aviaTestGateway, cardHolderName, email);
+
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, pendingStatus,
+                    cardHolderName, totalAmountEven, totalAmountEven, aviaTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "zeroCommissionSuccesfulTRX_RoutingOFF", BUILDNAME, null, result);
+        }
     }
 
     // TODO cases 6,7,8 - add rebill flag checking
     // case 6
     @Test
-    public void commissionGWDeclinedTRX_RoutingON(){
+    public void commissionGWDeclinedTRX_RoutingON()throws TestLinkAPIException{
 
+        String result = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountOdd + ".00";
         COMMISSION  = "Commission=" + commAmountOdd + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        //check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedTo));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedTo));
 
-        idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountOdd, MIDA2S_RoutedFrom);
-        idTransactionRouted = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedTo);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedTo, idTransactionRouted, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
-                advancedTestGateway, cardHolderName, email);
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, routedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountOdd, commAmountOdd,
-                commTestGateway, cardHolderName, email);
+            idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountOdd, MIDA2S_RoutedFrom);
+            idTransactionRouted = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedTo);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedTo, idTransactionRouted, id + orderID, typePurchase, pendingStatus,
-                cardHolderName, totalAmountOdd, totalAmountOdd, advancedTestGateway, email);
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, routedStatus,
-                cardHolderName, commAmountOdd, commAmountOdd, commTestGateway, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedTo, idTransactionRouted, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
+                    advancedTestGateway, cardHolderName, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, routedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountOdd, commAmountOdd,
+                    commTestGateway, cardHolderName, email);
+
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedTo, idTransactionRouted, id + orderID, typePurchase, pendingStatus,
+                    cardHolderName, totalAmountOdd, totalAmountOdd, advancedTestGateway, email);
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, routedStatus,
+                    cardHolderName, commAmountOdd, commAmountOdd, commTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "commissionGWDeclinedTRX_RoutingON", BUILDNAME, null, result);
+        }
     }
 
     // case 7
     @Test
-    public void aviaGWDeclinedTRX_RoutingON(){
+    public void aviaGWDeclinedTRX_RoutingON()throws TestLinkAPIException{
 
+        String result = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountOdd + ".00";
         COMMISSION  = "Commission=" + commAmountEven + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        //check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedTo));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedTo));
 
-        idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountEven, MIDA2S_RoutedFrom);
-        idTransaction = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedTo);
-        idTransactionAvia = TestUtils.getA2STransactionId(driver, ticketAmountOdd, MIDA2S_RoutedFrom);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,advancedTestGateway, cardHolderName, email);
+            idTransactionComm = TestUtils.getA2STransactionId(driver, commAmountEven, MIDA2S_RoutedFrom);
+            idTransaction = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedTo);
+            idTransactionAvia = TestUtils.getA2STransactionId(driver, ticketAmountOdd, MIDA2S_RoutedFrom);
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionAvia, id + orderID, typePurchase, routedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, ticketAmountOdd, ticketAmountOdd, aviaTestGateway, cardHolderName, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,advancedTestGateway, cardHolderName, email);
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, voidedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountEven, commAmountEven, commTestGateway, cardHolderName, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionAvia, id + orderID, typePurchase, routedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, ticketAmountOdd, ticketAmountOdd, aviaTestGateway, cardHolderName, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, voidedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, commAmountEven, commAmountEven, commTestGateway, cardHolderName, email);
 
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus,
-                cardHolderName, totalAmountOdd, totalAmountOdd, advancedTestGateway, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionAvia, id + orderID, typePurchase, routedStatus,
-                cardHolderName, ticketAmountOdd, ticketAmountOdd, aviaTestGateway, email);
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus,
+                    cardHolderName, totalAmountOdd, totalAmountOdd, advancedTestGateway, email);
 
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, voidedStatus,
-                cardHolderName, commAmountEven, commAmountEven, commTestGateway, email);
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionAvia, id + orderID, typePurchase, routedStatus,
+                    cardHolderName, ticketAmountOdd, ticketAmountOdd, aviaTestGateway, email);
+
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionComm, id + orderID, typePurchase, voidedStatus,
+                    cardHolderName, commAmountEven, commAmountEven, commTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "aviaGWDeclinedTRX_RoutingON", BUILDNAME, null, result);
+        }
     }
 
     // case 8
     @Test
-    public void zeroCommissionDeclinedTRX_RoutingON(){
+    public void zeroCommissionDeclinedTRX_RoutingON() throws TestLinkAPIException{
 
+        String result = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountOdd + ".00";
         COMMISSION  = "Commission=" + commAmountZero + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        //check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedTo));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver,baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountOdd));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedTo));
 
-        idTransactionRouted = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedFrom);
-        idTransaction = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedTo);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver,baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionRouted, id + orderID, typePurchase, routedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
-                aviaTestGateway, cardHolderName, email);
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
-                advancedTestGateway, cardHolderName, email);
+            idTransactionRouted = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedFrom);
+            idTransaction = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_RoutedTo);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionRouted, id + orderID, typePurchase, routedStatus,
-                cardHolderName, totalAmountOdd, totalAmountOdd, aviaTestGateway, email);
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus,
-                cardHolderName, totalAmountOdd, totalAmountOdd, advancedTestGateway, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransactionRouted, id + orderID, typePurchase, routedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
+                    aviaTestGateway, cardHolderName, email);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountOdd, totalAmountOdd,
+                    advancedTestGateway, cardHolderName, email);
+
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransactionRouted, id + orderID, typePurchase, routedStatus,
+                    cardHolderName, totalAmountOdd, totalAmountOdd, aviaTestGateway, email);
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedTo, idTransaction, id + orderID, typePurchase, pendingStatus,
+                    cardHolderName, totalAmountOdd, totalAmountOdd, advancedTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "zeroCommissionDeclinedTRX_RoutingON", BUILDNAME, null, result);
+        }
     }
 
     // case 9
     @Test
-    public void zeroCommissionSuccesfulTRX_RoutingON(){
+    public void zeroCommissionSuccesfulTRX_RoutingON() throws  TestLinkAPIException{
 
+        String result = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountEven + ".00";
         COMMISSION  = "Commission=" + commAmountZero + ".00";
 
-        // get security key
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
+        try{
 
-        // generate payment link and open it
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+            // get security key
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED);
 
-        // declined trx - intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
-                expDateYear, cardHolderName, cvc, bank, email);
+            // generate payment link and open it
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_ROUTEDFROM, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, IDATA, PRIVATE_SECURITY_KEY_A2S_ROUTED, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
 
-        //check result page
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountEven));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
-        Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedFrom));
+            // declined trx - intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth,
+                    expDateYear, cardHolderName, cvc, bank, email);
 
-        //check link - successful case
-        // занимает время из-за ожидания перехода по ссылке
-        //driver.findElement(By.linkText("Завершить")).click();
-        //Assert.assertTrue(driver.getCurrentUrl().contains(yaUrl));
-        driver.findElement(By.linkText("Завершить")).getText().contains(yaUrl);
+            //check result page
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, totalAmountEven));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, id + ""));
+            Assert.assertTrue(TestUtils.checkA2STransactionResultPage(driver, avia2SMercahntUrl_RoutedFrom));
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            //check link - successful case
+            // занимает время из-за ожидания перехода по ссылке
+            //driver.findElement(By.linkText("Завершить")).click();
+            //Assert.assertTrue(driver.getCurrentUrl().contains(yaUrl));
+            driver.findElement(By.linkText("Завершить")).getText().contains(yaUrl);
 
-        idTransaction = TestUtils.getA2STransactionId(driver, totalAmountEven, MIDA2S_RoutedFrom);
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountEven, totalAmountEven,
-                aviaTestGateway, cardHolderName, email);
+            idTransaction = TestUtils.getA2STransactionId(driver, totalAmountEven, MIDA2S_RoutedFrom);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_RoutedFrom, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, totalAmountEven, totalAmountEven,
+                    aviaTestGateway, cardHolderName, email);
 
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransaction, id + orderID, typePurchase, pendingStatus,
-                cardHolderName, totalAmountEven, totalAmountEven, aviaTestGateway, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_RoutedFrom, idTransaction, id + orderID, typePurchase, pendingStatus,
+                    cardHolderName, totalAmountEven, totalAmountEven, aviaTestGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "zeroCommissionSuccesfulTRX_RoutingON", BUILDNAME, null, result);
+        }
     }
 
     // case 10
     @Test
-    public void getAW3DSStatusTrx(){
+    public void getAW3DSStatusTrx ()throws  TestLinkAPIException{
 
+        String result = null;
+        String msg = null;
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
         AMOUNT  = "Amount=" + totalAmountOdd + ".00";
         COMMISSION  = "Commission=" + commAmountOdd + ".00";
 
-        // generate payment link and open it
-        SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_A3DS, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S_A3DS);
-        paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_A3DS, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S_A3DS, SecurityKey, RETURNURL);
-        driver.get(paymentLink);
+        try{
 
-        // intitiate trx
-        TestUtils.initiateA2STransactionId(driver, numberCardA_a3ds, numberCardB_a3ds, numberCardC_a3ds, numberCardD_a3ds, expDateMonth,
+            // generate payment link and open it
+            SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S_A3DS, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S_A3DS);
+            paymentLink = TestUtils.getA2SIdTransactionLink(URL, MERCHANT_ID_A2S_A3DS, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S_A3DS, SecurityKey, RETURNURL);
+            driver.get(paymentLink);
+
+            // intitiate trx
+            TestUtils.initiateA2STransactionId(driver, numberCardA_a3ds, numberCardB_a3ds, numberCardC_a3ds, numberCardD_a3ds, expDateMonth,
                 expDateYear, cardHolderName, cvc_a3ds, bank, email);
 
-        //check 3DS page
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']")).getText().contains(totalAmountOdd));
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']")).getText().contains(id+""));
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
+            //check 3DS page
+            Assert.assertTrue(driver.findElement(By.xpath(".*//**//**//**//**//**//**//**//*//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*[@id='mainContent']")).getText().contains(totalAmountOdd));
+            Assert.assertTrue(driver.findElement(By.xpath(".*//**//**//**//**//**//**//**//*//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*[@id='mainContent']")).getText().contains(id+""));
+            Assert.assertTrue(driver.findElement(By.xpath(".*//**//**//**//**//**//**//**//*//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
 
-        // trx doesn't completed, testing aw3ds status only
+            // trx doesn't completed, testing aw3ds status only
 
-        // administrator interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
-        driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
-        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+            // administrator interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).clear();
+            driver.findElement(By.id("ctl00_content_filter_orderNumber")).sendKeys(id+"");
+            driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
 
-        // get trx id
-        idTransaction = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_3DS);
-        TestUtils.checkCardTransactionAdmin(driver, MIDA2S_3DS, idTransaction, id + orderID, typePurchase, aw3dsStatus, cardTypeVisa,
+            // get trx id
+            idTransaction = TestUtils.getA2STransactionId(driver, totalAmountOdd, MIDA2S_3DS);
+            TestUtils.checkCardTransactionAdmin(driver, MIDA2S_3DS, idTransaction, id + orderID, typePurchase, aw3dsStatus, cardTypeVisa,
                 numberCardA_a3ds + numberCardB_a3ds + numberCardC_a3ds + numberCardD_a3ds, expDate, bank, totalAmountOdd, commAmountOdd,
                 a2sGateway, cardHolderName, email);
 
-        // merchant interface
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDA2S_3DS, idTransaction, id + orderID, typePurchase, aw3dsStatus,
+            // merchant interface
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchantA2S, passwordMerchantA2S);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDA2S_3DS, idTransaction, id + orderID, typePurchase, aw3dsStatus,
                 cardHolderName, totalAmountOdd, commAmountOdd, a2sGateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            msg = assertionError.getMessage();
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "getAW3DSStatusTrx", BUILDNAME, msg, result);
+        }
     }
 }
