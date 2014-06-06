@@ -25,7 +25,6 @@ public class DriverFactory {
         @Override
         protected WebDriver initialValue(){
             WebDriver driver = new FirefoxDriver();
-            //WebDriver driver = new ChromeDriver();
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             return driver;
         }

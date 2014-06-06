@@ -5,9 +5,9 @@
     <suite-files>
         <!--DONE-->
         <suite-file path = "gateways/suite.xml"/>
-        <!--<suite-file path = "medium/filters/suite.xml"/>-->
         <!--<suite-file path = "critical/transaction/suite.xml"/>-->
         <!--<suite-file path = "critical/authorized/suite.xml"/>-->
+        <!--<suite-file path = "medium/filters/suite.xml"/>-->
         <!--IN PROGRESS-->
 
     </suite-files>

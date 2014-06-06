@@ -257,4 +257,16 @@ public class Utils {
         Assert.assertTrue(universalCheck(driver, "xpath", ".//*[@id='mainContent']/div[5]/table/tbody/tr[19]", null), "Issuer country field is empty on transaction card (Merchant Login).");
 
     }
+
+    //TODO refactor #2
+    public static String getIdTransactionRefund(WebDriver driver, String idTransaction, String amount) {
+        driver.findElement(By.linkText(idTransaction)).click();
+        WebElement element = driver.findElement(By.id("refunds"));
+        for (WebElement e: element.findElements(By.tagName("tr"))){
+               if(e.getText().contains(amount)){
+                   return e.findElement(By.tagName("a")).getText();
+               }
+        }
+        return null;
+    }
 }

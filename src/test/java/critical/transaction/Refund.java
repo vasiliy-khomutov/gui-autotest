@@ -230,7 +230,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpending, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -304,7 +304,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -379,7 +379,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -448,7 +448,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpending, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -565,7 +565,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -680,7 +680,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -785,7 +785,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpending, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -860,7 +860,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -935,7 +935,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, simpleMIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -1001,7 +1001,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1077,7 +1077,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1153,7 +1153,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1215,7 +1215,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1250,7 +1250,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund2);
+        idRefund2 = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idRefund2, id + orderID, lastActionRefund, pendingStatus,
@@ -1326,7 +1326,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1361,7 +1361,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund2);
+        idRefund2 = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund2, id + orderID, lastActionRefund, pendingStatus,
@@ -1437,7 +1437,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1472,7 +1472,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund2);
+        idRefund2 = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund2, id + orderID, lastActionRefund, pendingStatus,
@@ -1534,7 +1534,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPendingRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpending, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1610,7 +1610,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1686,7 +1686,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, simpleAmountPreauthRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, simpleMIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -1794,7 +1794,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -1916,7 +1916,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2039,7 +2039,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2146,7 +2146,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2308,7 +2308,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2471,7 +2471,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2619,7 +2619,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpending3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2743,7 +2743,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2867,7 +2867,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         // check transaction card
         TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth3DS, idRefund, id + orderID, typeRefund, pendingStatus,
@@ -2976,7 +2976,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -3097,7 +3097,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -3218,7 +3218,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -3323,7 +3323,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -3358,7 +3358,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund2);
+        idRefund2 = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
@@ -3482,7 +3482,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -3517,7 +3517,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund2);
+        idRefund2 = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
@@ -3641,7 +3641,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund1);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -3676,7 +3676,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund2 = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund2);
+        idRefund2 = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund2);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund2, id + orderID, lastActionRefund, pendingStatus,
@@ -3781,7 +3781,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPendingRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpending3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -3905,7 +3905,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,
@@ -4029,7 +4029,7 @@ public class Refund {
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
 
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
+        idRefund = Utils.getIdTransactionRefund(driver, idTransaction, threeDSAmountPreauthRefund3);
 
         //check cardTransaction
         TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth3DS, idRefund, id + orderID, lastActionRefund, pendingStatus,

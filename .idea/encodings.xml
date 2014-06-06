@@ -6,7 +6,6 @@
     <file url="file://$PROJECT_DIR$/src/test/resources/critical/authorized/suite.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/test/resources/low/suite.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/test/resources/medium/openItem/suite.xml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/medium/suite.xml" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

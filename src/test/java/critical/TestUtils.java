@@ -298,18 +298,6 @@ public class TestUtils {
 
 
     //TODO refactor #2
-    public static String getIdTransactionRefund(WebDriver driver, String idTransaction, String amount) {
-        driver.findElement(By.linkText(idTransaction)).click();
-        WebElement element = driver.findElement(By.id("refunds"));
-        for (WebElement e: element.findElements(By.tagName("tr"))){
-               if(e.getText().contains(amount)){
-                   return e.findElement(By.tagName("a")).getText();
-               }
-        }
-        return null;
-    }
-
-    //TODO refactor #2
     public static String getIdTransactionRefund2(WebDriver driver, String idTransaction, String amount) {
         driver.findElement(By.linkText(idTransaction)).click();
 
