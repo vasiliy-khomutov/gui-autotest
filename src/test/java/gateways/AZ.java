@@ -9,8 +9,12 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import testlink.api.java.client.TestLinkAPIResults;
+import testlink.api.java.client.TestLinkAPIException;
 
-public class AZ {
+import java.util.NoSuchElementException;
+
+public class AZ extends TestClass{
 
     // authorization details
     private String baseUrl;
@@ -97,1327 +101,1500 @@ public class AZ {
     // TODO - data provider files
     // GW + Currency Exchange service testing
     // PENDING, PREAUTH, COMPLETE
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = true)
-    public void pending(String currency, String amount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "pendingAZ", enabled = false)
+    public void pending(String currency, String amount) throws TestLinkAPIException {
+    String result = null;
 
-        long id = System.currentTimeMillis();
-        WebDriver driver = DriverFactory.getInstance().getDriver();
+        try{
+            long id = System.currentTimeMillis();
+            WebDriver driver = DriverFactory.getInstance().getDriver();
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Pending", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauth(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauth(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndPartialComplete(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauthAndPartialComplete(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        try{
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // partial preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
+            // partial preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                partialCompleteAmount, completedAmountUSD, gateway, email);
+            String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
-                gateway, cardHolderName, email);
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    partialCompleteAmount, completedAmountUSD, gateway, email);
+
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
+                    gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Partial Complete", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndFullComplete(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauthAndFullComplete(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        try{
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
-                gateway, cardHolderName, email);
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
+
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
+                    gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Full Complete", BUILDNAME, null, result);
+        }
     }
 
 
     // VOIDS
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "voidAZ", enabled = true)
-    public void pendingAndVoid(String currency, String amount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "voidAZ", enabled = false)
+    public void pendingAndVoid(String currency, String amount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //open voidedForm and check
-        driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        Utils.checkVoidedForm(driver, MIDpending, idTransaction, id + orderID, cardHolderName, pendingStatus);
+            //open voidedForm and check
+            driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
+            Utils.checkVoidedForm(driver, MIDpending, idTransaction, id + orderID, cardHolderName, pendingStatus);
 
-        // void trx
-        driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
+            // void trx
+            driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
+            Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
-        // open all transaction tab and check transaction card
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, voidedStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // open all transaction tab and check transaction card
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, voidedStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        // admin authorization and check transaction card
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typeVoid, voidedStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            // admin authorization and check transaction card
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typeVoid, voidedStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Pending and Void", BUILDNAME, "test message", result);
+        }
     }
 
     @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndVoid(String currency, String amount, String partialCompleteAmount){
+    public void preauthAndVoid(String currency, String amount, String partialCompleteAmount) throws Exception {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        /*String result = null;
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        try{*/
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //open voidedForm and check
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        Utils.checkVoidedForm(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, preauthStatus);
+            //open voidedForm and check
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
+            Utils.checkVoidedForm(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, preauthStatus);
 
-        //voided
-        driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
+            //voided
+            driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
+            Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
-        //open transaction all and check cardTransaction
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8),
-                typePurchase, voidedStatus, cardHolderName, amount, amountUSD, gateway, email);
+            //open transaction all and check cardTransaction
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8),
+                    typePurchase, voidedStatus, cardHolderName, amount, amountUSD, gateway, email);
 
-        //authorization admin and check transactionCard
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid,
-                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //authorization admin and check transactionCard
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid,
+                    voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                    expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            /*result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Void", BUILDNAME, "test message", result);
+        }*/
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndPartialCompleteAndVoid(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauthAndPartialCompleteAndVoid(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        try{
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // partial preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                partialCompleteAmount, completedAmountUSD, gateway, email);
+            // partial preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
-                gateway, cardHolderName, email);
+            String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    partialCompleteAmount, completedAmountUSD, gateway, email);
 
-        //open voidedForm and check
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        Utils.checkVoidedForm(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
+                    gateway, cardHolderName, email);
 
-        //voided
-        driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
+            //open voidedForm and check
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
+            Utils.checkVoidedForm(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
-        //open transaction all and check cardTransaction
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8),
-                typePurchase, voidedStatus, cardHolderName, partialCompleteAmount, completedAmountUSD, gateway, email);
+            //voided
+            driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
+            Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
-        //authorization admin and check transactionCard
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid,
-                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, partialCompleteAmount, completedAmountUSD, gateway, cardHolderName, email);
+            //open transaction all and check cardTransaction
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8),
+                    typePurchase, voidedStatus, cardHolderName, partialCompleteAmount, completedAmountUSD, gateway, email);
+
+            //authorization admin and check transactionCard
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid,
+                    voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                    expDate, bank, partialCompleteAmount, completedAmountUSD, gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Partial Complete and Void", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndFullCompleteAndVoid(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauthAndFullCompleteAndVoid(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        // preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
-                gateway, cardHolderName, email);
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
+                    gateway, cardHolderName, email);
 
-        //open voidedForm and check
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
-        Utils.checkVoidedForm(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
+            //open voidedForm and check
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.name("ctl00$content$view$cmdVoid")).click();
+            Utils.checkVoidedForm(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), cardHolderName, pendingStatus);
 
-        //voided
-        driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
-        Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
+            //voided
+            driver.findElement(By.name("ctl00$content$voidTransaction$cmdVoid")).click();
+            Assert.assertTrue(Utils.checkMessage(driver), "Message voided is not displayed!");
 
-        //open transaction all and check cardTransaction
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8),
-                typePurchase, voidedStatus, cardHolderName, amount, amountUSD, gateway, email);
+            //open transaction all and check cardTransaction
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8),
+                    typePurchase, voidedStatus, cardHolderName, amount, amountUSD, gateway, email);
 
-        //authorization admin and check transactionCard
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid,
-                voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //authorization admin and check transactionCard
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, (id + orderID).substring(8), lastActionVoid,
+                    voidedStatus, cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                    expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Full Complete and Void", BUILDNAME, null, result);
+        }
     }
 
 
     // CHARGEBACKS
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "cbkAZ", enabled = true)
-    public void pendingAndCBK(String currency, String amount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "cbkAZ", enabled = false)
+    public void pendingAndCBK(String currency, String amount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //authorization admin and open registrationChargeBackForm
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
-        //authorization admin and open registrationChargeBackForm
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
+            //check registrationChargeBackForm
+            Utils.checkChargeBackForm(driver, idTransaction, amountUSD, pendingStatus, gateway, cardHolderName);
 
-        //check registrationChargeBackForm
-        Utils.checkChargeBackForm(driver, idTransaction, amountUSD, pendingStatus, gateway, cardHolderName);
+            //type all value in form and click nextButton
+            driver.findElement(By.name("ctl00$content$editor$reason")).clear();
+            driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
+            driver.findElement(By.name("ctl00$content$editor$code")).clear();
+            driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
+            driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
+            driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
+            driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
 
-        //type all value in form and click nextButton
-        driver.findElement(By.name("ctl00$content$editor$reason")).clear();
-        driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
-        driver.findElement(By.name("ctl00$content$editor$code")).clear();
-        driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
-        driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
-        driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
-        driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
+            //check in lk admin
+            driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+            Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk admin
-        driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+            //check card transaction
+            Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending, idChargeBack, id + orderID, lastActionCharge,
+                    settledStatus, cause, cbcode, cbindicator, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway);
 
-        //check card transaction
-        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpending, idChargeBack, id + orderID, lastActionCharge,
-                settledStatus, cause, cbcode, cbindicator, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway);
+            //check in lk merch
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk merch
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+            //check card transaction
+            Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending, idChargeBack, id + orderID, typeTransaction,
+                    cause, settledStatus, cardHolderName, amount, amountUSD, gateway,
+                    email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Pending and CBK", BUILDNAME, null, result);
+        }
 
-        //check card transaction
-        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpending, idChargeBack, id + orderID, typeTransaction,
-                cause, settledStatus, cardHolderName, amount, amountUSD, gateway,
-                email);
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndCBK(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauthAndCBK(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //authorization admin and open registrationChargeBackForm
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
-        //authorization admin and open registrationChargeBackForm
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
+            //check registrationChargeBackForm
+            Utils.checkChargeBackForm(driver, idTransaction, amountUSD, preauthStatus, gateway, cardHolderName);
 
-        //check registrationChargeBackForm
-        Utils.checkChargeBackForm(driver, idTransaction, amountUSD, preauthStatus, gateway, cardHolderName);
+            //type all value in form and click nextButton
+            driver.findElement(By.name("ctl00$content$editor$reason")).clear();
+            driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
+            driver.findElement(By.name("ctl00$content$editor$code")).clear();
+            driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
+            driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
+            driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
+            driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
 
-        //type all value in form and click nextButton
-        driver.findElement(By.name("ctl00$content$editor$reason")).clear();
-        driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
-        driver.findElement(By.name("ctl00$content$editor$code")).clear();
-        driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
-        driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
-        driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
-        driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
+            //check in lk admin
+            driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+            Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk admin
-        driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+            //check card transaction
+            Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+                    cause, cbcode, cbindicator, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway);
 
-        //check card transaction
-        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
-                cause, cbcode, cbindicator, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway);
+            //check in lk merch
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk merch
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
-
-        //check card transaction
-        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth, idChargeBack, id + orderID, typeTransaction,
-                cause, settledStatus, cardHolderName, amount, amountUSD, gateway,
-                email);
+            //check card transaction
+            Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+                    cause, settledStatus, cardHolderName, amount, amountUSD, gateway,
+                    email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and CBK", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndPartialCompleteAndCBK(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauthAndPartialCompleteAndCBK(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // partial preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        // partial preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    partialCompleteAmount, completedAmountUSD, gateway, email);
 
-        String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                partialCompleteAmount, completedAmountUSD, gateway, email);
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
+                    gateway, cardHolderName, email);
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
-                gateway, cardHolderName, email);
+            //authorization admin and open registrationChargeBackForm
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
-        //authorization admin and open registrationChargeBackForm
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
+            //check registrationChargeBackForm
+            Utils.checkChargeBackForm(driver, idTransaction, completedAmountUSD, pendingStatus, gateway, cardHolderName);
 
-        //check registrationChargeBackForm
-        Utils.checkChargeBackForm(driver, idTransaction, completedAmountUSD, pendingStatus, gateway, cardHolderName);
+            //type all value in form and click nextButton
+            driver.findElement(By.name("ctl00$content$editor$reason")).clear();
+            driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
+            driver.findElement(By.name("ctl00$content$editor$code")).clear();
+            driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
+            driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
+            driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
+            driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
 
-        //type all value in form and click nextButton
-        driver.findElement(By.name("ctl00$content$editor$reason")).clear();
-        driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
-        driver.findElement(By.name("ctl00$content$editor$code")).clear();
-        driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
-        driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
-        driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
-        driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
+            //check in lk admin
+            driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+            Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk admin
-        driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+            //check card transaction
+            Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+                    cause, cbcode, cbindicator, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD, gateway);
 
-        //check card transaction
-        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
-                cause, cbcode, cbindicator, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD, gateway);
+            //check in lk merch
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk merch
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
-
-        //check card transaction
-        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth, idChargeBack, id + orderID, typeTransaction,
-                cause, settledStatus, cardHolderName, partialCompleteAmount, completedAmountUSD, gateway,
-                email);
+            //check card transaction
+            Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+                    cause, settledStatus, cardHolderName, partialCompleteAmount, completedAmountUSD, gateway,
+                    email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Partial Complete and CBK", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = true)
-    public void preauthAndFullCompleteAndCBK(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "preauthAZ", enabled = false)
+    public void preauthAndFullCompleteAndCBK(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        // preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
+                    gateway, cardHolderName, email);
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
-                gateway, cardHolderName, email);
+            //authorization admin and open registrationChargeBackForm
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
 
-        //authorization admin and open registrationChargeBackForm
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.linkText("Зарегистрировать ChargeBack")).click();
+            //check registrationChargeBackForm
+            Utils.checkChargeBackForm(driver, idTransaction, amountUSD, pendingStatus, gateway, cardHolderName);
 
-        //check registrationChargeBackForm
-        Utils.checkChargeBackForm(driver, idTransaction, amountUSD, pendingStatus, gateway, cardHolderName);
+            //type all value in form and click nextButton
+            driver.findElement(By.name("ctl00$content$editor$reason")).clear();
+            driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
+            driver.findElement(By.name("ctl00$content$editor$code")).clear();
+            driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
+            driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
+            driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
+            driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
 
-        //type all value in form and click nextButton
-        driver.findElement(By.name("ctl00$content$editor$reason")).clear();
-        driver.findElement(By.name("ctl00$content$editor$reason")).sendKeys(cause);
-        driver.findElement(By.name("ctl00$content$editor$code")).clear();
-        driver.findElement(By.name("ctl00$content$editor$code")).sendKeys(cbcode);
-        driver.findElement(By.name("ctl00$content$editor$indicator")).clear();
-        driver.findElement(By.name("ctl00$content$editor$indicator")).sendKeys(cbindicator);
-        driver.findElement(By.name("ctl00$content$editor$cmdSave")).click();
+            //check in lk admin
+            driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
+            Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk admin
-        driver.findElement(By.id("ctl00_content_leftMenu_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        idChargeBack = Utils.getIdTransactionCharge(driver, idTransaction).substring(2);
-        Assert.assertTrue(Utils.checkChargeBackImgAdmin(driver, idChargeBack), "Failure image chargeBack in transaction list!");
+            //check card transaction
+            Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
+                    cause, cbcode, cbindicator, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway);
 
-        //check card transaction
-        Utils.checkCardTransactionChagreBackAdmin(driver, MIDpreAuth, idChargeBack, id + orderID, lastActionCharge, settledStatus,
-                cause, cbcode, cbindicator, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway);
+            //check in lk merch
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
 
-        //check in lk merch
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        Assert.assertTrue(Utils.checkChargeBackImgMerchant(driver, idChargeBack), "Failure image chargeBack in transaction list!");
-
-        //check card transaction
-        Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth, idChargeBack, id + orderID, typeTransaction,
-                cause, settledStatus, cardHolderName, amount, amountUSD, gateway,
-                email);
+            //check card transaction
+            Utils.checkCardTransactionChargeBackMerchant(driver, MIDpreAuth, idChargeBack, id + orderID, typeTransaction,
+                    cause, settledStatus, cardHolderName, amount, amountUSD, gateway,
+                    email);
+            result = TestLinkAPIResults.TEST_PASSED;
+        }
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Full Complete and CBK", BUILDNAME, null, result);
+        }
     }
 
 
     // REFUNDS
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = true)
-    public void pendingAndRefund(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = false)
+    public void pendingAndRefund(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, pendingMercahnt, optionPendingMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, pendingMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(pendingMercahntUrl));
+            //check in administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in merchant backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in merchant backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //change transaction status
+            Connect connectDb = new Connect();
+            connectDb.executeQuery(idTransaction);
+            for(String winHandle : driver.getWindowHandles()){
+                driver.switchTo().window(winHandle);
+            }
 
-        //change transaction status
-        Connect connectDb = new Connect();
-        connectDb.executeQuery(idTransaction);
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
+            // authorization merchant and open registrationRefundForm
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
+
+            //check registrationRefundForm
+            TestUtils.checkRefundFormMerchant(driver, MIDpending, idTransaction, id + orderID, cardHolderName,
+                    settledStatus, amount);
+
+            //type amount and refund
+            driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount);
+            driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
+
+            // get idRefund
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount);
+
+            // check transaction card
+            TestUtils.checkCardTransactionMerchant(driver, MIDpending, idRefund, id + orderID, typeRefund, pendingStatus,
+                    cardHolderName, amount, amountUSD, gateway, email);
+
+            // admin authorization and transaction card checking
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+
+            driver.findElement(By.linkText("Транзакции")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpending, idRefund, id + orderID, lastActionRefund, pendingStatus,
+                    cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                    expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
         }
-
-        // authorization merchant and open registrationRefundForm
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
-
-        //check registrationRefundForm
-        TestUtils.checkRefundFormMerchant(driver, MIDpending, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount);
-
-        //type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount);
-        driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
-
-        // get idRefund
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount);
-
-        // check transaction card
-        TestUtils.checkCardTransactionMerchant(driver, MIDpending, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount, amountUSD, gateway, email);
-
-        // admin authorization and transaction card checking
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-
-        driver.findElement(By.linkText("Транзакции")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpending, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Pending and Settled and Refund", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = true)
-    public void preauthAndRefund(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = false)
+    public void preauthAndRefund(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //change transaction status
+            Connect connectDb = new Connect();
+            connectDb.executeQuery(idTransaction);
+            for(String winHandle : driver.getWindowHandles()){
+                driver.switchTo().window(winHandle);
+            }
 
-        //change transaction status
-        Connect connectDb = new Connect();
-        connectDb.executeQuery(idTransaction);
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
+            // authorization merchant and open registrationRefundForm
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
+
+            //check registrationRefundForm
+            TestUtils.checkRefundFormMerchant(driver, MIDpreAuth, idTransaction, id + orderID, cardHolderName,
+                    settledStatus, amount);
+
+            //type amount and refund
+            driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount);
+            driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
+
+            // get idRefund
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount);
+
+            // check transaction card
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
+                    cardHolderName, amount, amountUSD, gateway, email);
+
+            // admin authorization and transaction card checking
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+
+            driver.findElement(By.linkText("Транзакции")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
+                    cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                    expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
         }
-
-        // authorization merchant and open registrationRefundForm
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
-
-        //check registrationRefundForm
-        TestUtils.checkRefundFormMerchant(driver, MIDpreAuth, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount);
-
-        //type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount);
-        driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
-
-        // get idRefund
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount);
-
-        // check transaction card
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount, amountUSD, gateway, email);
-
-        // admin authorization and transaction card checking
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-
-        driver.findElement(By.linkText("Транзакции")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth (Settled) and Refund", BUILDNAME, null, result);
+        }
 
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = true)
-    public void preauthAndPartialCompleteAndRefund(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = false)
+    public void preauthAndPartialCompleteAndRefund(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
 
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
+            // get USD amount
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        // get USD amount
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // partial preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        // partial preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(partialCompleteAmount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    partialCompleteAmount, completedAmountUSD, gateway, email);
 
-        String completedAmountUSD = Utils.getUSDAmount(partialCompleteAmount, currency);
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                partialCompleteAmount, completedAmountUSD, gateway, email);
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
+                    gateway, cardHolderName, email);
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, partialCompleteAmount, completedAmountUSD,
-                gateway, cardHolderName, email);
+            //change transaction status
+            Connect connectDb = new Connect();
+            connectDb.executeQuery(idTransaction);
+            for(String winHandle : driver.getWindowHandles()){
+                driver.switchTo().window(winHandle);
+            }
 
-        //change transaction status
-        Connect connectDb = new Connect();
-        connectDb.executeQuery(idTransaction);
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
+            // authorization merchant and open registrationRefundForm
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
+
+            //check registrationRefundForm
+            TestUtils.checkRefundFormMerchant(driver, MIDpreAuth, idTransaction, id + orderID, cardHolderName,
+                    settledStatus, partialCompleteAmount);
+
+            //type amount and refund
+            driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(partialCompleteAmount);
+            driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
+
+            // get idRefund
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, partialCompleteAmount);
+
+            // check transaction card
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
+                    cardHolderName, partialCompleteAmount, completedAmountUSD, gateway, email);
+
+            // admin authorization and transaction card checking
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+
+            driver.findElement(By.linkText("Транзакции")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
+                    cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                    expDate, bank, partialCompleteAmount, completedAmountUSD, gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
         }
-
-        // authorization merchant and open registrationRefundForm
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
-
-        //check registrationRefundForm
-        TestUtils.checkRefundFormMerchant(driver, MIDpreAuth, idTransaction, id + orderID, cardHolderName,
-                settledStatus, partialCompleteAmount);
-
-        //type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(partialCompleteAmount);
-        driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
-
-        // get idRefund
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, partialCompleteAmount);
-
-        // check transaction card
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, partialCompleteAmount, completedAmountUSD, gateway, email);
-
-        // admin authorization and transaction card checking
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-
-        driver.findElement(By.linkText("Транзакции")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, partialCompleteAmount, completedAmountUSD, gateway, cardHolderName, email);
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Partial Complete (Settle) and Refund", BUILDNAME, null, result);
+        }
     }
 
-    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = true)
-    public void preauthAndFullCompleteAndRefund(String currency, String amount, String partialCompleteAmount){
+    @Test (dataProviderClass = model.DataProviders.class, dataProvider = "refundAZ", enabled = false)
+    public void preauthAndFullCompleteAndRefund(String currency, String amount, String partialCompleteAmount)throws TestLinkAPIException {
 
         long id = System.currentTimeMillis();
         WebDriver driver = DriverFactory.getInstance().getDriver();
+        String result = null;
+        try{
+            //authorization
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
 
-        //authorization
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            //generate link and payment
+            idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
+                    numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
 
-        //generate link and payment
-        idTransaction = TestUtils.getNewIdTransaction(driver, preAuthMercahnt, optionPreAuthMerchant, id + orderID, amount,
-                numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, email, currency, cardHolderName);
+            //check result page
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
+            Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
 
-        //check result page
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, amount));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, id + orderID));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, preAuthMercahntUrl));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, cardHolderName));
-        Assert.assertTrue(Utils.checkResultPageTransaction(driver, email));
+            //check link
+            driver.findElement(By.linkText("Завершить")).click();
+            Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
 
-        //check link
-        driver.findElement(By.linkText("Завершить")).click();
-        Assert.assertTrue(driver.getCurrentUrl().contains(preAuthMercahntUrl));
+            //check in lk administrator
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            amountUSD = Utils.getUSDAmount(amount, currency);
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
 
-        //check in lk administrator
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        amountUSD = Utils.getUSDAmount(amount, currency);
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, typePreAuth, preauthStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            //check in lk merchant
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        //check in lk merchant
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, preauthStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            // preauth complete
+            driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
+            driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
+            driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
+            Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
 
-        // preauth complete
-        driver.findElement(By.id("ctl00_content_view_cmdComplete")).click();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).clear();
-        driver.findElement(By.id("ctl00_content_completeTransaction_amount")).sendKeys(amount);
-        driver.findElement(By.id("ctl00_content_completeTransaction_cmdComplete")).click();
-        Assert.assertTrue( driver.findElement(By.xpath("./*//*[@id='mainContent']/div[4]")).getText().contains("Транзакция подтверждена"));
+            Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
+                    amount, amountUSD, gateway, email);
 
-        Utils.checkCompletedPreauth(driver, MIDpreAuth, idTransaction, id + orderID, typePurchase, pendingStatus, cardHolderName,
-                amount, amountUSD, gateway, email);
+            //check completed preauth at administrator backend
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+            driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
+                    numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
+                    gateway, cardHolderName, email);
 
-        //check completed preauth at administrator backend
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idTransaction, id + orderID, lastActionComplete, pendingStatus, cardTypeVisa,
-                numberCardA + numberCardB + numberCardC + numberCardD, expDate, bank, amount, amountUSD,
-                gateway, cardHolderName, email);
+            //change transaction status
+            Connect connectDb = new Connect();
+            connectDb.executeQuery(idTransaction);
+            for(String winHandle : driver.getWindowHandles()){
+                driver.switchTo().window(winHandle);
+            }
 
-        //change transaction status
-        Connect connectDb = new Connect();
-        connectDb.executeQuery(idTransaction);
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
+            // authorization merchant and open registrationRefundForm
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
+
+            //check registrationRefundForm
+            TestUtils.checkRefundFormMerchant(driver, MIDpreAuth, idTransaction, id + orderID, cardHolderName,
+                    settledStatus, amount);
+
+            //type amount and refund
+            driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount);
+            driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
+
+            // get idRefund
+            driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            driver.findElement(By.linkText(idTransaction)).click();
+            idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount);
+
+            // check transaction card
+            TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
+                    cardHolderName, amount, amountUSD, gateway, email);
+
+            // admin authorization and transaction card checking
+            driver.get(baseUrl + "login/");
+            Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+
+            driver.findElement(By.linkText("Транзакции")).click();
+            driver.findElement(By.id("ctl00_content_all")).click();
+            TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
+                    cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
+                    expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+            result = TestLinkAPIResults.TEST_PASSED;
         }
-
-        // authorization merchant and open registrationRefundForm
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
-
-        //check registrationRefundForm
-        TestUtils.checkRefundFormMerchant(driver, MIDpreAuth, idTransaction, id + orderID, cardHolderName,
-                settledStatus, amount);
-
-        //type amount and refund
-        driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount);
-        driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
-
-        // get idRefund
-        driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        idRefund = TestUtils.getIdTransactionRefund(driver, idTransaction, amount);
-
-        // check transaction card
-        TestUtils.checkCardTransactionMerchant(driver, MIDpreAuth, idRefund, id + orderID, typeRefund, pendingStatus,
-                cardHolderName, amount, amountUSD, gateway, email);
-
-        // admin authorization and transaction card checking
-        driver.get(baseUrl + "login/");
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-
-        driver.findElement(By.linkText("Транзакции")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtils.checkCardTransactionAdmin(driver, MIDpreAuth, idRefund, id + orderID, lastActionRefund, pendingStatus,
-                cardTypeVisa, numberCardA + numberCardB + numberCardC + numberCardD,
-                expDate, bank, amount, amountUSD, gateway, cardHolderName, email);
+        catch(AssertionError assertionError){
+            result = TestLinkAPIResults.TEST_FAILED;
+            System.out.print(assertionError.getMessage());
+        }
+        finally{
+            TestClass.reportTestCaseResult(PROJECTNAME , TESTPLANNAME, "Preauth and Full Complete (Settle) and Refund", BUILDNAME, null, result);
+        }
     }
 
     // 3DS - ?
