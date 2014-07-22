@@ -818,7 +818,7 @@ public class TestUtilsFilters {
         }
         if(filterName.equals("Match.Card.CardHolderName")){
             driver.findElement(By.xpath("//*[@id='bi-pan']/a")).click();
-            Assert.assertTrue(Utils.universalCheck(driver, "xpath", "//*[@id='pan-view']", parameter1), "Incorrect PAN field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", "//*[@id='pan-view']", parameter1), "Incorrect field on transaction card (Admin Login).");
             Assert.assertTrue(Utils.universalCheck(driver, "xpath", "//*[@id='view-top']/table[2]/tbody/tr[1]/td", parameter2), "Incorrect Cardholder field on transaction card (Admin Login).");
             Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'Match.Card.CardHolderName')]")).getText().contains(code), "Incorrect Match.Card.CardHolderName Result Code.");
         }
@@ -828,7 +828,7 @@ public class TestUtilsFilters {
         }
         if(filterName.equals("StopList.Card")){
             driver.findElement(By.xpath("//*[@id='bi-pan']/a")).click();
-            Assert.assertTrue(Utils.universalCheck(driver, "xpath", "//*[@id='pan-view']", parameter1), "Incorrect PAN field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", "//*[@id='pan-view']", parameter1), "Incorrect field on transaction card (Admin Login).");
             Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'StopList.Card')]")).getText().contains(code), "Incorrect Filter Result Code.");
         }
         if(filterName.equals("StopList.Email")){
@@ -867,24 +867,24 @@ public class TestUtilsFilters {
         }
         //limits
         if(filterName.equals("Limit.Transaction.Amount")){
-            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[17]/td", parameter1), "Incorrect PAN field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[17]/td", parameter1), "Incorrect field on transaction card (Admin Login).");
             Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'Limit.Transaction.Amount')]")).getText().contains(code), "Incorrect Filter Result Code.");
         }
         if(filterName.equals("Limit.Ip.EmailCount")){
-            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='tran-email']/a", parameter1), "Incorrect PAN field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='tran-email']/a", parameter1), "Incorrect field on transaction card (Admin Login).");
             Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'Limit.Ip.EmailCount')]")).getText().contains(code), "Incorrect Filter Result Code.");
         }
         if(filterName.equals("Limit.Ip.CardCount")){
             driver.findElement(By.xpath("//*[@id='bi-pan']/a")).click();
-            Assert.assertTrue(Utils.universalCheck(driver, "xpath", "//*[@id='pan-view']", parameter1), "Incorrect PAN field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", "//*[@id='pan-view']", parameter1), "Incorrect field on transaction card (Admin Login).");
             Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'Limit.Ip.CardCount')]")).getText().contains(code), "Incorrect Filter Result Code.");
         }
         if(filterName.equals("Limit.Ip.DeclinedAttemptsCount")){
-            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[17]/td", parameter1), "Incorrect PAN field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[17]/td", parameter1), "Incorrect field on transaction card (Admin Login).");
             Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'Limit.Ip.DeclinedAttemptsCount')]")).getText().contains(code), "Incorrect Filter Result Code.");
         }
         if(filterName.equals("Limit.Card.PurchaseAmount")){
-            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[17]/td", parameter1), "Incorrect PAN field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[1]/tbody/tr[17]/td", parameter1), "Incorrect field on transaction card (Admin Login).");
             Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'Limit.Card.PurchaseAmount')]")).getText().contains(code), "Incorrect Filter Result Code.");
         }
         if(filterName.equals("Limit.Card.PurchaseCount")){
