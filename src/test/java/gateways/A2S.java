@@ -2,8 +2,6 @@ package gateways;
 
 import model.DriverFactory;
 import model.Environment;
-
-
 import model.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,17 +10,14 @@ import org.testng.annotations.*;
 import testlink.api.java.client.TestLinkAPIException;
 import testlink.api.java.client.TestLinkAPIResults;
 
-
 public class A2S extends TestClass {
 
-    
     String [] parameters = Environment.readFile();
     private String baseUrl = parameters[0];
     private String loginAdmin = parameters[1];;
     private String passwordAdmin = parameters[2];
     private String loginMerchantA2S = parameters[5];
     private String passwordMerchantA2S = parameters[6];
-    private String captcha = "ability";
 
     // merchant details
     private String MIDA2S = "55456";
@@ -78,15 +73,12 @@ public class A2S extends TestClass {
     private String voidedStatus = "Voided";
     private String routedStatus = "Routed";
     private String aw3dsStatus = "Awaiting3DAuthentication";
-
     private String commTestGateway = " Test gateway";
     private String aviaTestGateway = " Test Gateway";
     private String advancedTestGateway = "Advanced Test Gateway";
     private String a2sGateway = "Avia";
-
     private String cardTypeVisa = "Visa";
     private String typePurchase = "Purchase";
-
     private String yaUrl = "https://www.ya.ru/";
 
     // link generation parameters
@@ -127,7 +119,7 @@ public class A2S extends TestClass {
 
     // case 1
     @Test
-    public void commissionGWDeclinedTRX_RoutingOFF()throws TestLinkAPIException{
+    public void commissionGWDeclinedTRX_RoutingOFF() throws TestLinkAPIException{
 
         String result=null;
         long id = System.currentTimeMillis();
@@ -136,7 +128,6 @@ public class A2S extends TestClass {
         COMMISSION  = "Commission=" + commAmountOdd + ".00";
 
         try{
-
             // get security key
             SecurityKey = "SecurityKey=" + Utils.getA2SSecurityKey(MERCHANT_ID_A2S, ORDER_ID + id, AMOUNT, CURRENCY_RUB, COMMISSION, PNR, PRIVATE_SECURITY_KEY_A2S);
 
@@ -175,6 +166,7 @@ public class A2S extends TestClass {
             driver.findElement(By.id("ctl00_content_all")).click();
             TestUtils.checkCardTransactionMerchant(driver, MIDA2S, idTransactionComm, id + orderID, typePurchase, declinedStatus,
                     cardHolderName, commAmountOdd, commAmountOdd, commTestGateway, email);
+
             result = TestLinkAPIResults.TEST_PASSED;
         }
         catch(AssertionError assertionError){
@@ -755,9 +747,9 @@ public class A2S extends TestClass {
                 expDateYear, cardHolderName, cvc_a3ds, bank, email);
 
             //check 3DS page
-            Assert.assertTrue(driver.findElement(By.xpath(".*//**//**//**//**//**//**//**//*//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*[@id='mainContent']")).getText().contains(totalAmountOdd));
-            Assert.assertTrue(driver.findElement(By.xpath(".*//**//**//**//**//**//**//**//*//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*[@id='mainContent']")).getText().contains(id+""));
-            Assert.assertTrue(driver.findElement(By.xpath(".*//**//**//**//**//**//**//**//*//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
+            Assert.assertTrue(driver.findElement(By.xpath(".*//*[@id='mainContent']")).getText().contains(totalAmountOdd));
+            Assert.assertTrue(driver.findElement(By.xpath(".*//*[@id='mainContent']")).getText().contains(id+""));
+            Assert.assertTrue(driver.findElement(By.xpath(".*//*[@id='mainContent']")).getText().contains("Ваша карта зарегистрирована в"));
 
             // trx doesn't completed, testing aw3ds status only
 
