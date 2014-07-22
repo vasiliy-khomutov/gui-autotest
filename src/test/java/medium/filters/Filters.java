@@ -144,7 +144,7 @@ public class Filters {
         email2 = "autotest2_" + idzipemail + "@test.ru";
     }
 
-    @Test (enabled = true)
+    @Test (enabled = false)
     public void MatchEmailZip(){
 
         WebDriver driver = DriverFactory.getInstance().getDriver();
@@ -700,6 +700,7 @@ public class Filters {
         // check filter algorithm
     }
 
+    // limit
     @Test (enabled = false)
     public void LimitTransactionAmount(){
 
@@ -708,7 +709,6 @@ public class Filters {
 
         //enable Filter
         TestUtilsFilters.enableFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID, filterLimitTransactionAmount);
-
         // trx 1
         Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
         idTransaction = TestUtilsFilters.getNewIdTransaction_Filter(driver, pendingMercahnt, optionPendingMerchant, id + orderID + "1",
@@ -1082,7 +1082,7 @@ public class Filters {
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_all")).click();
         driver.findElement(By.linkText(idTransaction)).click();
-        driver.findElement(By.name("ctl00$content$view$cmdRefund")).click();
+        driver.findElement(By.xpath(".//input[@id='ctl00_content_view_cmdRefund']")).click();
         driver.findElement(By.name("ctl00$content$refundTransaction$amount")).sendKeys(amount1);
         driver.findElement(By.name("ctl00$content$refundTransaction$cmdRefund")).click();
         driver.findElement(By.id("ctl00_ctl11_mhlTransactions")).click();
@@ -1132,49 +1132,15 @@ public class Filters {
         TestUtilsFilters.disableFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID, filterLimitMerchantRefundAmount);
     }
 
-    @Test (enabled = false)
+    /*@Test (enabled = false)
     public void LimitAccountIdPaymentParameters(){
-        // api trx
-    }
+
+    }*/
 
 
     // matches
-    @Test (enabled = false)
+    /*@Test (enabled = false)
     public void MatchBrowserLanguageBillingCountry(){
-
-        WebDriver driver = DriverFactory.getInstance().getDriver();
-        long id = System.currentTimeMillis();
-
-        //enable Filter
-        TestUtilsFilters.enableFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID, filterLimitMerchantPurchaseAmount);
-
-        // trx 1
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        idTransaction = TestUtilsFilters.getNewIdTransaction_Filter(driver, pendingMercahnt, optionPendingMerchant, id + orderID + "1",
-                amount1, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, address,
-                city, zip, country, phone, email, currencyRUB, cardHolderName, baseUrl, loginAdmin, passwordAdmin);
-
-        // check trx
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        TestUtilsFilters.checkTransactionCard_Admin_Filter(driver, idTransaction, amount1, null, code200, filterLimitMerchantPurchaseAmount);
-
-        // trx 2
-        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
-        idTransaction = TestUtilsFilters.getNewIdTransaction_Filter(driver, pendingMercahnt, optionPendingMerchant, id + orderID + "2",
-                amount2, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, address,
-                city, zip, country, phone, email, currencyRUB, cardHolderName, baseUrl, loginAdmin, passwordAdmin);
-
-        // check trx
-        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
-        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
-        driver.findElement(By.id("ctl00_content_all")).click();
-        driver.findElement(By.linkText(idTransaction)).click();
-        TestUtilsFilters.checkTransactionCard_Admin_Filter(driver, idTransaction, amount2, null, code2052, filterLimitMerchantPurchaseAmount);
-
-        //disable Filter
-        TestUtilsFilters.disableFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID, filterLimitMerchantPurchaseAmount);
     }
 
     @Test (enabled = false)
@@ -1191,6 +1157,6 @@ public class Filters {
 
     @Test (enabled = false)
     public void MatchBinCountryIpCountry(){
-    }
+    }*/
 
 }
