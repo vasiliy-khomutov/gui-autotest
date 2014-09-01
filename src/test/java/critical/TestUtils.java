@@ -1,6 +1,7 @@
 package critical;
 
 
+import model.Captcha;
 import model.Environment;
 import model.Utils;
 import org.apache.http.HttpRequest;
@@ -410,7 +411,7 @@ public class TestUtils {
 
         //authorization
         driver.get(baseUrl + "login/");
-        Utils.authorized(driver, loginAdmin, passwordMerchant, captcha);
+        Utils.authorized(driver, loginAdmin, passwordMerchant, Captcha.getCaptcha(driver));
 
         driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
         driver.findElement(By.id("ctl00_content_filter_merchantId")).sendKeys(sapmaxMerchantId);

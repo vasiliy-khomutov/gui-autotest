@@ -51,6 +51,19 @@ public class TestUtilsFilters {
         driver.findElement(By.linkText(MID)).click();
         driver.findElement(By.xpath("//*[@id='tabs']/div[3]/div/a")).click();
 
+        if(filterName.equals("Match.BrowserLanguage.BillingCountry")){
+            if(driver.findElement(By.xpath("//*[@id='filtersView']/table/tbody/tr[18]")).getText().contains("Настройка")){
+                driver.findElement(By.xpath("//*[@id='filtersView']/table/tbody/tr[18]/td[2]/a[1]")).click();
+            }else {
+                driver.findElement(By.id("ctl00_content_filtersContainer_filterList_viewList_ctl17_lnkTurnOn")).click();
+            }
+            new Select(driver.findElement(By.id("ctl00_content_filtersContainer_matchBrowserLanguageBillingCountryFilterSettings_acceptMatchedResolvedLanguageConfirmation"))).selectByVisibleText("Да");
+            new Select(driver.findElement(By.id("ctl00_content_filtersContainer_matchBrowserLanguageBillingCountryFilterSettings_declineUnmatchedResolvedLanguageConfirmation"))).selectByVisibleText("Нет");
+            new Select(driver.findElement(By.id("ctl00_content_filtersContainer_matchBrowserLanguageBillingCountryFilterSettings_unresolvedLanguageAcceptanceSettings"))).selectByVisibleText("Отклонить");
+            new Select(driver.findElement(By.id("ctl00_content_filtersContainer_matchBrowserLanguageBillingCountryFilterSettings_behavior"))).selectByVisibleText("Блокировать транзакцию");
+            driver.findElement(By.id("ctl00_content_filtersContainer_matchBrowserLanguageBillingCountryFilterSettings_cmdSave")).click();
+        }
+
         if(filterName.equals("Match.Email.CardHolderName")){
             if(driver.findElement(By.xpath("//*[@id='filtersView']/table/tbody/tr[23]")).getText().contains("Настройка")){
                 driver.findElement(By.xpath("//*[@id='filtersView']/table/tbody/tr[23]/td[2]/a[1]")).click();
@@ -434,6 +447,11 @@ public class TestUtilsFilters {
         if(filterName.equals("StopList.Merchant.IpCountry")){
             filterTr = "16";
         }
+        if(filterName.equals("Match.BrowserLanguage.BillingCountry")){
+            filterTr = "17";
+        }
+
+
 
         if(filterName.equals("Match.Email.CardHolderName")){
             filterTr = "22";
@@ -804,6 +822,12 @@ public class TestUtilsFilters {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        if(filterName.equals("Match.BrowserLanguage.BillingCountry")){
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[2]/tbody/tr[6]/td", parameter1), "Incorrect field on transaction card (Admin Login).");
+            Assert.assertTrue(Utils.universalCheck(driver, "xpath", ".//*[@id='view-top']/table[2]/tbody/tr[12]/td", parameter2), "Incorrect field on transaction card (Admin Login).");
+            Assert.assertTrue(driver.findElement(By.xpath("//tr[contains(.,'Match.BrowserLanguage.BillingCountry')]")).getText().contains(code), "Incorrect Match.BrowserLanguage.BillingCountry Result Code.");
         }
 
         if(filterName.equals("Match.Email.CardHolderName")){

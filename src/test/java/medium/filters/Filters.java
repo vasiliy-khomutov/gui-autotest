@@ -6,6 +6,7 @@ import model.DriverFactory;
 import model.Environment;
 import model.Utils;
 import org.apache.http.client.methods.HttpPost;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeTest;
@@ -13,6 +14,7 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Filters {
 
@@ -72,8 +74,12 @@ public class Filters {
     private String cardHolder1;
     private String cardHolder2;
 
+    private String countryName = "Россия (RU)";
+    private String browserLanguage = "ru-RU";
+
     // filters
     private String filterMatchEmailCardHolderName = "Match.Email.CardHolderName";
+    private String filterMatchBrowserLanguageBillingCountry = "Match.BrowserLanguage.BillingCountry";
     private String filterMatchEmailZip = "Match.Email.Zip";
     private String filterMatchCardCardHolderName = "Match.Card.CardHolderName";
 
@@ -144,6 +150,90 @@ public class Filters {
         email2 = "autotest2_" + idzipemail + "@test.ru";
     }
 
+
+    // matches
+    @Test (enabled = true)
+    public void MatchBrowserLanguageBillingCountry(){
+
+        WebDriver driver = DriverFactory.getInstance().getDriver();
+        long id = System.currentTimeMillis();
+
+        //enable Filter
+        TestUtilsFilters.enableFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID, filterMatchBrowserLanguageBillingCountry);
+
+        // complete trx
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        idTransaction = TestUtilsFilters.getNewIdTransaction_Filter(driver, pendingMercahnt, optionPendingMerchant, id + orderID + "1",
+                amount1, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, address,
+                city, zip, country, phone, email, currencyRUB, cardHolderName, baseUrl, loginAdmin, passwordAdmin);
+
+        // check trx
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+        driver.findElement(By.id("ctl00_content_all")).click();
+        TestUtilsFilters.checkTransactionCard_Admin_Filter(driver, idTransaction, countryName, browserLanguage, code200, filterMatchBrowserLanguageBillingCountry);
+
+        // remove language code from allowed languages list
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlLookups")).click();
+        driver.findElement(By.xpath(".//*[@id='mainContent']/table/tbody/tr[1]/td/span/a")).click();
+        driver.findElement(By.id("ctl00_content_filter_countryCode")).clear();
+        driver.findElement(By.id("ctl00_content_filter_countryCode")).sendKeys("RU");
+        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+        driver.findElement(By.xpath(".//*[@id='list_transactions']/tbody/tr[2]/td[5]/a")).click();
+        driver.findElement(By.xpath(".//*[@id='mainContent']/div/table[4]/tbody/tr[contains(.,'ru')]/td[2]/a")).click();
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+
+        // complete trx
+        Utils.login(driver, baseUrl, loginMerchant, passwordMerchant);
+        idTransaction = TestUtilsFilters.getNewIdTransaction_Filter(driver, pendingMercahnt, optionPendingMerchant, id + orderID + "2",
+                amount1, numberCardA, numberCardB, numberCardC, numberCardD, expDateMonth, expDateYear, cvc, bank, address,
+                city, zip, country, phone, email, currencyRUB, cardHolderName, baseUrl, loginAdmin, passwordAdmin);
+
+        // check trx
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlTransactions")).click();
+        driver.findElement(By.id("ctl00_content_all")).click();
+        driver.findElement(By.linkText(idTransaction)).click();
+        TestUtilsFilters.checkTransactionCard_Admin_Filter(driver, idTransaction, countryName, browserLanguage, code2002, filterMatchBrowserLanguageBillingCountry);
+
+        // add language code from allowed languages list
+        Utils.login(driver, baseUrl, loginAdmin, passwordAdmin);
+        driver.findElement(By.id("ctl00_content_LeftMenu1_mhlLookups")).click();
+        driver.findElement(By.xpath("./*//*[@id='mainContent']/table/tbody/tr[1]/td/span/a")).click();
+        driver.findElement(By.id("ctl00_content_filter_countryCode")).clear();
+        driver.findElement(By.id("ctl00_content_filter_countryCode")).sendKeys("RU");
+        driver.findElement(By.id("ctl00_content_filter_cmdSelect")).click();
+        driver.findElement(By.xpath("./*//*[@id='list_transactions']/tbody/tr[2]/td[5]/a")).click();
+        driver.findElement(By.id("ctl00_content_countrySettings_lang")).clear();
+        driver.findElement(By.id("ctl00_content_countrySettings_lang")).sendKeys("ru");
+        driver.findElement(By.id("ctl00_content_countrySettings_cmdLanguageAdd")).click();
+
+        //disable Filter
+        TestUtilsFilters.disableFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID, filterMatchBrowserLanguageBillingCountry);
+    }
+    /*
+    @Test (enabled = false)
+    public void MatchUserAgentTimeZone(){
+    }
+
+    @Test (enabled = false)
+    public void MatchBillingCountryIpCountry(){
+    }
+
+    @Test (enabled = false)
+    public void MatchBillingCountryBinCountry(){
+    }
+
+    @Test (enabled = false)
+    public void MatchBinCountryIpCountry(){
+    }
+
+    @Test (enabled = false)
+    public void MatchEmailCardHolderName(){
+    }
+    */
     @Test (enabled = false)
     public void MatchEmailZip(){
 
@@ -281,6 +371,7 @@ public class Filters {
         //disable Filter
         TestUtilsFilters.disableFilter(driver, baseUrl, loginAdmin, passwordAdmin, MID, filterMatchCardCardHolderName);
     }
+
 
     @Test (enabled = false)
     public void StopListBillingCountry() {
@@ -1136,27 +1227,4 @@ public class Filters {
     public void LimitAccountIdPaymentParameters(){
 
     }*/
-
-
-    // matches
-    /*@Test (enabled = false)
-    public void MatchBrowserLanguageBillingCountry(){
-    }
-
-    @Test (enabled = false)
-    public void MatchUserAgentTimeZone(){
-    }
-
-    @Test (enabled = false)
-    public void MatchBillingCountryIpCountry(){
-    }
-
-    @Test (enabled = false)
-    public void MatchBillingCountryBinCountry(){
-    }
-
-    @Test (enabled = false)
-    public void MatchBinCountryIpCountry(){
-    }*/
-
 }
